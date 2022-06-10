@@ -27,7 +27,8 @@
             <div class="card-body">
                 <p class="login-box-msg">Silahkan login</p>
 
-                <form action="#" method="post">
+                <form action="/login" method="post">
+                    @csrf
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
