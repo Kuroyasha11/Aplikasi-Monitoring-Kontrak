@@ -22,7 +22,7 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt([$credentials])) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             return redirect()->intended('/' . auth()->user()->slug)->with('berhasil', 'Selamat datang ' . auth()->user()->name);
