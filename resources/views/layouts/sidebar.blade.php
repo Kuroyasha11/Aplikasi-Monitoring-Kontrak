@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="@auth
-            / {{ auth()->user()->slug }}
+    /{{ auth()->user()->slug }}
 @else
     /
     @endauth" class="brand-link  text-decoration-none">

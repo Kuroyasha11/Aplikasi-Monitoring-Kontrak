@@ -23,18 +23,27 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         User::create([
+            'name' => 'admin',
+            'slug' => 'admin',
+            'username' => 'admin01',
+            'email' => 'admin01@gmail.com',
+            'password' => bcrypt('admin01')
+        ]);
+
+        User::create([
             'name' => 'Kuroyasha',
             'slug' => 'kuroyasha',
+            'username' => 'Kuroyasha',
             'email' => 'Rickyandrean41@gmail.com',
             'password' => bcrypt('Ricky4424')
         ]);
 
-        // DATA FARABY
-        // User::create([
-        //     'name' => '',
-        //     'slug' => '',
-        //     'email' => '',
-        //     'password' => bycrypt('')
-        // ]);
+        User::create([
+            'name' => 'byy',
+            'slug' => 'byy',
+            'username' => 'byy',
+            'email' => 'byy@gmail.com',
+            'password' => bcrypt('admin123')
+        ]);
     }
 }
