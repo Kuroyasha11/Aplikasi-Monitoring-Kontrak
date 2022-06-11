@@ -18,6 +18,16 @@
 </head>
 
 <body class="hold-transition login-page">
+    @if (session()->has('berhasil'))
+        <div class="alert alert-success col-lg-15" role="alert">
+            {{ session('berhasil') }}
+        </div>
+    @endif
+    @if (session()->has('gagal'))
+        <div class="alert alert-danger col-lg-15" role="alert">
+            {{ session('gagal') }}
+        </div>
+    @endif
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
@@ -30,7 +40,7 @@
                 <form action="/login" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" class="form-control" placeholder="Email" name="email" autofocus required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -38,7 +48,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" placeholder="Password" name="password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>

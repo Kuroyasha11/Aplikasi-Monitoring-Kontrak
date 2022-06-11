@@ -26,3 +26,10 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'authenticate');
     Route::post('/logout', 'logout');
 });
+
+Route::get('/{slug}', function () {
+    return view('index', [
+        'title' => 'Home',
+        'judul' => 'Dashboard'
+    ]);
+});
