@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Kuroyasha',
             'slug' => 'kuroyasha',
             'email' => 'Rickyandrean41@gmail.com',
-            'password' => 'Ricky4424'
+            'password' => bcrypt('Ricky4424')
         ]);
 
         // DATA FARABY
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => '',
         //     'slug' => '',
         //     'email' => '',
-        //     'password' => ''
+        //     'password' => bycrypt('')
         // ]);
     }
 }

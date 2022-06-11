@@ -19,7 +19,7 @@ Route::get('/', function () {
         'title' => 'Home',
         'judul' => 'Dashboard'
     ]);
-});
+})->middleware(['guest']);
 
 Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'index')->name('login')->middleware('guest');
@@ -32,4 +32,4 @@ Route::get('/{slug}', function () {
         'title' => 'Home',
         'judul' => 'Dashboard'
     ]);
-});
+})->middleware(['auth']);

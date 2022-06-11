@@ -18,16 +18,6 @@
 </head>
 
 <body class="hold-transition login-page">
-    @if (session()->has('berhasil'))
-        <div class="alert alert-success col-lg-15" role="alert">
-            {{ session('berhasil') }}
-        </div>
-    @endif
-    @if (session()->has('gagal'))
-        <div class="alert alert-danger col-lg-15" role="alert">
-            {{ session('gagal') }}
-        </div>
-    @endif
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
@@ -35,25 +25,34 @@
                 <a href="/" class="h1"><b>LOGIN</b></a>
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Silahkan login</p>
-
+                @if (session()->has('gagal'))
+                    <p class="login-box-msg">{{ session('gagal') }}</p>
+                @endif
                 <form action="/login" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email" name="email" autofocus required>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email"
+                            name="email" autofocus required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
+
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password" name="password">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                            placeholder="Password" name="password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
+                        @error('password')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="row">
                         {{-- <div class="col-8">

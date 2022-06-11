@@ -5,6 +5,16 @@
           <li class="nav-item">
               <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
           </li>
+          @auth
+              <li class="nav-item d-none d-sm-inline-block">
+                  <form action="/logout" method="post">
+                      @csrf
+                      <button type="submit" class="nav-link">
+                          <i class="bi bi-box-arrow-left"></i> Logout
+                      </button>
+                  </form>
+              </li>
+          @endauth
           {{-- <li class="nav-item d-none d-sm-inline-block">
               <a href="index3.html" class="nav-link">Home</a>
           </li>
