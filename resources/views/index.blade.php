@@ -12,6 +12,14 @@
                 {{ session('gagal') }}
             </div>
         @endif
-        Hello World!!
+        <p>
+            DUIT KU HANYA @IDR(0), AKU MISKIN!!
+        </p>
+        <p>
+            DUIT KU HANYA @IDR(100000), AKU MISKIN!!
+        </p>
+        <p>
+            DUIT KU HANYA @IDR(10000000), AKU MISKIN!!
+        </p>
     </div>
 @endsection
