@@ -1,11 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="@auth
-    /{{ auth()->user()->slug }}
-@else
-    /
-    @endauth" class="brand-link  text-decoration-none">
+    <a href="/" class="brand-link  text-decoration-none">
         {{-- UBAH LOGO PERUSAHAAN --}}
         <img src="/assets/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -22,8 +18,7 @@
                     <img src="/assets/adminlte/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="/{{ auth()->user()->slug }}"
-                        class="d-block text-decoration-none">{{ auth()->user()->name }}</a>
+                    <a href="/dashboard" class="d-block text-decoration-none">{{ auth()->user()->name }}</a>
                 </div>
             </div>
 
@@ -43,10 +38,10 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon far fa-image"></i>
+                        <a href="/dashboard/storage" class="nav-link">
+                            <i class="bi bi-building"></i>
                             <p>
-                                MENU 1
+                                Gedung
                             </p>
                         </a>
                     </li>

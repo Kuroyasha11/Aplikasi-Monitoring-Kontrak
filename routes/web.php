@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\StorageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +28,11 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/logout', 'logout');
 });
 
-Route::get('/{slug}', function () {
+Route::get('/dashboard', function () {
     return view('index', [
         'title' => 'Home',
         'judul' => 'Dashboard'
     ]);
 })->middleware(['auth']);
+
+Route::resource('/dashboard/storage', StorageController::class)->middleware(['auth']);
