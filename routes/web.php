@@ -35,4 +35,4 @@ Route::get('/dashboard', function () {
     ]);
 })->middleware(['auth']);
 
-Route::resource('/dashboard/storage', StorageController::class)->middleware(['auth']);
+Route::resource('/dashboard/storage', StorageController::class)->middleware(['auth'])->except(['show']);

@@ -42,7 +42,14 @@ class StorageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nama' => 'required',
+            'hargadasar' => 'required|numeric|min:0',
+        ]);
+
+        Storage::create($validated);
+
+        return redirect('/dashboard/storage')->with('berhasil', 'Berhasil menambahkan gedung baru');
     }
 
     /**
@@ -80,7 +87,14 @@ class StorageController extends Controller
      */
     public function update(Request $request, Storage $storage)
     {
-        //
+        $validated = $request->validate([
+            'nama' => 'required',
+            'hargadasar' => 'required|numeric|min:0',
+        ]);
+
+        Storage::where('id', $storage->id)->update($validated);
+
+        return redirect('/dashboard/storage')->with('berhasil', 'Berhasil mengubah data gedung');
     }
 
     /**
@@ -91,6 +105,8 @@ class StorageController extends Controller
      */
     public function destroy(Storage $storage)
     {
-        //
+        Storage::destroy($storage->id);
+
+        return redirect('/dashboard/storage')->with('berhasil', 'Berhasil menghapus data gedung');
     }
 }

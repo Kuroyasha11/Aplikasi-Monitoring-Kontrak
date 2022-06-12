@@ -17,21 +17,35 @@
             <a href="/dashboard/storage/create" class="btn btn-success"><i class="bi bi-plus-square"></i> Tambah</a>
             {{ $storage->onEachSide(5)->links() }}
         </div>
-        <table class="table table-responsive table-hover">
+        <table class="table table-hover table-bordered">
             <thead class="table-dark">
-                <tr>
+                <tr align="center">
                     <th scope="col">No</th>
                     <th scope="col">NAMA GUDANG</th>
-                    <th scope="col">Tarif / Luas Meter</th>
+                    <th scope="col">Tarif Harga (Meter/Bulan)</th>
+                    <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @if ($storage->count())
                     @foreach ($storage as $item)
                         <tr>
-                            <th scope="row" align="CENTER">{{ $storage->firstItem() - 1 + $loop->iteration }}</th>
+                            <td align="CENTER"><b>{{ $storage->firstItem() - 1 + $loop->iteration }}</b></th>
                             <td>{{ $item->nama }}</td>
-                            <td align="RIGHT">{{ $item->hargadasar }}</td>
+                            <td align="RIGHT">@IDR($item->hargadasar)</td>
+                            <td>
+                                <div class="d-flex  justify-content-center">
+                                    <a href="/dashboard/storage/{{ $item->id }}/edit" class="btn btn-warning"><i
+                                            class="bi bi-pencil-square"></i> Edit</a>
+                                    <form action="/dashboard/storage/{{ $item->id }}" method="post">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                            <i class="bi bi-x-circle"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                 @else
