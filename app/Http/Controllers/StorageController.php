@@ -53,11 +53,7 @@ class StorageController extends Controller
      */
     public function show(Storage $storage)
     {
-        return view('storage.show', [
-            'title' => 'Storage',
-            'judul' => 'Detil Gudang',
-            'storage' => $storage
-        ]);
+        //
     }
 
     /**

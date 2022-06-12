@@ -16,14 +16,21 @@
         <table class="table">
             <thead class="table-dark">
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <th scope="col">No</th>
+                    <th scope="col">NAMA GUDANG</th>
+                    <th scope="col">Tarif / Luas Meter</th>
                 </tr>
             </thead>
             <tbody>
-                ...
+                @if ($storage->count())
+                    @foreach ($storage as $item)
+                        <tr>
+                            <th scope="row">{{ $storage->firstItem() - 1 + $loop->iteration }}</th>
+                            <td>{{ $item->nama }}</td>
+                            <td>{{ $item->hargadasar }}</td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </div>
