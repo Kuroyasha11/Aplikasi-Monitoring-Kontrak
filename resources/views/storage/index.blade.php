@@ -13,7 +13,7 @@
             </div>
         @endif
 
-        <table class="table">
+        <table class=" table table-responsive table-hover">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">No</th>
