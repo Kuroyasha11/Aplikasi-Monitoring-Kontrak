@@ -16,6 +16,7 @@ class StorageController extends Controller
     {
         return view('storage.index', [
             'title' => 'Storage',
+            'judul' => 'Daftar Gudang',
             'storage' => Storage::all()
         ]);
     }
@@ -28,7 +29,8 @@ class StorageController extends Controller
     public function create()
     {
         return view('storage.create', [
-            'title' => 'Storage'
+            'title' => 'Storage',
+            'judul' => 'Buat Daftar Gudang Baru'
         ]);
     }
 
@@ -53,6 +55,7 @@ class StorageController extends Controller
     {
         return view('storage.show', [
             'title' => 'Storage',
+            'judul' => 'Detil Gudang',
             'storage' => $storage
         ]);
     }
@@ -67,6 +70,7 @@ class StorageController extends Controller
     {
         return view('storage.edit', [
             'title' => 'Storage',
+            'judul' => 'Ubah Data Gudang',
             'storage' => $storage
         ]);
     }
