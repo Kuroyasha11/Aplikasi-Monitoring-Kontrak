@@ -13,6 +13,10 @@
             </div>
         @endif
 
+        <div class="d-flex justify-content-between">
+            <a href="/dashboard/storage/create" class="btn btn-success"><i class="bi bi-plus-square"></i> Tambah</a>
+            {{ $storage->onEachSide(5)->links() }}
+        </div>
         <table class="table table-responsive table-hover">
             <thead class="table-dark">
                 <tr>

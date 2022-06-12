@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Paginator::useBootstrap();
+        Paginator::useBootstrapFive();
 
         Blade::directive('IDR', function ($rupiah) {
             return "Rp<?php echo number_format($rupiah, 0); ?>";

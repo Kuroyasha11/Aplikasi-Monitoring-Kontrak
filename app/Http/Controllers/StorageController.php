@@ -17,7 +17,7 @@ class StorageController extends Controller
         return view('storage.index', [
             'title' => 'Storage',
             'judul' => 'Daftar Gudang',
-            'storage' => Storage::all()
+            'storage' => Storage::latest()->paginate(10)
         ]);
     }
 
