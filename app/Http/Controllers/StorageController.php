@@ -14,8 +14,10 @@ class StorageController extends Controller
      */
     public function index()
     {
-        //
-        // menambah baris 1
+        return view('storage.index', [
+            'title' => 'Storage',
+            'storage' => Storage::all()
+        ]);
     }
 
     /**
@@ -25,7 +27,9 @@ class StorageController extends Controller
      */
     public function create()
     {
-        //
+        return view('storage.create', [
+            'title' => 'Storage'
+        ]);
     }
 
     /**
@@ -47,7 +51,10 @@ class StorageController extends Controller
      */
     public function show(Storage $storage)
     {
-        //
+        return view('storage.show', [
+            'title' => 'Storage',
+            'storage' => $storage
+        ]);
     }
 
     /**
@@ -58,7 +65,10 @@ class StorageController extends Controller
      */
     public function edit(Storage $storage)
     {
-        //
+        return view('storage.edit', [
+            'title' => 'Storage',
+            'storage' => $storage
+        ]);
     }
 
     /**
