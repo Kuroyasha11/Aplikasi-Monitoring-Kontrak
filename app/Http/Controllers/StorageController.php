@@ -15,7 +15,7 @@ class StorageController extends Controller
     public function index()
     {
         //
-        // baris 2
+        // menambah baris 1
     }
 
     /**
