@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title }} | PT BGR LOGISTIK INDONESIA DIVRE PALEMBANG</title>
+    <title>{{ $title }} | PT BGR LOGISTIK INDONESIA DIVRE PALEMBANGS</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
