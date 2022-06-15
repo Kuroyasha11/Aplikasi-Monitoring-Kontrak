@@ -50,8 +50,8 @@
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="3">
-                            <p class="text-center fs-4">Tidak ada Paket</p>
+                        <td colspan="4">
+                            <p class="text-center fs-4">Tidak ada daftar gudang</p>
                         </td>
                     </tr>
                 @endif
