@@ -24,23 +24,6 @@
                 <div class="info">
                     <a href="/dashboard" class="d-block text-decoration-none">{{ auth()->user()->name }}</a>
                 </div>
-                <div class="dropdown-center">
-                    <button class="d-blox" type="button" id="dropdownCenterBtn" data-bs-toggle="dropdown">
-                        {{ auth()->user()->name }}
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownCenterBtn">
-                        @auth
-                            <li>
-                                <form action="/logout" method="post">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">
-                                        <i class="bi bi-box-arrow-left"></i> Logout
-                                    </button>
-                                </form>
-                            </li>
-                        @endauth
-                    </ul>
-                </div>
             </div>
 
             <!-- SidebarSearch Form -->
