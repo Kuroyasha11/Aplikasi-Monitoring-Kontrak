@@ -13,49 +13,58 @@
             </div>
         @endif
 
-        <div class="d-flex justify-content-between">
-            <a href="/dashboard/storage/create" class="btn btn-success"><i class="bi bi-plus-square"></i> Tambah</a>
-            {{ $storage->onEachSide(5)->links() }}
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <a href="/dashboard/storage/create" class="btn btn-success"><i class="bi bi-plus-square"></i> Tambah</a>
+                {{-- {{ $storage->onEachSide(5)->links() }} --}}
+            </div>
         </div>
-        <table class="table table-hover table-bordered">
-            <thead class="table-dark">
-                <tr align="center">
-                    <th scope="col">No</th>
-                    <th scope="col">NAMA GUDANG</th>
-                    <th scope="col">Tarif Harga (Meter/Bulan)</th>
-                    <th scope="col">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if ($storage->count())
-                    @foreach ($storage as $item)
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="tabel-biasa" class="table table-bordered table-hover">
+                <thead>
+                    <tr align="CENTER">
+                        <th>No</th>
+                        <th>NAMA GUDANG</th>
+                        <th>Tarif Harga (Meter/Bulan)</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ($storage->count())
+                        @foreach ($storage as $item)
+                            <tr>
+                                <td align="CENTER"><b>{{ $storage->firstItem() - 1 + $loop->iteration }}</b></th>
+                                <td>{{ $item->nama }}</td>
+                                <td align="RIGHT">@IDR($item->hargadasar)</td>
+                                <td>
+                                    <div class="d-flex  justify-content-center">
+                                        <a href="/dashboard/storage/{{ $item->id }}/edit" class="btn btn-warning"><i
+                                                class="bi bi-pencil-square"></i> Edit</a>
+                                        <form action="/dashboard/storage/{{ $item->id }}" method="post">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                                <i class="bi bi-x-circle"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td align="CENTER"><b>{{ $storage->firstItem() - 1 + $loop->iteration }}</b></th>
-                            <td>{{ $item->nama }}</td>
-                            <td align="RIGHT">@IDR($item->hargadasar)</td>
-                            <td>
-                                <div class="d-flex  justify-content-center">
-                                    <a href="/dashboard/storage/{{ $item->id }}/edit" class="btn btn-warning"><i
-                                            class="bi bi-pencil-square"></i> Edit</a>
-                                    <form action="/dashboard/storage/{{ $item->id }}" method="post">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
-                                            <i class="bi bi-x-circle"></i> Delete
-                                        </button>
-                                    </form>
-                                </div>
+                            <td colspan="4">
+                                <p class="text-center fs-4">Tidak ada daftar gudang</p>
                             </td>
                         </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="4">
-                            <p class="text-center fs-4">Tidak ada daftar gudang</p>
-                        </td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
     </div>
+    <!-- /.card -->
+
+
 @endsection

@@ -43,7 +43,17 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item">
-                        <a href="/dashboard/storage" class="nav-link">
+                        <a href="/dashboard" class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}">
+                            <i class="bi bi-speedometer"></i>
+                            <p>
+                                Dashboard
+                            </p>
+                        </a>
+                    </li>
+                    <hr>
+                    <li class="nav-item">
+                        <a href="/dashboard/storage"
+                            class="nav-link {{ Request::is('dashboard/storage*') ? 'active' : '' }}">
                             <i class="bi bi-building"></i>
                             <p>
                                 Gedung
