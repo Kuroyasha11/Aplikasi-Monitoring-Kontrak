@@ -9,5 +9,12 @@ class Contract extends Model
 {
     use HasFactory;
 
+    protected $with = ['storage'];
     protected $guarded = ['id'];
+
+
+    public function storage()
+    {
+        return $this->belongsTo(Storage::class);
+    }
 }

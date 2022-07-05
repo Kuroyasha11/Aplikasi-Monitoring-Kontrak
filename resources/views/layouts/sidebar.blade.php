@@ -4,7 +4,7 @@
     <a href="@auth
     /dashboard
 @else
-/    
+/
     @endauth" class="brand-link  text-decoration-none">
         {{-- UBAH LOGO PERUSAHAAN --}}
         <img src="/assets/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
@@ -59,6 +59,23 @@
                                 Gedung
                             </p>
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/dashboard/contract"
+                            class="nav-link {{ Request::is('dashboard/contract*') ? 'active' : '' }}">
+                            <i class="bi bi-building"></i>
+                            <p>
+                                Contract
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link">
+                            <i class="bi bi-box-arrow-left"></i>
+                            <p>Logout</p>
+
+                        </a>
+
                     </li>
                 </ul>
             </nav>

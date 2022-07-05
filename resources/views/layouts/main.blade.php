@@ -139,7 +139,7 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
     </script>
 
-    <!-- DataTables  & Plugins -->
+    <!-- DataTables & Plugins -->
     <script src="/assets/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="/assets/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="/assets/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -163,7 +163,7 @@
                 "autoWidth": false,
                 "buttons": [
                     "copy",
-                    // "csv", 
+                    // "csv",
                     "excel",
                     "pdf",
                     "print",
@@ -181,7 +181,6 @@
             });
         });
     </script>
-
 </body>
 
 </html>

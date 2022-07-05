@@ -21,4 +21,9 @@ class Storage extends Model
             });
         });
     }
+
+    public function contract()
+    {
+        return $this->hasMany(contracts::class);
+    }
 }
