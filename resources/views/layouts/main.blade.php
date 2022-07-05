@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title }} | PT BGR LOGISTIK INDONESIA DIVRE PALEMBANGS</title>
+    <title>{{ $title }} | PT BGR LOGISTIK INDONESIA DIVRE PALEMBANG</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -33,6 +33,15 @@
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     {{-- Bootstrap Icon 1.8.3 --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/assets/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+    <!-- jQuery -->
+    <script src="/assets/adminlte/plugins/jquery/jquery.min.js"></script>
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -41,8 +50,8 @@
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
             {{-- UBAH LOGO PERUSAHAAN --}}
-            <img class="animation__shake" src="/assets/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60"
-                width="60">
+            <img class="animation__shake" src="/assets/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTELogo"
+                height="60" width="60">
         </div>
 
         {{-- Navbar --}}
@@ -129,8 +138,49 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
     </script>
-    {{-- Ubah Github --}}
-    {{-- Tambahan Coding --}}
+
+    <!-- DataTables & Plugins -->
+    <script src="/assets/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/assets/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="/assets/adminlte/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/assets/adminlte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="/assets/adminlte/plugins/jszip/jszip.min.js"></script>
+    <script src="/assets/adminlte/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="/assets/adminlte/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="/assets/adminlte/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="/assets/adminlte/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="/assets/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+    <!-- Page specific script -->
+    <script>
+        $(function() {
+            $("#tabel-print").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": [
+                    "copy",
+                    // "csv",
+                    "excel",
+                    "pdf",
+                    "print",
+                    // "colvis"
+                ]
+            }).buttons().container().appendTo('#tabel-print_wrapper .col-md-6:eq(0)');
+            $('#tabel-biasa').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -15,7 +15,7 @@
 
         <div class="card-header">
             <div class="d-flex justify-content-between">
-                <a href="/dashboard/storage/create" class="btn btn-success"><i class="bi bi-plus-square"></i> Tambah</a>
+                <a href="/dashboard/contract/create" class="btn btn-success"><i class="bi bi-plus-square"></i> Tambah</a>
                 {{-- {{ $storage->onEachSide(5)->links() }} --}}
             </div>
         </div>
@@ -25,23 +25,25 @@
                 <thead>
                     <tr align="CENTER">
                         <th>No</th>
-                        <th>NAMA GUDANG</th>
-                        <th>Tarif Harga (Meter/Bulan)</th>
+                        <th>Nama Gudang</th>
+                        <th>Nama</th>
+                        <th>Keterangan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($storage->count())
-                        @foreach ($storage as $item)
+                    @if ($contract->count())
+                        @foreach ($contract as $item)
                             <tr>
                                 <td align="CENTER"><b>{{ $storage->firstItem() - 1 + $loop->iteration }}</b></th>
+                                <td>{{ $item->storage->nama }}</td>
                                 <td>{{ $item->nama }}</td>
-                                <td align="RIGHT">@IDR($item->hargadasar)</td>
+                                <td>{{ $item->keterangan }}</td>
                                 <td>
                                     <div class="d-flex  justify-content-center">
-                                        <a href="/dashboard/storage/{{ $item->id }}/edit" class="btn btn-warning"><i
+                                        <a href="/dashboard/contract/{{ $item->id }}/edit" class="btn btn-warning"><i
                                                 class="bi bi-pencil-square"></i> Edit</a>
-                                        <form action="/dashboard/storage/{{ $item->id }}" method="post">
+                                        <form action="/dashboard/contract/{{ $item->id }}" method="post">
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
@@ -54,8 +56,8 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="4">
-                                <p class="text-center fs-4">Tidak ada daftar gudang</p>
+                            <td colspan="5">
+                                <p class="text-center fs-4">Tidak ada daftar kontrak</p>
                             </td>
                         </tr>
                     @endif

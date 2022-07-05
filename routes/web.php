@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StorageController;
+use App\Http\Controllers\ContractController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,7 @@ Route::get('/', function () {
 Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'index')->name('login')->middleware('guest');
     Route::post('/login', 'authenticate');
-    Route::post('/logout', 'logout');
+    Route::get('/logout', 'logout')->middleware(['auth']);
 });
 
 Route::get('/dashboard', function () {
@@ -36,3 +37,5 @@ Route::get('/dashboard', function () {
 })->middleware(['auth']);
 
 Route::resource('/dashboard/storage', StorageController::class)->middleware(['auth'])->except(['show']);
+
+Route::resource('/dashboard/contract', ContractController::class)->middleware(['auth'])->except(['show']);
