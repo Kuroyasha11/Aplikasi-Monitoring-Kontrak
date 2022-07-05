@@ -28,7 +28,7 @@ class StorageController extends Controller
      */
     public function create()
     {
-        return view('storage.create', [
+        return view('storage    .create', [
             'title' => 'Storage',
             'judul' => 'Buat Daftar Gudang Baru'
         ]);
