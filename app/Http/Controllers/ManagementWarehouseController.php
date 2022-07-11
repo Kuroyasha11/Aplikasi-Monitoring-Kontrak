@@ -109,6 +109,6 @@ class ManagementWarehouseController extends Controller
     {
         ManagementWarehouse::destroy($management_warehouse->id);
 
-        return redirect('/dashboard/management-warehouse')->with('berhasil', 'Berhasil menghapus data Warehouse');
+        return redirect('/dashboard/management-warehouse')->with('berhasil', 'Berhasil menghapus data Management Warehouse');
     }
 }

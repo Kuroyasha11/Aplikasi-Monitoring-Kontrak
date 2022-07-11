@@ -79,6 +79,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="/dashboard/handling"
+                            class="nav-link {{ Request::is('dashboard/handling*') ? 'active' : '' }}">
+                            <i class="bi bi-building"></i>
+                            <p>
+                                Handling
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="/dashboard/contract"
                             class="nav-link {{ Request::is('dashboard/contract*') ? 'active' : '' }}">
                             <i class="bi bi-building"></i>
