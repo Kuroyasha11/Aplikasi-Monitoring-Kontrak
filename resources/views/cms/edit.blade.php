@@ -38,6 +38,16 @@
                     </div>
                 @enderror
             </div>
+            <div class="form-group">
+                <label for="keterangan">Keterangan</label>
+                <textarea class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" id="keterangan"
+                    cols="30" rows="10" value="{{ old('keterangan', $request->keterangan) }}"></textarea>
+                @error('keterangan')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
             <div class="d-flex">
                 <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> Ubah</button>
                 <a href="/dashboard/collateral_management_services" class="btn btn-warning"><i class="bi bi-arrow-left"></i>

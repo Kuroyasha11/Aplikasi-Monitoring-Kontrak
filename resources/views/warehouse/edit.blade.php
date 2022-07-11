@@ -14,13 +14,13 @@
         @endif
 
 
-        <form action="/dashboard/storage/{{ $storage->id }}" method="post">
+        <form action="/dashboard/warehouse/{{ $request->id }}" method="post">
             @method('put')
             @csrf
             <div class="form-group">
-                <label for="nama">Nama Gedung</label>
+                <label for="nama">Nama</label>
                 <input type="text" id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror"
-                    value="{{ old('nama', $storage) }}" autofocus required>
+                    value="{{ old('nama', $request->nama) }}" autofocus required>
                 @error('name')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -28,11 +28,21 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="hargadasar">Tarif Harga (Meter/Bulan)</label>
+                <label for="hargadasar">Tarif Harga</label>
                 <input type="number" id="hargadasar" name="hargadasar"
                     class="form-control @error('hargadasar') is-invalid @enderror"
-                    value="{{ old('hargadasar', $storage) }}" required>
+                    value="{{ old('hargadasar', $request->hargadasar) }}" required>
                 @error('hargadasar')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="keterangan">Keterangan</label>
+                <textarea class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" id="keterangan"
+                    cols="30" rows="10" value="{{ old('keterangan', $request->keterangan) }}"></textarea>
+                @error('keterangan')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -40,7 +50,8 @@
             </div>
             <div class="d-flex">
                 <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> Ubah</button>
-                <a href="/dashboard/storage" class="btn btn-warning"><i class="bi bi-arrow-left"></i> Kembali</a>
+                <a href="/dashboard/warehouse" class="btn btn-warning"><i class="bi bi-arrow-left"></i>
+                    Kembali</a>
             </div>
         </form>
     </div>

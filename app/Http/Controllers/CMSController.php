@@ -30,7 +30,7 @@ class CMSController extends Controller
     {
         return view('cms.create', [
             'title' => 'Collateral Management Services',
-            'judul' => 'Buat Daftar Gudang Baru'
+            'judul' => 'Buat Daftar CMS Baru'
         ]);
     }
 
@@ -45,6 +45,7 @@ class CMSController extends Controller
         $validated = $request->validate([
             'nama' => 'required',
             'hargadasar' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|max:100'
         ]);
 
         CMS::create($validated);
@@ -90,6 +91,7 @@ class CMSController extends Controller
         $validated = $request->validate([
             'nama' => 'required',
             'hargadasar' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|max:100'
         ]);
 
         CMS::where('id', $collateral_management_service->id)->update($validated);

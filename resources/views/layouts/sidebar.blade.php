@@ -52,11 +52,11 @@
                     </li>
                     <hr>
                     <li class="nav-item">
-                        <a href="/dashboard/storage"
-                            class="nav-link {{ Request::is('dashboard/storage*') ? 'active' : '' }}">
+                        <a href="/dashboard/warehouse"
+                            class="nav-link {{ Request::is('dashboard/warehouse*') ? 'active' : '' }}">
                             <i class="bi bi-building"></i>
                             <p>
-                                Gedung
+                                Warehouse
                             </p>
                         </a>
                     </li>
