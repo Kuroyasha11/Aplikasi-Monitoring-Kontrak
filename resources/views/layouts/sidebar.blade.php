@@ -61,6 +61,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="/dashboard/management-warehouse"
+                            class="nav-link {{ Request::is('dashboard/management-warehouse*') ? 'active' : '' }}">
+                            <i class="bi bi-building"></i>
+                            <p>
+                                Management Warehouse
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="/dashboard/collateral-management-services"
                             class="nav-link {{ Request::is('dashboard/collateral-management-services*') ? 'active' : '' }}">
                             <i class="bi bi-building"></i>
