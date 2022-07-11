@@ -15,8 +15,7 @@
 
         <div class="card-header">
             <div class="d-flex justify-content-between">
-                <a href="/dashboard/collateral-management-services/create" class="btn btn-success"><i
-                        class="bi bi-plus-square"></i> Tambah</a>
+                <a href="{{ url() }}/create" class="btn btn-success"><i class="bi bi-plus-square"></i> Tambah</a>
                 {{-- {{ $request->onEachSide(5)->links() }} --}}
             </div>
         </div>
@@ -40,10 +39,9 @@
                                 <td align="RIGHT">@IDR($item->hargadasar)</td>
                                 <td>
                                     <div class="d-flex  justify-content-center">
-                                        <a href="/dashboard/collateral-management-services/{{ $item->id }}/edit"
-                                            class="btn btn-warning"><i class="bi bi-pencil-square"></i> Edit</a>
-                                        <form action="/dashboard/collateral-management-services/{{ $item->id }}"
-                                            method="post">
+                                        <a href="{{ url() }}/{{ $item->id }}/edit" class="btn btn-warning"><i
+                                                class="bi bi-pencil-square"></i> Edit</a>
+                                        <form action="{{ url() }}/{{ $item->id }}" method="post">
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-danger" onclick="return confirm('Are you sure?')">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CMSController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StorageController;
@@ -37,5 +38,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth']);
 
 Route::resource('/dashboard/storage', StorageController::class)->middleware(['auth'])->except(['show']);
+Route::resource('/dashboard/collateral-management-services', CMSController::class)->middleware(['auth'])->except(['show']);
 
 Route::resource('/dashboard/contract', ContractController::class)->middleware(['auth'])->except(['show']);

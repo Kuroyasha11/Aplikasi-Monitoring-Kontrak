@@ -61,6 +61,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="/dashboard/collateral-management-services"
+                            class="nav-link {{ Request::is('dashboard/collateral-management-services*') ? 'active' : '' }}">
+                            <i class="bi bi-building"></i>
+                            <p>
+                                Collateral Management Services (CMS)
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="/dashboard/contract"
                             class="nav-link {{ Request::is('dashboard/contract*') ? 'active' : '' }}">
                             <i class="bi bi-building"></i>
