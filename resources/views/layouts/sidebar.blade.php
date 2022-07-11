@@ -52,11 +52,38 @@
                     </li>
                     <hr>
                     <li class="nav-item">
-                        <a href="/dashboard/storage"
-                            class="nav-link {{ Request::is('dashboard/storage*') ? 'active' : '' }}">
+                        <a href="/dashboard/warehouse"
+                            class="nav-link {{ Request::is('dashboard/warehouse*') ? 'active' : '' }}">
                             <i class="bi bi-building"></i>
                             <p>
-                                Gedung
+                                Warehouse
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/dashboard/management-warehouse"
+                            class="nav-link {{ Request::is('dashboard/management-warehouse*') ? 'active' : '' }}">
+                            <i class="bi bi-person-workspace"></i>
+                            <p>
+                                Management Warehouse
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/dashboard/collateral-management-services"
+                            class="nav-link {{ Request::is('dashboard/collateral-management-services*') ? 'active' : '' }}">
+                            <i class="bi bi-gear"></i>
+                            <p>
+                                Collateral Management Services (CMS)
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/dashboard/handling"
+                            class="nav-link {{ Request::is('dashboard/handling*') ? 'active' : '' }}">
+                            <i class="bi bi-person-square"></i>
+                            <p>
+                                Handling
                             </p>
                         </a>
                     </li>

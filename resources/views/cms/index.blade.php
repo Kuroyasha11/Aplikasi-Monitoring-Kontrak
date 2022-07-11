@@ -15,8 +15,9 @@
 
         <div class="card-header">
             <div class="d-flex justify-content-between">
-                <a href="/dashboard/storage/create" class="btn btn-success"><i class="bi bi-plus-square"></i> Tambah</a>
-                {{-- {{ $storage->onEachSide(5)->links() }} --}}
+                <a href="/dashboard/collateral-management-services/create" class="btn btn-success"><i
+                        class="bi bi-plus-square"></i> Tambah</a>
+                {{-- {{ $request->onEachSide(5)->links() }} --}}
             </div>
         </div>
         <!-- /.card-header -->
@@ -25,23 +26,24 @@
                 <thead>
                     <tr align="CENTER">
                         <th>No</th>
-                        <th>NAMA GUDANG</th>
-                        <th>Tarif Harga (Meter/Bulan)</th>
+                        <th>NAMA</th>
+                        <th>Tarif Harga</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($storage->count())
-                        @foreach ($storage as $item)
+                    @if ($request->count())
+                        @foreach ($request as $item)
                             <tr>
-                                <td align="CENTER"><b>{{ $storage->firstItem() - 1 + $loop->iteration }}</b></th>
+                                <td align="CENTER"><b>{{ $request->firstItem() - 1 + $loop->iteration }}</b></th>
                                 <td>{{ $item->nama }}</td>
                                 <td align="RIGHT">@IDR($item->hargadasar)</td>
                                 <td>
                                     <div class="d-flex  justify-content-center">
-                                        <a href="/dashboard/storage/{{ $item->id }}/edit" class="btn btn-warning"><i
-                                                class="bi bi-pencil-square"></i> Edit</a>
-                                        <form action="/dashboard/storage/{{ $item->id }}" method="post">
+                                        <a href="/dashboard/collateral-management-services/{{ $item->id }}/edit"
+                                            class="btn btn-warning"><i class="bi bi-pencil-square"></i> Edit</a>
+                                        <form action="/dashboard/collateral-management-services/{{ $item->id }}"
+                                            method="post">
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
@@ -55,7 +57,7 @@
                     @else
                         <tr>
                             <td colspan="4">
-                                <p class="text-center fs-4">Tidak ada daftar gudang</p>
+                                <p class="text-center fs-4">Tidak ada daftar {{ $title }}</p>
                             </td>
                         </tr>
                     @endif
