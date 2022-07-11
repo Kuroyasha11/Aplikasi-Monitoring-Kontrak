@@ -7,8 +7,7 @@
 /
     @endauth" class="brand-link  text-decoration-none">
         {{-- UBAH LOGO PERUSAHAAN --}}
-        <img src="/assets/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="/assets/image/logo.jpeg" alt="Logo BGR" style="opacity: .8" width="85 px">
         <span class="brand-text font-weight-light">PT BGR LOGISTIK</span>
     </a>
 
@@ -63,9 +62,36 @@
                     <li class="nav-item">
                         <a href="/dashboard/contract"
                             class="nav-link {{ Request::is('dashboard/contract*') ? 'active' : '' }}">
-                            <i class="bi bi-building"></i>
+                            <i class="bi bi-person-rolodex"></i>
                             <p>
                                 Contract
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/dashboard/office"
+                            class="nav-link {{ Request::is('dashboard/office*') ? 'active' : '' }}">
+                            <i class="bi bi-briefcase"></i>
+                            <p>
+                                Kantor
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/dashboard/depo-container"
+                            class="nav-link {{ Request::is('dashboard/depo-container*') ? 'active' : '' }}">
+                            <i class="bi bi-truck"></i>
+                            <p>
+                                Depo Container
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/dashboard/distribution"
+                            class="nav-link {{ Request::is('dashboard/distribution*') ? 'active' : '' }}">
+                            <i class="bi bi-minecart"></i>
+                            <p>
+                                Distribusi
                             </p>
                         </a>
                     </li>
