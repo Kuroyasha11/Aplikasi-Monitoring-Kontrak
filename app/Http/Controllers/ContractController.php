@@ -75,7 +75,7 @@ class ContractController extends Controller
         return view('contracts.edit', [
             'title' => 'Kontrak',
             'judul' => 'Ubah Data Kontrak',
-            'storage' => $contract
+            'contract' => $contract
         ]);
     }
 
@@ -109,6 +109,6 @@ class ContractController extends Controller
     {
         Contract::destroy($contract->id);
 
-        return redirect('')->with('berhasil', 'Berhasil menghapus data kontrak');
+        return redirect('/dashboard/contract')->with('berhasil', 'Berhasil menghapus data kontrak');
     }
 }

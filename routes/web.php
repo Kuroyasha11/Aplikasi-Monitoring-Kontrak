@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\OfficeController;
+use App\Http\Controllers\DepoController;
+use App\Http\Controllers\DistributionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +42,9 @@ Route::get('/dashboard', function () {
 Route::resource('/dashboard/storage', StorageController::class)->middleware(['auth'])->except(['show']);
 
 Route::resource('/dashboard/contract', ContractController::class)->middleware(['auth'])->except(['show']);
+
+Route::resource('/dashboard/office', OfficeController::class)->middleware(['auth'])->except(['show']);
+
+Route::resource('/dashboard/depo-container', DepoController::class)->middleware(['auth'])->except(['show']);
+
+Route::resource('/dashboard/distribution', DistributionController::class)->middleware(['auth'])->except(['show']);
