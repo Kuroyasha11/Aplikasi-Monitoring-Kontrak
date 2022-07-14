@@ -50,8 +50,7 @@
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
             {{-- UBAH LOGO PERUSAHAAN --}}
-            <img class="animation__shake" src="/assets/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTELogo"
-                height="60" width="60">
+            <img class="animation__shake" src="/assets/image/logo.jpeg" alt="BGR LOGO" height="60" width="60">
         </div>
 
         {{-- Navbar --}}
