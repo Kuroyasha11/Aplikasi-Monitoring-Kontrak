@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Storage;
+use App\Models\Handling;
 use Illuminate\Http\Request;
 
-class StorageController extends Controller
+class HandlingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class StorageController extends Controller
      */
     public function index()
     {
-        return view('storage.index', [
-            'title' => 'Storage',
-            'judul' => 'Daftar Gudang',
-            'storage' => Storage::latest()->paginate(10)
+        return view('handling.index', [
+            'title' => 'Handling',
+            'judul' => 'Daftar Handling',
+            'request' => Handling::latest()->paginate(10)
         ]);
     }
 
@@ -28,9 +28,9 @@ class StorageController extends Controller
      */
     public function create()
     {
-        return view('storage.create', [
-            'title' => 'Storage',
-            'judul' => 'Buat Daftar Gudang Baru'
+        return view('handling.create', [
+            'title' => 'Handling',
+            'judul' => 'Buat Daftar Handling Baru'
         ]);
     }
 
@@ -45,20 +45,21 @@ class StorageController extends Controller
         $validated = $request->validate([
             'nama' => 'required',
             'hargadasar' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|max:100'
         ]);
 
-        Storage::create($validated);
+        Handling::create($validated);
 
-        return redirect('/dashboard/storage')->with('berhasil', 'Berhasil menambahkan gedung baru');
+        return redirect('/dashboard/handling')->with('berhasil', 'Berhasil menambahkan Handling baru');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Storage  $storage
+     * @param  \App\Models\Handling  $handling
      * @return \Illuminate\Http\Response
      */
-    public function show(Storage $storage)
+    public function show(Handling $handling)
     {
         //
     }
@@ -66,15 +67,15 @@ class StorageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Storage  $storage
+     * @param  \App\Models\Handling  $handling
      * @return \Illuminate\Http\Response
      */
-    public function edit(Storage $storage)
+    public function edit(Handling $handling)
     {
-        return view('storage.edit', [
-            'title' => 'Storage',
-            'judul' => 'Ubah Data Gudang',
-            'storage' => $storage
+        return view('handling.edit', [
+            'title' => 'Handling',
+            'judul' => 'Ubah Data Warehouse',
+            'request' => $handling
         ]);
     }
 
@@ -82,31 +83,32 @@ class StorageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Storage  $storage
+     * @param  \App\Models\Handling  $handling
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Storage $storage)
+    public function update(Request $request, Handling $handling)
     {
         $validated = $request->validate([
             'nama' => 'required',
             'hargadasar' => 'required|numeric|min:0',
+            'keterangan' => 'nullable|max:100'
         ]);
 
-        Storage::where('id', $storage->id)->update($validated);
+        Handling::where('id', $handling->id)->update($validated);
 
-        return redirect('/dashboard/storage')->with('berhasil', 'Berhasil mengubah data gedung');
+        return redirect('/dashboard/handling')->with('berhasil', 'Berhasil mengubah data Handling');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Storage  $storage
+     * @param  \App\Models\Handling  $handling
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Storage $storage)
+    public function destroy(Handling $handling)
     {
-        Storage::destroy($storage->id);
+        Handling::destroy($handling->id);
 
-        return redirect('/dashboard/storage')->with('berhasil', 'Berhasil menghapus data gedung');
+        return redirect('/dashboard/handling')->with('berhasil', 'Berhasil menghapus data Handling');
     }
 }

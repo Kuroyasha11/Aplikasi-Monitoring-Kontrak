@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CMSController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StorageController;
@@ -7,6 +8,9 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\DepoController;
 use App\Http\Controllers\DistributionController;
+use App\Http\Controllers\HandlingController;
+use App\Http\Controllers\ManagementWarehouseController;
+use App\Http\Controllers\WarehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,12 +43,12 @@ Route::get('/dashboard', function () {
     ]);
 })->middleware(['auth']);
 
-Route::resource('/dashboard/storage', StorageController::class)->middleware(['auth'])->except(['show']);
+Route::resource('/dashboard/warehouse', WarehouseController::class)->middleware(['auth'])->except(['show']);
+Route::resource('/dashboard/management-warehouse', ManagementWarehouseController::class)->middleware(['auth'])->except(['show']);
+Route::resource('/dashboard/collateral-management-services', CMSController::class)->middleware(['auth'])->except(['show']);
+Route::resource('/dashboard/handling', HandlingController::class)->middleware(['auth'])->except(['show']);
 
 Route::resource('/dashboard/contract', ContractController::class)->middleware(['auth'])->except(['show']);
-
 Route::resource('/dashboard/office', OfficeController::class)->middleware(['auth'])->except(['show']);
-
 Route::resource('/dashboard/depo-container', DepoController::class)->middleware(['auth'])->except(['show']);
-
 Route::resource('/dashboard/distribution', DistributionController::class)->middleware(['auth'])->except(['show']);
