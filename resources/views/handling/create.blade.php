@@ -26,11 +26,16 @@
                     </div>
                 @enderror
             </div>
+            <select name="hargadasar" class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="10000">@IDR(10000)</option>
+                <option value="20000">@IDR(20000)</option>
+                <option value="0">Lainnya</option>
+            </select>
             <div class="form-group">
-                <label for="hargadasar">Tarif Harga</label>
-                <input type="number" id="hargadasar" name="hargadasar"
-                    class="form-control @error('hargadasar') is-invalid @enderror" value="{{ old('hargadasar') }}"
-                    required>
+                <label for="lainnya">Tarif Harga</label>
+                <input type="number" id="lainnya" name="lainnya"
+                    class="form-control @error('lainnya') is-invalid @enderror" value="{{ old('lainnya') }}" required>
                 @error('hargadasar')
                     <div class="invalid-feedback">
                         {{ $message }}
