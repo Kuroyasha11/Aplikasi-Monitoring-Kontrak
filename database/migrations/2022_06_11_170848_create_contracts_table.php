@@ -16,8 +16,16 @@ return new class extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Storage::class);
-            $table->string('nama');
+            $table->string('jenislayanan');
+            $table->string('namagudang');
+            $table->string('manajemen');
+            $table->string('namapelanggan');
+            $table->integer('harga');
+            $table->string('luassewa');
+            $table->string('peruntukan');
+            $table->date('tglmulai');
+            $table->date('tglakhir')->nullable();
+            $table->integer('sisasewa')->nullable();
             $table->string('keterangan')->nullable();
             $table->timestamps();
         });

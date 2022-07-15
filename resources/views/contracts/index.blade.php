@@ -25,8 +25,11 @@
                 <thead>
                     <tr align="CENTER">
                         <th>No</th>
+                        <th>Jenis Layanan</th>
                         <th>Nama Gudang</th>
-                        <th>Nama</th>
+                        <th>Sisa Sewa</th>
+                        <th>Tanggal Mulai Sewa</th>
+                        <th>Tanggal Akhir Sewa</th>
                         <th>Keterangan</th>
                         <th>Aksi</th>
                     </tr>
@@ -35,18 +38,21 @@
                     @if ($contract->count())
                         @foreach ($contract as $item)
                             <tr>
-                                <td align="CENTER"><b>{{ $storage->firstItem() - 1 + $loop->iteration }}</b></th>
-                                <td>{{ $item->storage->nama }}</td>
-                                <td>{{ $item->nama }}</td>
+                                <td align="CENTER"><b>{{ $contract->firstItem() - 1 + $loop->iteration }}</b></th>
+                                <td>{{ $item->jenislayanan }}</td>
+                                <td>{{ $item->namagudang }}</td>
+                                <td>{{ $item->sisasewa }}</td>
+                                <td>{{ $item->tglmulai }}</td>
+                                <td>{{ $item->tglakhir }}</td>
                                 <td>{{ $item->keterangan }}</td>
                                 <td>
-                                    <div class="d-flex  justify-content-center">
-                                        <a href="/dashboard/contract/{{ $item->id }}/edit" class="btn btn-warning"><i
-                                                class="bi bi-pencil-square"></i> Edit</a>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="/dashboard/contract/{{ $item->id }}/edit"
+                                            class="btn btn-warning m-1"><i class="bi bi-pencil-square"></i> Edit</a>
                                         <form action="/dashboard/contract/{{ $item->id }}" method="post">
                                             @method('delete')
                                             @csrf
-                                            <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                            <button class="btn btn-danger m-1" onclick="return confirm('Are you sure?')">
                                                 <i class="bi bi-x-circle"></i> Delete
                                             </button>
                                         </form>
@@ -56,7 +62,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="5">
+                            <td colspan="8">
                                 <p class="text-center fs-4">Tidak ada daftar kontrak</p>
                             </td>
                         </tr>
