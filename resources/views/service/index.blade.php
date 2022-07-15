@@ -28,7 +28,7 @@
                 <thead>
                     <tr align="CENTER">
                         <th>No</th>
-                        <th>NAMA</th>
+                        <th>Nama</th>
                         <th>Keterangan</th>
                         <th>Aksi</th>
                     </tr>
@@ -39,7 +39,7 @@
                             <tr>
                                 <td align="CENTER"><b>{{ $request->firstItem() - 1 + $loop->iteration }}</b></th>
                                 <td>{{ $item->nama }}</td>
-                                <td>{{ $item->Keterangan }}</td>
+                                <td>{{ $item->keterangan }}</td>
                                 <td>
                                     <div class="d-flex  justify-content-center">
                                         <!-- Button trigger modal edit-->
@@ -47,7 +47,7 @@
                                             data-bs-target="#edit{{ $item->id }}">
                                             <i class="bi bi-pencil-square"></i> Edit
                                         </button>
-                                        <form action="/dashboard/warehouse/{{ $item->id }}" method="post">
+                                        <form action="/dashboard/service/{{ $item->id }}" method="post">
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
@@ -70,7 +70,7 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="/dashboard/warehouse/{{ $item->id }}" method="post">
+                                            <form action="/dashboard/service/{{ $item->id }}" method="post">
                                                 @method('put')
                                                 @csrf
                                                 <div class="form-group">
@@ -128,7 +128,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/dashboard/warehouse" method="post">
+                    <form action="/dashboard/service" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="nama">Nama</label>
