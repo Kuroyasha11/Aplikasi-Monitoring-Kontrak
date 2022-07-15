@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Warehouse;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
-class WarehouseController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        return view('warehouse.index', [
-            'title' => 'Warehouse',
-            'judul' => 'Daftar Warehouse',
-            'request' => Warehouse::latest()->paginate(10)
+        return view('service.index', [
+            'title' => 'Service',
+            'judul' => 'Daftar Service',
+            'request' => Service::latest()->paginate(10)
         ]);
     }
 
@@ -39,27 +39,23 @@ class WarehouseController extends Controller
      */
     public function store(Request $request)
     {
-        $kapital = ucfirst($request->nama);
-
         $validated = $request->validate([
-            'nama' => 'required|unique:warehouses,nama',
+            'nama' => 'required',
             'keterangan' => 'nullable|max:100'
         ]);
 
-        $validated['nama'] = $kapital;
+        Service::create($validated);
 
-        Warehouse::create($validated);
-
-        return redirect('/dashboard/warehouse')->with('berhasil', 'Berhasil menambahkan Warehouse baru');
+        return redirect('/dashboard/service')->with('berhasil', 'Berhasil menambahkan Service baru');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Warehouse  $warehouse
+     * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function show(Warehouse $warehouse)
+    public function show(Service $service)
     {
         //
     }
@@ -67,10 +63,10 @@ class WarehouseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Warehouse  $warehouse
+     * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function edit(Warehouse $warehouse)
+    public function edit(Service $service)
     {
         //
     }
@@ -79,31 +75,31 @@ class WarehouseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Warehouse  $warehouse
+     * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Warehouse $warehouse)
+    public function update(Request $request, Service $service)
     {
         $validated = $request->validate([
             'nama' => 'required',
             'keterangan' => 'nullable|max:100'
         ]);
 
-        Warehouse::where('id', $warehouse->id)->update($validated);
+        Service::where('id', $service->id)->update($validated);
 
-        return redirect('/dashboard/warehouse')->with('berhasil', 'Berhasil mengubah data Warehouse');
+        return redirect('/dashboard/service')->with('berhasil', 'Berhasil mengubah data Service');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Warehouse  $warehouse
+     * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Warehouse $warehouse)
+    public function destroy(Service $service)
     {
-        Warehouse::destroy($warehouse->id);
+        Service::destroy($service->id);
 
-        return redirect('/dashboard/warehouse')->with('berhasil', 'Berhasil menghapus data Warehouse');
+        return redirect('/dashboard/service')->with('berhasil', 'Berhasil menghapus data Service');
     }
 }

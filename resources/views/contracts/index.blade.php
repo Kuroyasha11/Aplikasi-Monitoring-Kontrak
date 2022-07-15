@@ -25,11 +25,11 @@
                 <thead>
                     <tr align="CENTER">
                         <th>No</th>
-                        <th>Jenis Layanan</th>
-                        <th>Nama Gudang</th>
+                        <th>Layanan</th>
+                        <th>Nama Pelanggan</th>
                         <th>Sisa Sewa</th>
-                        <th>Tanggal Mulai Sewa</th>
-                        <th>Tanggal Akhir Sewa</th>
+                        <th>Mulai Sewa</th>
+                        <th>Akhir Sewa</th>
                         <th>Keterangan</th>
                         <th>Aksi</th>
                     </tr>
@@ -39,11 +39,11 @@
                         @foreach ($contract as $item)
                             <tr>
                                 <td align="CENTER"><b>{{ $contract->firstItem() - 1 + $loop->iteration }}</b></th>
-                                <td>{{ $item->jenislayanan }}</td>
-                                <td>{{ $item->namagudang }}</td>
-                                <td>{{ $item->sisasewa }}</td>
+                                <td>{{ $item->service->nama }}</td>
+                                <td>{{ $item->namapelanggan }}</td>
                                 <td>{{ $item->tglmulai }}</td>
-                                <td>{{ $item->tglakhir }}</td>
+                                <td>{{ $item->harga }}</td>
+                                <td>{{ $item->harga }}</td>
                                 <td>{{ $item->keterangan }}</td>
                                 <td>
                                     <div class="d-flex justify-content-center">

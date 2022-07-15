@@ -5,9 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Distribution extends Model
+class Service extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function contract()
+    {
+        return $this->hasMany(Contract::class);
+    }
 }
