@@ -42,15 +42,24 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
-            'storage_id' => 'required',
-            'nama' => 'required',
-            'keterangan' => 'required',
+        $validated = $request->validate([
+            'jenislayanan' => 'required',
+            'namagudang' => 'required',
+            'manajemen' => 'required',
+            'namapelanggan' => 'required',
+            'harga' => 'required',
+            'luassewa' => 'required',
+            'peruntukan' => 'required',
+            'tglmulai' => 'required',
+            'tglakhir' => 'required',
+            'keterangan' => 'nullable',
+            'tglakhir' => 'nullable',
+            'sisasewa' => 'nullable '
         ]);
 
-        Contract::create($validate);
+        Contract::create($validated);
 
-        return redirect()->with('Berhasil', 'Berhasil menambahkan kontrak baru');
+        return redirect('/dashboard/contract')->with('Berhasil', 'Berhasil menambahkan kontrak baru');
     }
 
     /**
