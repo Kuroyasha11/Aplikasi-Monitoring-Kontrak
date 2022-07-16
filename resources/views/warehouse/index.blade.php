@@ -78,7 +78,7 @@
                                                     <input type="text" id="nama" name="nama"
                                                         class="form-control @error('nama') is-invalid @enderror"
                                                         value="{{ old('nama', $item->nama) }}" autofocus required>
-                                                    @error('name')
+                                                    @error('nama')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
@@ -135,7 +135,7 @@
                             <input type="text" id="nama" name="nama"
                                 class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}"
                                 autofocus required>
-                            @error('name')
+                            @error('nama')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

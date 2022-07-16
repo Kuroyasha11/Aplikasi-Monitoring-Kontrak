@@ -39,10 +39,14 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+        $kapital = ucfirst($request->nama);
+
         $validated = $request->validate([
-            'nama' => 'required',
+            'nama' => 'required|unique:services,nama',
             'keterangan' => 'nullable|max:100'
         ]);
+
+        $validated['nama'] = $kapital;
 
         Service::create($validated);
 
