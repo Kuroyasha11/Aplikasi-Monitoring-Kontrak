@@ -59,20 +59,23 @@ class ContractController extends Controller
             'keterangan' => 'nullable'
         ];
 
-        $rules2 = [
-            'nama' => 'nullable|min:3'
-        ];
-
         // validasi kontrak
         $validatedData1 = $request->validate($rules1);
-        // validasi gudang
-        $validatedData2 = $request->validate($rules2);
 
-        Warehouse::create($validatedData2);
+        if ($request->nama) {
+            $rules2 = [
+                'nama' => 'nullable|min:3|unique:warehouses,nama'
+            ];
 
-        $cekgudang = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
+            // validasi gudang
+            $validatedData2 = $request->validate($rules2);
 
-        $validatedData1['warehouse_id'] = $cekgudang['id'];
+            Warehouse::create($validatedData2);
+
+            $cekgudang = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
+
+            $validatedData1['warehouse_id'] = $cekgudang['id'];
+        }
 
         Contract::create($validatedData1);
 
