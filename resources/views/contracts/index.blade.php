@@ -27,7 +27,6 @@
                         <th>No</th>
                         <th>Layanan</th>
                         <th>Nama Pelanggan</th>
-                        <th>Sisa Sewa</th>
                         <th>Mulai Sewa</th>
                         <th>Akhir Sewa</th>
                         <th>Keterangan</th>
