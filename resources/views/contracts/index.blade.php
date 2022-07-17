@@ -42,7 +42,6 @@
                                 <td>{{ $item->namapelanggan }}</td>
                                 <td>{{ $item->tglmulai }}</td>
                                 <td>{{ $item->harga }}</td>
-                                <td>{{ $item->harga }}</td>
                                 <td>{{ $item->keterangan }}</td>
                                 <td>
                                     <div class="d-flex justify-content-center">

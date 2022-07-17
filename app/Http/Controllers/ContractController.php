@@ -101,10 +101,13 @@ class ContractController extends Controller
      */
     public function edit(Contract $contract)
     {
+        // MASIH ERROR, 
         return view('contracts.edit', [
             'title' => 'Kontrak',
             'judul' => 'Ubah Data Kontrak',
-            'contract' => $contract
+            'request' => $contract,
+            'layanan' => Service::all(),
+            'gudang' => Warehouse::latest()->get(),
         ]);
     }
 
@@ -117,13 +120,38 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
-        $validated = $request->validate([
-            'storage_id' => 'required',
-            'nama' => 'required',
-            'keterangan' => 'required',
-        ]);
+        $rules1 = [
+            'service_id' => 'required|min:1|numeric',
+            'manajemen' => 'required',
+            'namapelanggan' => 'required|min:3',
+            'warehouse_id' => ['nullable'],
+            'namamitra' => ['nullable', 'min:3'],
+            'harga' => 'required|numeric',
+            'luassewa' => ['required'],
+            'peruntukan' => 'nullable',
+            'tglmulai' => 'required',
+            'keterangan' => 'nullable'
+        ];
 
-        Contract::where('id', $contract->id)->update($validated);
+        // validasi kontrak
+        $validatedData1 = $request->validate($rules1);
+
+        if ($request->nama) {
+            $rules2 = [
+                'nama' => 'nullable|min:3|unique:warehouses,nama'
+            ];
+
+            // validasi gudang
+            $validatedData2 = $request->validate($rules2);
+
+            Warehouse::create($validatedData2);
+
+            $cekgudang = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
+
+            $validatedData1['warehouse_id'] = $cekgudang['id'];
+        }
+
+        Contract::where('id', $contract->id)->update($validatedData1);
 
         return redirect('')->with('berhasil', 'Berhasil mengubah data kontrak');
     }
