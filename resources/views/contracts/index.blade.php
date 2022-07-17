@@ -27,7 +27,6 @@
                         <th>No</th>
                         <th>Layanan</th>
                         <th>Nama Pelanggan</th>
-                        <th>Sisa Sewa</th>
                         <th>Mulai Sewa</th>
                         <th>Akhir Sewa</th>
                         <th>Keterangan</th>
@@ -42,7 +41,6 @@
                                 <td>{{ $item->service->nama }}</td>
                                 <td>{{ $item->namapelanggan }}</td>
                                 <td>{{ $item->tglmulai }}</td>
-                                <td>{{ $item->harga }}</td>
                                 <td>{{ $item->harga }}</td>
                                 <td>{{ $item->keterangan }}</td>
                                 <td>

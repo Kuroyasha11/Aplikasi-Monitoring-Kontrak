@@ -20,19 +20,25 @@
                 <select name="service_id" id="service_id" class="form-select" required>
                     <option selected>Pilih Salah Satu</option>
                     @foreach ($layanan as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @if (old('service_id') == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
             <div class="d-flex mb-3">
                 <div class="form-check mx-2">
-                    <input class="form-check-input" value="0" type="radio" name="manajemen" id="manajemen" checked>
+                    <input class="form-check-input" value="0" type="radio" name="manajemen" id="manajemen"
+                        @checked(old('manajemen') == 0)>
                     <label class="form-check-label" for="manajemen">
                         Include Manajemen BGR
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" value="1" type="radio" name="manajemen" id="manajemen">
+                    <input class="form-check-input" value="1" type="radio" name="manajemen" id="manajemen"
+                        @checked(old('manajemen') == 1)>
                     <label class="form-check-label" for="manajemen">
                         Tidak Include Manajemen BGR
                     </label>
@@ -53,7 +59,11 @@
                 <select name="warehouse_id" id="pilihan" class="form-select">
                     <option selected>Pilih Salah Satu</option>
                     @foreach ($gudang as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @if (old('warehouse_id') == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endif
                     @endforeach
                     <option>Lainnya</option>
                 </select>
@@ -134,41 +144,5 @@
         </form>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('#pilihan').hide();
-            $('#teks').hide();
-            $('#lainnya').hide();
-        });
-
-        $('#service_id').change(function(e) {
-            e.preventDefault();
-            let data = $('#service_id').find(':selected').text()
-
-            if (data == 'Gudang') {
-                $('#pilihan').val('');
-                $('#pilihan').show();
-                $('#teks').val('');
-                $('#teks').hide();
-            } else {
-                $('#pilihan').val('');
-                $('#pilihan').hide();
-                $('#teks').val('');
-                $('#teks').show();
-            }
-        });
-
-        $('#pilihan').change(function(e) {
-            e.preventDefault();
-            let data = $('#pilihan').find(':selected').text()
-
-            if (data == 'Lainnya') {
-                $('#lainnya').val('');
-                $('#lainnya').show();
-            } else {
-                $('#lainnya').val('');
-                $('#lainnya').hide();
-            }
-        });
-    </script>
+    <script src="/javascript/contract.js"></script>
 @endsection
