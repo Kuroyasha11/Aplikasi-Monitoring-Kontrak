@@ -63,12 +63,15 @@ class ContractController extends Controller
         $validatedData1 = $request->validate($rules1);
 
         if ($request->nama) {
+            $kapital = ucfirst($request->nama);
             $rules2 = [
                 'nama' => 'nullable|min:3|unique:warehouses,nama'
             ];
 
             // validasi gudang
             $validatedData2 = $request->validate($rules2);
+
+            $validatedData2['nama'] = $kapital;
 
             Warehouse::create($validatedData2);
 
@@ -101,7 +104,6 @@ class ContractController extends Controller
      */
     public function edit(Contract $contract)
     {
-        // MASIH ERROR, 
         return view('contracts.edit', [
             'title' => 'Kontrak',
             'judul' => 'Ubah Data Kontrak',
@@ -137,12 +139,15 @@ class ContractController extends Controller
         $validatedData1 = $request->validate($rules1);
 
         if ($request->nama) {
+            $kapital = ucfirst($request->nama);
             $rules2 = [
                 'nama' => 'nullable|min:3|unique:warehouses,nama'
             ];
 
             // validasi gudang
             $validatedData2 = $request->validate($rules2);
+
+            $validatedData2['nama'] = $kapital;
 
             Warehouse::create($validatedData2);
 
