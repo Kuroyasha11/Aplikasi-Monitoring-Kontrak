@@ -21,4 +21,9 @@ class Warehouse extends Model
             });
         });
     }
+
+    public function contract()
+    {
+        return $this->hasMany(Contract::class);
+    }
 }
