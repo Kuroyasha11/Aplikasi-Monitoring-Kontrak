@@ -56,6 +56,7 @@ class ContractController extends Controller
             'luassewa' => ['required'],
             'peruntukan' => 'nullable',
             'tglmulai' => 'required',
+            'tglakhir' => 'required',
             'keterangan' => 'nullable'
         ];
 
@@ -132,6 +133,7 @@ class ContractController extends Controller
             'luassewa' => ['required'],
             'peruntukan' => 'nullable',
             'tglmulai' => 'required',
+            'tglakhir' => 'required',
             'keterangan' => 'nullable'
         ];
 
@@ -158,7 +160,7 @@ class ContractController extends Controller
 
         Contract::where('id', $contract->id)->update($validatedData1);
 
-        return redirect('')->with('berhasil', 'Berhasil mengubah data kontrak');
+        return redirect('/dashboard/contract')->with('berhasil', 'Berhasil mengubah data kontrak');
     }
 
     /**
