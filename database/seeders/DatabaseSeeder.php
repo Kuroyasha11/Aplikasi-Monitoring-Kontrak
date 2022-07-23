@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => 'admin',
-            'slug' => 'admin',
+            'is_admin' => true,
             'username' => 'admin01',
             'email' => 'admin01@gmail.com',
             'password' => bcrypt('admin01')
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => 'Kuroyasha',
-            'slug' => 'kuroyasha',
+            'is_admin' => true,
             'username' => 'Kuroyasha',
             'email' => 'Rickyandrean41@gmail.com',
             'password' => bcrypt('Ricky4424')
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => 'byy',
-            'slug' => 'byy',
+            'is_admin' => true,
             'username' => 'byy',
             'email' => 'byy@gmail.com',
             'password' => bcrypt('admin123')

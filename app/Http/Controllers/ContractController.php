@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contract;
 use App\Models\Service;
+use App\Models\User;
 use App\Models\Warehouse;
 use Carbon\Carbon;
 use DateTime;
@@ -58,7 +59,6 @@ class ContractController extends Controller
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
-            'namapelanggan' => 'required|min:3',
             'warehouse_id' => ['nullable'],
             'namamitra' => ['nullable', 'min:3'],
             'harga' => 'required|numeric',
@@ -73,6 +73,25 @@ class ContractController extends Controller
         $validatedData1 = $request->validate($rules1);
         $validatedData1['tglsblm'] = $date_minus;
 
+        // USER
+        if ($request->name) {
+            $rules3 = [
+                'name' => 'required|min:3',
+                'email' => 'required|email:dns|unique:users',
+            ];
+
+            $validatedData3 = $request->validate($rules3);
+            $validatedData3['username'] = $request->email;
+            $validatedData3['password'] = bcrypt('12345678');
+
+            User::create($validatedData3);
+
+            $cekuser = User::all()->where('email', $validatedData3['email'])->first();
+
+            $validatedData1['user_id'] = $cekuser['id'];
+        }
+
+        // GUDANG
         if ($request->nama) {
             $kapital = ucfirst($request->nama);
             $rules2 = [
@@ -90,6 +109,7 @@ class ContractController extends Controller
 
             $validatedData1['warehouse_id'] = $cekgudang['id'];
         }
+
 
         Contract::create($validatedData1);
 
@@ -136,7 +156,6 @@ class ContractController extends Controller
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
-            'namapelanggan' => 'required|min:3',
             'warehouse_id' => ['nullable'],
             'namamitra' => ['nullable', 'min:3'],
             'harga' => 'required|numeric',

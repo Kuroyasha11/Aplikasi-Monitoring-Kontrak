@@ -40,7 +40,7 @@
                             <tr>
                                 <td align="CENTER"><b>{{ $contract->firstItem() - 1 + $loop->iteration }}</b></th>
                                 <td>{{ $item->service->nama }}</td>
-                                <td>{{ $item->namapelanggan }}</td>
+                                <td>{{ $item->author->name }}</td>
                                 <td>
                                     @if ($item->warehouse_id && !$item->namamitra)
                                         {{ $item->warehouse->nama }}

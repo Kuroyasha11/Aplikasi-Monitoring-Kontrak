@@ -44,10 +44,20 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="namapelanggan" class="form-label">Nama Pelanggan</label>
-                <input type="text" name="namapelanggan" class="form-control @error('namapelanggan') is-invalid @enderror"
-                    id="namapelanggan" placeholder="Nama Pelanggan" value="{{ old('namapelanggan') }}" required>
-                @error('namapelanggan')
+                <label for="name" class="form-label">Nama Pelanggan</label>
+                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
+                    placeholder="Nama Pelanggan" value="{{ old('name') }}" required>
+                @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Pelanggan</label>
+                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                    id="email" placeholder="Email Pelanggan" value="{{ old('email') }}" required>
+                @error('email')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
@@ -87,7 +97,7 @@
             <div class="mb-3">
                 <label for="harga" class="form-label">Tarif Harga Sewa (Rp/M<sup>2</sup>)</label>
                 <input type="number" name="harga" class="form-control @error('harga') is-invalid @enderror"
-                    id="harga" value="{{ old('harga') }}" required>
+                    id="harga" value="{{ old('harga') }}" placeholder="Tarif Harga Sewa" required>
                 @error('harga')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -97,7 +107,7 @@
             <div class="mb-3">
                 <label for="luassewa" class="form-label">Luas Sewa / Lingkup Pekerjaan (M<sup>2</sup>) </label>
                 <input type="text" name="luassewa" class="form-control @error('luassewa') is-invalid @enderror"
-                    id="luassewa" value="{{ old('luassewa') }}" required>
+                    id="luassewa" value="{{ old('luassewa') }}" placeholder="Luas Sewa / Lingkup Pekerjaan" required>
                 @error('luassewa')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -107,7 +117,7 @@
             <div class="mb-3">
                 <label for="peruntukan" class="form-label">Peruntukan Gudang</label>
                 <input type="text" name="peruntukan" class="form-control @error('peruntukan') is-invalid @enderror"
-                    id="peruntukan" value="{{ old('peruntukan') }}">
+                    id="peruntukan" placeholder="Peruntukan Gudang" value="{{ old('peruntukan') }}">
                 @error('peruntukan')
                     <div class="invalid-feedback">
                         {{ $message }}

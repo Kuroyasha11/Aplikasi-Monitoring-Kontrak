@@ -37,6 +37,6 @@ Route::get('/dashboard', function () {
     ]);
 })->middleware(['auth']);
 
-Route::resource('/dashboard/warehouse', WarehouseController::class)->middleware(['auth'])->except(['show', 'create', 'edit']);
-Route::resource('/dashboard/contract', ContractController::class)->middleware(['auth'])->except(['show']);
-Route::resource('/dashboard/service', ServiceController::class)->middleware(['auth'])->except(['show', 'create', 'edit']);
+Route::resource('/dashboard/warehouse', WarehouseController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
+Route::resource('/dashboard/contract', ContractController::class)->middleware(['auth', 'admin'])->except(['show']);
+Route::resource('/dashboard/service', ServiceController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
