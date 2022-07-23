@@ -20,7 +20,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Service::class);
             $table->foreignIdFor(Warehouse::class)->nullable();
-            $table->foreignId(User::class);
+            $table->foreignIdFor(User::class);
             $table->string('namamitra')->nullable();
             $table->boolean('manajemen')->default(false);
             $table->integer('harga');
