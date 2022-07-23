@@ -18,9 +18,9 @@ use App\Http\Controllers\WarehouseController;
 */
 
 Route::get('/', function () {
-    return view('index', [
+    return view('welcome', [
         'title' => 'Home',
-        'judul' => 'Dashboard'
+        'judul' => 'Landing Page'
     ]);
 })->middleware(['guest']);
 

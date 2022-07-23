@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Contract;
 use App\Models\Service;
 use App\Models\Warehouse;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 
 class ContractController extends Controller
@@ -46,6 +48,13 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
+        $tanggal = ($request->tglakhir);
+        $date = new DateTime($tanggal);
+        $date_minus = $date->modify("-13 days");
+        // dd($date_minus);
+        // $new = $request->tglmulai = new Carbon();
+        // $new->addDays(10);
+        // dd($new);
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
@@ -62,6 +71,7 @@ class ContractController extends Controller
 
         // validasi kontrak
         $validatedData1 = $request->validate($rules1);
+        $validatedData1['tglsblm'] = $date_minus;
 
         if ($request->nama) {
             $kapital = ucfirst($request->nama);
