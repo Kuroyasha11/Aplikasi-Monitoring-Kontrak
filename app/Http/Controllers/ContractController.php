@@ -156,7 +156,6 @@ class ContractController extends Controller
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
-            'namapelanggan' => 'required|min:3',
             'warehouse_id' => ['nullable'],
             'namamitra' => ['nullable', 'min:3'],
             'harga' => 'required|numeric',
