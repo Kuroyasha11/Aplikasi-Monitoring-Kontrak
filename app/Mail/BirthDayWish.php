@@ -11,14 +11,15 @@ class BirthDayWish extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $contract;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($contract)
     {
-        //
+        $this->contract = $contract;
     }
 
     /**
@@ -28,6 +29,7 @@ class BirthDayWish extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->subject('Sisa Kontrak' . $this->contract->author->name)
+            ->view('contracts.email');
     }
 }
