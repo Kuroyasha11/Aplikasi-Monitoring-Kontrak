@@ -55,34 +55,16 @@
                             class="nav-link {{ Request::is('dashboard/warehouse*') ? 'active' : '' }}">
                             <i class="bi bi-building"></i>
                             <p>
-                                Warehouse
+                                Gudang
                             </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/dashboard/management-warehouse"
-                            class="nav-link {{ Request::is('dashboard/management-warehouse*') ? 'active' : '' }}">
-                            <i class="bi bi-person-workspace"></i>
-                            <p>
-                                Management Warehouse
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/dashboard/collateral-management-services"
-                            class="nav-link {{ Request::is('dashboard/collateral-management-services*') ? 'active' : '' }}">
+                        <a href="/dashboard/service"
+                            class="nav-link {{ Request::is('dashboard/service*') ? 'active' : '' }}">
                             <i class="bi bi-gear"></i>
                             <p>
-                                Collateral Management Services (CMS)
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/dashboard/handling"
-                            class="nav-link {{ Request::is('dashboard/handling*') ? 'active' : '' }}">
-                            <i class="bi bi-person-square"></i>
-                            <p>
-                                Handling
+                                Jenis Pelayanan
                             </p>
                         </a>
                     </li>
@@ -91,34 +73,7 @@
                             class="nav-link {{ Request::is('dashboard/contract*') ? 'active' : '' }}">
                             <i class="bi bi-person-rolodex"></i>
                             <p>
-                                Contract
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/dashboard/office"
-                            class="nav-link {{ Request::is('dashboard/office*') ? 'active' : '' }}">
-                            <i class="bi bi-briefcase"></i>
-                            <p>
-                                Kantor
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/dashboard/depo-container"
-                            class="nav-link {{ Request::is('dashboard/depo-container*') ? 'active' : '' }}">
-                            <i class="bi bi-truck"></i>
-                            <p>
-                                Depo Container
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/dashboard/distribution"
-                            class="nav-link {{ Request::is('dashboard/distribution*') ? 'active' : '' }}">
-                            <i class="bi bi-minecart"></i>
-                            <p>
-                                Distribusi
+                                Kontrak
                             </p>
                         </a>
                     </li>
@@ -126,9 +81,7 @@
                         <a href="/logout" class="nav-link">
                             <i class="bi bi-box-arrow-left"></i>
                             <p>Logout</p>
-
                         </a>
-
                     </li>
                 </ul>
             </nav>

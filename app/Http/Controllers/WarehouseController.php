@@ -28,10 +28,7 @@ class WarehouseController extends Controller
      */
     public function create()
     {
-        return view('warehouse.create', [
-            'title' => 'Warehouse',
-            'judul' => 'Buat Daftar Warehouse Baru'
-        ]);
+        //
     }
 
     /**
@@ -42,11 +39,14 @@ class WarehouseController extends Controller
      */
     public function store(Request $request)
     {
+        $kapital = ucfirst($request->nama);
+
         $validated = $request->validate([
-            'nama' => 'required',
-            'hargadasar' => 'required|numeric|min:0',
+            'nama' => 'required|unique:warehouses,nama',
             'keterangan' => 'nullable|max:100'
         ]);
+
+        $validated['nama'] = $kapital;
 
         Warehouse::create($validated);
 
@@ -72,11 +72,7 @@ class WarehouseController extends Controller
      */
     public function edit(Warehouse $warehouse)
     {
-        return view('warehouse.edit', [
-            'title' => 'Warehouse',
-            'judul' => 'Ubah Data Warehouse',
-            'request' => $warehouse
-        ]);
+        //
     }
 
     /**
@@ -90,7 +86,6 @@ class WarehouseController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required',
-            'hargadasar' => 'required|numeric|min:0',
             'keterangan' => 'nullable|max:100'
         ]);
 

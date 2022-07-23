@@ -13,112 +13,138 @@
             </div>
         @endif
 
-
         <form action="/dashboard/contract" method="post">
             @csrf
-            <div class="form-group">
-                <label for="layanan">Jenis Layanan</label>
-                <select name="jenislayanan" id="layanan" class="form-control select" required>
-                    <option value="">Pilih Salah Satu</option>
-                    <option value="Warehouse">Warehouse</option>
-                    <option value="Depo Container">Depo Container</option>
-                    <option value="Collateral Management Services (CMS)">Collateral Management Services (CMS)</option>
-                    <option value="Project Logistics">Project Logistics</option>
-                    <option>Lainnya</option>
+            <div class="mb-3">
+                <label for="form-select">Jenis Layanan</label>
+                <select name="service_id" id="service_id" class="form-select" required>
+                    <option selected>Pilih Salah Satu</option>
+                    @foreach ($layanan as $item)
+                        @if (old('service_id') == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endif
+                    @endforeach
                 </select>
             </div>
-
-            <div class="form-group">
-                <textarea name="jenislayanan" class="form-control" rows="3" placeholder="Lainnya..." id="lainnya"></textarea>
+            <div class="d-flex mb-3">
+                <div class="form-check mx-2">
+                    <input class="form-check-input" value="0" type="radio" name="manajemen" id="manajemen"
+                        @checked(old('manajemen') == 0)>
+                    <label class="form-check-label" for="manajemen">
+                        Include Manajemen BGR
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" value="1" type="radio" name="manajemen" id="manajemen"
+                        @checked(old('manajemen') == 1)>
+                    <label class="form-check-label" for="manajemen">
+                        Tidak Include Manajemen BGR
+                    </label>
+                </div>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="manajemen" id="flexRadioDefault1" value="Include">
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Include Manajemen BGR
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="manajemen" id="flexRadioDefault2"
-                    value="Tidak Include">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Tidak Include Manajemen BGR
-                </label>
-            </div>
-            <br>
-            <div class="form-group">
-                <label for="namagudang">Nama Gudang</label>
-                <input type="text" id="namagudang" name="namagudang"
-                    class="form-control @error('namagudang') is-invalid @enderror" value="{{ old('namagudang') }}"
-                    required>
-                @error('namagudang')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="namapelanggan">Nama Pelanggan</label>
-                <input type="text" id="namapelanggan" name="namapelanggan"
-                    class="form-control @error('namapelanggan') is-invalid @enderror" value="{{ old('namapelanggan') }}"
-                    required>
+            <div class="mb-3">
+                <label for="namapelanggan" class="form-label">Nama Pelanggan</label>
+                <input type="text" name="namapelanggan" class="form-control @error('namapelanggan') is-invalid @enderror"
+                    id="namapelanggan" placeholder="Nama Pelanggan" value="{{ old('namapelanggan') }}" required>
                 @error('namapelanggan')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="harga">Tarif Harga Sewa (Rp/M<sup>2</sup>)</label>
-                <input type="number" id="harga" name="harga"
-                    class="form-control @error('harga') is-invalid @enderror" value="{{ old('harga') }}" required>
+            <div class="mb-3">
+                <label for="form-select">Nama (Gudang,Kantor, dan lain-lain)</label>
+                <select name="warehouse_id" id="pilihan" class="form-select">
+                    <option selected>Pilih Salah Satu</option>
+                    @foreach ($gudang as $item)
+                        @if (old('warehouse_id') == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endif
+                    @endforeach
+                    <option>Lainnya</option>
+                </select>
+                <input type="text" name="namamitra" id="teks"
+                    class="form-control @error('namamitra') is-invalid @enderror" id="namamitra"
+                    placeholder="Nama (Gudang,Kantor, dan lain-lain)" value="{{ old('namamitra') }}">
+                @error('namamitra')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+                <hr>
+            </div>
+            <div class="mb-3">
+                <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="lainnya"
+                    placeholder="Nama Gudang" value="{{ old('nama') }}">
+                @error('nama')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="harga" class="form-label">Tarif Harga Sewa (Rp/M<sup>2</sup>)</label>
+                <input type="number" name="harga" class="form-control @error('harga') is-invalid @enderror"
+                    id="harga" value="{{ old('harga') }}" required>
                 @error('harga')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="luassewa">Luas Sewa / Lingkup Pekerjaan (M<sup>2</sup>) </label>
-                <input type="text" id="luassewa" name="luassewa"
-                    class="form-control @error('luassewa') is-invalid @enderror" value="{{ old('luassewa') }}" required>
+            <div class="mb-3">
+                <label for="luassewa" class="form-label">Luas Sewa / Lingkup Pekerjaan (M<sup>2</sup>) </label>
+                <input type="text" name="luassewa" class="form-control @error('luassewa') is-invalid @enderror"
+                    id="luassewa" value="{{ old('luassewa') }}" required>
                 @error('luassewa')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="peruntukan">Peruntukan Gudang</label>
-                <input type="text" id="peruntukan" name="peruntukan"
-                    class="form-control @error('peruntukan') is-invalid @enderror" value="{{ old('peruntukan') }}"
-                    required>
+            <div class="mb-3">
+                <label for="peruntukan" class="form-label">Peruntukan Gudang</label>
+                <input type="text" name="peruntukan" class="form-control @error('peruntukan') is-invalid @enderror"
+                    id="peruntukan" value="{{ old('peruntukan') }}">
                 @error('peruntukan')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
-            <div class="form-group col-md-6">
-                <label for="tglmulai">Tanggal Mulai Sewa</label>
-                <input type="date" id="tglmulai" name="tglmulai"
-                    class="form-control @error('tglmulai') is-invalid @enderror" value="{{ old('tglmulai') }}" required>
+            <div class="mb-3 col-lg-2">
+                <label for="tglmulai" class="form-label">Mulai Sewa</label>
+                <input type="date" name="tglmulai" class="form-control @error('tglmulai') is-invalid @enderror"
+                    id="tglmulai" value="{{ old('tglmulai') }}">
                 @error('tglmulai')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="text">Keterangan</label>
-                <textarea class="form-control  @error('keterangan') is-invalid @enderror" value="{{ old('keterangan') }}"
-                    placeholder="Keterangan" id="keterangan" name="keterangan" style="height: 100px"></textarea>
+            <div class="mb-3 col-lg-2">
+                <label for="tglakhir" class="form-label">Selesai Sewa</label>
+                <input type="date" name="tglakhir" class="form-control @error('tglakhir') is-invalid @enderror"
+                    id="tglakhir" value="{{ old('tglakhir') }}">
+                @error('tglakhir')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="keterangan" class="form-label">Keterangan</label>
+                <textarea class="form-control  @error('keterangan') is-invalid @enderror" placeholder="Keterangan" id="keterangan"
+                    name="keterangan" style="height: 100px">{{ old('keterangan') }}</textarea>
                 @error('keterangan')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
-
             </div>
 
             <div class="d-flex">
@@ -130,22 +156,38 @@
 
     <script>
         $(document).ready(function() {
+            $('#pilihan').hide();
+            $('#teks').hide();
             $('#lainnya').hide();
         });
 
-        $('#layanan').change(function(e) {
+        $('#service_id').change(function(e) {
             e.preventDefault();
-            let data = $('#layanan').find(':selected').text()
+            let data = $('#service_id').find(':selected').text()
+
+            if (data == 'Gudang') {
+                $('#pilihan').val('');
+                $('#pilihan').show();
+                $('#teks').val('');
+                $('#teks').hide();
+            } else {
+                $('#pilihan').val('');
+                $('#pilihan').hide();
+                $('#teks').val('');
+                $('#teks').show();
+            }
+        });
+
+        $('#pilihan').change(function(e) {
+            e.preventDefault();
+            let data = $('#pilihan').find(':selected').text()
 
             if (data == 'Lainnya') {
+                $('#lainnya').val('');
                 $('#lainnya').show();
-                $('#lainnya').attr('name', 'jenislayanan');
-                $('#layanan').removeAttr('name');
             } else {
-                $('#lainnya').removeAttr('name');
                 $('#lainnya').val('');
                 $('#lainnya').hide();
-                $('#layanan').attr('name', 'jenislayanan');
             }
         });
     </script>

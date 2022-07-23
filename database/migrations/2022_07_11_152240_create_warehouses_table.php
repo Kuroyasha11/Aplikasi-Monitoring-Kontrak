@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->integer('hargadasar');
             $table->string('keterangan')->nullable();
             $table->timestamps();
         });

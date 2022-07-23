@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
+use App\Models\Service;
+use App\Models\Warehouse;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 
 class ContractController extends Controller
@@ -30,7 +34,9 @@ class ContractController extends Controller
     {
         return view('contracts.create', [
             'title' => 'Kontrak',
-            'judul' => 'Buat Daftar Kontrak Baru'
+            'judul' => 'Buat Daftar Kontrak Baru',
+            'layanan' => Service::all(),
+            'gudang' => Warehouse::latest()->get(),
         ]);
     }
 
@@ -42,22 +48,50 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'jenislayanan' => 'required',
-            'namagudang' => 'required',
+        $tanggal = ($request->tglakhir);
+        $date = new DateTime($tanggal);
+        $date_minus = $date->modify("-13 days");
+        // dd($date_minus);
+        // $new = $request->tglmulai = new Carbon();
+        // $new->addDays(10);
+        // dd($new);
+        $rules1 = [
+            'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
-            'namapelanggan' => 'required',
-            'harga' => 'required',
-            'luassewa' => 'required',
-            'peruntukan' => 'required',
+            'namapelanggan' => 'required|min:3',
+            'warehouse_id' => ['nullable'],
+            'namamitra' => ['nullable', 'min:3'],
+            'harga' => 'required|numeric',
+            'luassewa' => ['required'],
+            'peruntukan' => 'nullable',
             'tglmulai' => 'required',
             'tglakhir' => 'required',
-            'keterangan' => 'nullable',
-            'tglakhir' => 'nullable',
-            'sisasewa' => 'nullable '
-        ]);
+            'keterangan' => 'nullable'
+        ];
 
-        Contract::create($validated);
+        // validasi kontrak
+        $validatedData1 = $request->validate($rules1);
+        $validatedData1['tglsblm'] = $date_minus;
+
+        if ($request->nama) {
+            $kapital = ucfirst($request->nama);
+            $rules2 = [
+                'nama' => 'nullable|min:3|unique:warehouses,nama'
+            ];
+
+            // validasi gudang
+            $validatedData2 = $request->validate($rules2);
+
+            $validatedData2['nama'] = $kapital;
+
+            Warehouse::create($validatedData2);
+
+            $cekgudang = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
+
+            $validatedData1['warehouse_id'] = $cekgudang['id'];
+        }
+
+        Contract::create($validatedData1);
 
         return redirect('/dashboard/contract')->with('Berhasil', 'Berhasil menambahkan kontrak baru');
     }
@@ -84,7 +118,9 @@ class ContractController extends Controller
         return view('contracts.edit', [
             'title' => 'Kontrak',
             'judul' => 'Ubah Data Kontrak',
-            'contract' => $contract
+            'request' => $contract,
+            'layanan' => Service::all(),
+            'gudang' => Warehouse::latest()->get(),
         ]);
     }
 
@@ -97,13 +133,42 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
-        $validated = $request->validate([
-            'storage_id' => 'required',
-            'nama' => 'required',
-            'keterangan' => 'required',
-        ]);
+        $rules1 = [
+            'service_id' => 'required|min:1|numeric',
+            'manajemen' => 'required',
+            'namapelanggan' => 'required|min:3',
+            'warehouse_id' => ['nullable'],
+            'namamitra' => ['nullable', 'min:3'],
+            'harga' => 'required|numeric',
+            'luassewa' => ['required'],
+            'peruntukan' => 'nullable',
+            'tglmulai' => 'required',
+            'tglakhir' => 'required',
+            'keterangan' => 'nullable'
+        ];
 
-        Contract::where('id', $contract->id)->update($validated);
+        // validasi kontrak
+        $validatedData1 = $request->validate($rules1);
+
+        if ($request->nama) {
+            $kapital = ucfirst($request->nama);
+            $rules2 = [
+                'nama' => 'nullable|min:3|unique:warehouses,nama'
+            ];
+
+            // validasi gudang
+            $validatedData2 = $request->validate($rules2);
+
+            $validatedData2['nama'] = $kapital;
+
+            Warehouse::create($validatedData2);
+
+            $cekgudang = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
+
+            $validatedData1['warehouse_id'] = $cekgudang['id'];
+        }
+
+        Contract::where('id', $contract->id)->update($validatedData1);
 
         return redirect('')->with('berhasil', 'Berhasil mengubah data kontrak');
     }
