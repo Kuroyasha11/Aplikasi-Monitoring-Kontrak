@@ -18,7 +18,6 @@
             <div class="mb-3">
                 <label for="form-select">Jenis Layanan</label>
                 <select name="service_id" id="service_id" class="form-select" required>
-                    <option selected>Pilih Salah Satu</option>
                     @foreach ($layanan as $item)
                         @if (old('service_id') == $item->id)
                             <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
@@ -57,7 +56,6 @@
             <div class="mb-3">
                 <label for="form-select">Nama (Gudang,Kantor, dan lain-lain)</label>
                 <select name="warehouse_id" id="pilihan" class="form-select">
-                    <option selected>Pilih Salah Satu</option>
                     @foreach ($gudang as $item)
                         @if (old('warehouse_id') == $item->id)
                             <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
@@ -156,9 +154,26 @@
 
     <script>
         $(document).ready(function() {
-            $('#pilihan').hide();
-            $('#teks').hide();
-            $('#lainnya').hide();
+            let service_id = $('#service_id').find(':selected').text()
+
+            if (service_id == 'Gudang') {
+                $('#pilihan').show();
+                $('#teks').hide();
+                $('#teks').val(null);
+            } else {
+                $('#pilihan').hide();
+                $('#pilihan').val(null);
+                $('#teks').show();
+            }
+
+            let pilihan = $('#pilihan').find(':selected').text()
+
+            if (pilihan == 'Lainnya') {
+                $('#lainnya').show();
+            } else {
+                $('#lainnya').hide();
+                $('#lainnya').val(null);
+            }
         });
 
         $('#service_id').change(function(e) {
@@ -166,14 +181,12 @@
             let data = $('#service_id').find(':selected').text()
 
             if (data == 'Gudang') {
-                $('#pilihan').val('');
                 $('#pilihan').show();
-                $('#teks').val('');
                 $('#teks').hide();
+                $('#teks').val(null);
             } else {
-                $('#pilihan').val('');
                 $('#pilihan').hide();
-                $('#teks').val('');
+                $('#pilihan').val(null);
                 $('#teks').show();
             }
         });
@@ -183,11 +196,10 @@
             let data = $('#pilihan').find(':selected').text()
 
             if (data == 'Lainnya') {
-                $('#lainnya').val('');
                 $('#lainnya').show();
             } else {
-                $('#lainnya').val('');
                 $('#lainnya').hide();
+                $('#lainnya').val(null);
             }
         });
     </script>

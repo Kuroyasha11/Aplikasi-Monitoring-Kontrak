@@ -19,7 +19,6 @@
             <div class="mb-3">
                 <label for="form-select">Jenis Layanan</label>
                 <select name="service_id" id="service_id" class="form-select" required>
-                    <option selected>Pilih Salah Satu</option>
                     @foreach ($layanan as $item)
                         @if (old('service_id', $request->service_id) == $item->id)
                             <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
@@ -59,7 +58,6 @@
             <div class="mb-3">
                 <label for="form-select">Nama (Gudang,Kantor, dan lain-lain)</label>
                 <select name="warehouse_id" id="pilihan" class="form-select">
-                    <option selected>Pilih Salah Satu</option>
                     @foreach ($gudang as $item)
                         @if (old('warehouse_id', $request->warehouse_id) == $item->id)
                             <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
@@ -151,7 +149,7 @@
             </div>
 
             <div class="d-flex">
-                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> Buat</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> Simpan</button>
                 <a href="/dashboard/contract" class="btn btn-warning"><i class="bi bi-arrow-left"></i> Kembali</a>
             </div>
         </form>
@@ -159,15 +157,23 @@
 
     <script>
         $(document).ready(function() {
-            let edit = $('#service_id').find(':selected').text()
+            let service_id = $('#service_id').find(':selected').text()
 
-            if (edit == 'Gudang') {
+            if (service_id == 'Gudang') {
                 $('#pilihan').show();
+                $('#teks').hide();
             } else {
                 $('#pilihan').hide();
+                $('#teks').show();
             }
-            $('#teks').hide();
-            $('#lainnya').hide();
+
+            let pilihan = $('#pilihan').find(':selected').text()
+
+            if (pilihan == 'Lainnya') {
+                $('#lainnya').show();
+            } else {
+                $('#lainnya').hide();
+            }
         });
 
         $('#service_id').change(function(e) {
@@ -175,14 +181,12 @@
             let data = $('#service_id').find(':selected').text()
 
             if (data == 'Gudang') {
-                $('#pilihan').val('');
                 $('#pilihan').show();
-                $('#teks').val('');
                 $('#teks').hide();
-            } else {
-                $('#pilihan').val('');
-                $('#pilihan').hide();
                 $('#teks').val('');
+            } else {
+                $('#pilihan').hide();
+                $('#pilihan').val('');
                 $('#teks').show();
             }
         });
@@ -192,11 +196,10 @@
             let data = $('#pilihan').find(':selected').text()
 
             if (data == 'Lainnya') {
-                $('#lainnya').val('');
                 $('#lainnya').show();
             } else {
-                $('#lainnya').val('');
                 $('#lainnya').hide();
+                $('#lainnya').val('');
             }
         });
     </script>

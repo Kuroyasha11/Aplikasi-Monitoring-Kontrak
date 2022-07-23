@@ -27,6 +27,7 @@
                         <th>No</th>
                         <th>Layanan</th>
                         <th>Nama Pelanggan</th>
+                        <th>Nama (Gudang, Kantor, dan lain-lain)</th>
                         <th>Mulai Sewa</th>
                         <th>Akhir Sewa</th>
                         <th>Keterangan</th>
@@ -40,9 +41,18 @@
                                 <td align="CENTER"><b>{{ $contract->firstItem() - 1 + $loop->iteration }}</b></th>
                                 <td>{{ $item->service->nama }}</td>
                                 <td>{{ $item->namapelanggan }}</td>
-                                <td>{{ $item->tglmulai }}</td>
-                                <td>{{ $item->harga }}</td>
-                                <td>{{ $item->keterangan }}</td>
+                                <td>
+                                    @if ($item->warehouse_id && !$item->namamitra)
+                                        {{ $item->warehouse->nama }}
+                                    @elseif(!$item->warehouse_id && $item->namamitra)
+                                        {{ $item->namamitra }}
+                                    @endif
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($item->tglmulai)->isoFormat('DD MMMM Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->tglakhir)->isoFormat('DD MMMM Y') }}</td>
+                                <td>
+                                    {{ $item->keterangan }}
+                                </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
                                         <a href="/dashboard/contract/{{ $item->id }}/edit"
