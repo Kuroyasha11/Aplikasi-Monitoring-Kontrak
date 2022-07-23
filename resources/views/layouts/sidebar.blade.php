@@ -49,34 +49,37 @@
                             </p>
                         </a>
                     </li>
+                    @can('admin')
+                        <hr>
+                        <li class="nav-item">
+                            <a href="/dashboard/warehouse"
+                                class="nav-link {{ Request::is('dashboard/warehouse*') ? 'active' : '' }}">
+                                <i class="bi bi-building"></i>
+                                <p>
+                                    Gudang
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dashboard/service"
+                                class="nav-link {{ Request::is('dashboard/service*') ? 'active' : '' }}">
+                                <i class="bi bi-gear"></i>
+                                <p>
+                                    Jenis Pelayanan
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dashboard/contract"
+                                class="nav-link {{ Request::is('dashboard/contract*') ? 'active' : '' }}">
+                                <i class="bi bi-person-rolodex"></i>
+                                <p>
+                                    Kontrak
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
                     <hr>
-                    <li class="nav-item">
-                        <a href="/dashboard/warehouse"
-                            class="nav-link {{ Request::is('dashboard/warehouse*') ? 'active' : '' }}">
-                            <i class="bi bi-building"></i>
-                            <p>
-                                Gudang
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/dashboard/service"
-                            class="nav-link {{ Request::is('dashboard/service*') ? 'active' : '' }}">
-                            <i class="bi bi-gear"></i>
-                            <p>
-                                Jenis Pelayanan
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/dashboard/contract"
-                            class="nav-link {{ Request::is('dashboard/contract*') ? 'active' : '' }}">
-                            <i class="bi bi-person-rolodex"></i>
-                            <p>
-                                Kontrak
-                            </p>
-                        </a>
-                    </li>
                     <li class="nav-item">
                         <a href="/logout" class="nav-link">
                             <i class="bi bi-box-arrow-left"></i>

@@ -9,9 +9,14 @@ class Contract extends Model
 {
     use HasFactory;
 
-    protected $with = ['service', 'warehouse'];
+    protected $with = ['service', 'warehouse', 'author'];
 
     protected $guarded = ['id'];
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function service()
     {
