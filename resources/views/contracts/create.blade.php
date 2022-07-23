@@ -126,6 +126,16 @@
                     </div>
                 @enderror
             </div>
+            <div class="mb-3 col-lg-2">
+                <label for="tglakhir" class="form-label">Selesai Sewa</label>
+                <input type="date" name="tglakhir" class="form-control @error('tglakhir') is-invalid @enderror"
+                    id="tglakhir" value="{{ old('tglakhir') }}">
+                @error('tglakhir')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
             <div class="mb-3">
                 <label for="keterangan" class="form-label">Keterangan</label>
                 <textarea class="form-control  @error('keterangan') is-invalid @enderror" placeholder="Keterangan" id="keterangan"

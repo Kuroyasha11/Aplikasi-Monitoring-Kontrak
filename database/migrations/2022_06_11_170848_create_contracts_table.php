@@ -26,8 +26,7 @@ return new class extends Migration
             $table->string('luassewa');
             $table->string('peruntukan')->nullable();
             $table->date('tglmulai');
-            $table->date('tglakhir')->nullable();
-            $table->integer('sisasewa')->nullable();
+            $table->date('tglakhir');
             $table->string('keterangan')->nullable();
             $table->boolean('selesai')->default(false);
             $table->timestamps();
