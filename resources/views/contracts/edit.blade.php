@@ -128,7 +128,7 @@
                 @enderror
             </div>
             <div class="mb-3 col-lg-2">
-                <label for="tglakhir" class="form-label">Mulai Sewa</label>
+                <label for="tglakhir" class="form-label">Selesai Sewa</label>
                 <input type="date" name="tglakhir" class="form-control @error('tglakhir') is-invalid @enderror"
                     id="tglakhir" value="{{ old('tglakhir', $request->tglakhir) }}">
                 @error('tglakhir')

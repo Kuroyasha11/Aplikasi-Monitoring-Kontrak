@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Service;
+use App\Models\User;
 use App\Models\Warehouse;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,9 +20,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Service::class);
             $table->foreignIdFor(Warehouse::class)->nullable();
+            $table->foreignId(User::class);
             $table->string('namamitra')->nullable();
             $table->boolean('manajemen')->default(false);
-            $table->string('namapelanggan');
             $table->integer('harga');
             $table->string('luassewa');
             $table->string('peruntukan')->nullable();

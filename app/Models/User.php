@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return 'slug';
     }
+
+    public function contract()
+    {
+        return $this->hasOne(Contract::class);
+    }
 }

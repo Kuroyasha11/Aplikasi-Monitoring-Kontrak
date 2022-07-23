@@ -32,5 +32,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('IDR', function ($rupiah) {
             return "Rp<?php echo number_format($rupiah, 0); ?>";
         });
+
+        Gate::define('admin', function (User $user) {
+            return $user->is_admin;
+        });
     }
 }
