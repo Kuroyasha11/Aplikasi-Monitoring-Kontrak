@@ -53,14 +53,6 @@ class ContractController extends Controller
         $date = new DateTime($tanggal);
         $date_minus = $date->modify("-13 days");
 
-        // $data1 =Contract::where('id', $request->id)->get();
-        // // $email = Contract::whereMonth('tglkonfirmasi', date('m'))
-        // //     ->get();
-        // dd($data1);
-        // dd($date_minus);
-        // $new = $request->tglmulai = new Carbon();
-        // $new->addDays(10);
-        // dd($new);
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
