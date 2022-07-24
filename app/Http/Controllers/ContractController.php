@@ -166,9 +166,9 @@ class ContractController extends Controller
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
-            'warehouse_id' => ['nullable'],
-            'namamitra' => ['nullable', 'min:3'],
             'harga' => 'required|numeric',
+            'warehouse_id' => 'nullable',
+            'namamitra' => 'nullable|min:3',
             'luassewa' => ['required'],
             'peruntukan' => 'nullable',
             'tglmulai' => 'required',
@@ -176,26 +176,68 @@ class ContractController extends Controller
             'keterangan' => 'nullable'
         ];
 
+        // $cekdatagudangkontrak = Warehouse::all()->where('id', $contract->warehouse_id);
+        // if ($request->warehouse_id != $cekdatagudangkontrak->id) {
+        //     $rules1['warehouse_id'] = 'nullable';
+        // } elseif ($request->warehouse_id) {
+        //     $rules1['warehouse_id'] = 'nullable';
+        // }
+
+        // if ($request->namamitra != $contract->namamitra) {
+        //     $rules1['namamitra'] = 'nullable|min:3';
+        // } elseif ($request->namamitra) {
+        //     $rules1['namamitra'] = 'nullable|min:3';
+        // }
         // validasi kontrak
         $validatedData1 = $request->validate($rules1);
         $validatedData1['tglkonfirmasi'] = $date_minus;
 
-        if ($request->nama) {
-            $kapital = ucfirst($request->nama);
-            $rules2 = [
-                'nama' => 'nullable|min:3|unique:warehouses,nama'
+        $cekdatauser = User::all()->where('id', $contract->user_id)->first();
+        // USER
+        if ($request->name != $cekdatauser->name) {
+            $rules3 = [
+                'name' => 'required|min:3',
             ];
 
-            // validasi gudang
-            $validatedData2 = $request->validate($rules2);
+            if ($request->email != $cekdatauser->email) {
+                $rules3['email'] = 'required|email:dns|unique:users';
+            }
 
-            $validatedData2['nama'] = $kapital;
+            $validatedData3 = $request->validate($rules3);
+            if ($request->email != $cekdatauser->email) {
+                $validatedData3['username'] = $validatedData3['email'];
+            }
+            $validatedData3['password'] = bcrypt('12345678');
 
-            Warehouse::create($validatedData2);
+            User::where('id', $contract->user_id)->update($validatedData3);
+        }
 
-            $cekgudang = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
+        $cekdatagudang  = Warehouse::all()->where('id', $contract->warehouse_id)->first();
+        // GUDANG
+        if ($request->nama) {
+            if ($request->nama != $cekdatagudang->nama) {
+                $kapital = ucfirst($request->nama);
+                $rules2 = [
+                    'nama' => 'nullable|min:3|unique:warehouses,nama'
+                ];
 
-            $validatedData1['warehouse_id'] = $cekgudang['id'];
+                // validasi gudang
+                $validatedData2 = $request->validate($rules2);
+
+                $validatedData2['nama'] = $kapital;
+
+                Warehouse::create($validatedData2);
+
+                $cekgudang = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
+
+                $validatedData1['warehouse_id'] = $cekgudang['id'];
+            }
+        }
+
+        if ($request->warehouse_id == null) {
+            Contract::where('id', $contract->id)->update(['warehouse_id' => null]);
+        } elseif ($request->namamitra == null) {
+            Contract::where('id', $contract->id)->update(['namamitra' => null]);
         }
 
         Contract::where('id', $contract->id)->update($validatedData1);
