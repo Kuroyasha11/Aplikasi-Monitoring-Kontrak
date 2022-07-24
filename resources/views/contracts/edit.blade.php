@@ -57,7 +57,7 @@
             <div class="mb-3">
                 <label for="email" class="form-label">Email Pelanggan</label>
                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                    id="email" placeholder="Email Pelanggan" value="{{ old('email', $request->author->name) }}"
+                    id="email" placeholder="Email Pelanggan" value="{{ old('email', $request->author->email) }}"
                     required>
                 @error('email')
                     <div class="invalid-feedback">
@@ -79,8 +79,7 @@
                 </select>
                 <input type="text" name="namamitra" id="teks"
                     class="form-control @error('namamitra') is-invalid @enderror" id="namamitra"
-                    placeholder="Nama (Gudang,Kantor, dan lain-lain)"
-                    value="{{ old('namamitra', $request->namamitra) }}">
+                    placeholder="Nama (Gudang,Kantor, dan lain-lain)" value="{{ old('namamitra', $request->namamitra) }}">
                 @error('namamitra')
                     <div class="invalid-feedback">
                         {{ $message }}

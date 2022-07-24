@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('luassewa');
             $table->string('peruntukan')->nullable();
             $table->date('tglmulai');
+            $table->date('tglkonfirmasi');
             $table->date('tglakhir');
             $table->string('keterangan')->nullable();
             $table->boolean('selesai')->default(false);
