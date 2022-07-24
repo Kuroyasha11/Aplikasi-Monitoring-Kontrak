@@ -197,7 +197,7 @@
                 $('#teks').val('');
             } else {
                 $('#pilihan').hide();
-                $('#pilihan').val('');
+                $('#pilihan').val('0');
                 $('#teks').show();
             }
         });
