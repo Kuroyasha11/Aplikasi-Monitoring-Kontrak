@@ -30,7 +30,16 @@ class AutoBirthDayWish extends Command
      */
     public function handle()
     {
-            
+        $contracts = Contract::whereDay('tglkonfirmasi', date('d'))
+            ->whereMonth('tglkonfirmasi', date('m'))
+            ->whereYear('tglkonfirmasi', date('Y'))
+            ->get();
+
+        if ($contracts->count() > 0) {
+            foreach ($contracts as $contract) {
+                Mail::to($contract->author->email)->send(new BirthDayWish($contract->author->email));
+            }
+        }
         return 0;
     }
 }
