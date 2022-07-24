@@ -52,6 +52,11 @@ class ContractController extends Controller
         $tanggal = ($request->tglakhir);
         $date = new DateTime($tanggal);
         $date_minus = $date->modify("-13 days");
+
+        // $data1 =Contract::where('id', $request->id)->get();
+        // // $email = Contract::whereMonth('tglkonfirmasi', date('m'))
+        // //     ->get();
+        // dd($data1);
         // dd($date_minus);
         // $new = $request->tglmulai = new Carbon();
         // $new->addDays(10);
@@ -71,7 +76,7 @@ class ContractController extends Controller
 
         // validasi kontrak
         $validatedData1 = $request->validate($rules1);
-        $validatedData1['tglsblm'] = $date_minus;
+        $validatedData1['tglkonfirmasi'] = $date_minus;
 
         // USER
         if ($request->name) {
@@ -153,6 +158,11 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
+        // Tanggal Notifikasi
+        $tanggal = ($request->tglakhir);
+        $date = new DateTime($tanggal);
+        $date_minus = $date->modify("-13 days");
+
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
@@ -168,6 +178,7 @@ class ContractController extends Controller
 
         // validasi kontrak
         $validatedData1 = $request->validate($rules1);
+        $validatedData1['tglkonfirmasi'] = $date_minus;
 
         if ($request->nama) {
             $kapital = ucfirst($request->nama);
