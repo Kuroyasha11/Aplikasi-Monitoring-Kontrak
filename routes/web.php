@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,12 +32,12 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/logout', 'logout')->middleware(['auth']);
 });
 
-Route::get('/dashboard', function () {
-    return view('index', [
-        'title' => 'Home',
-        'judul' => 'Dashboard'
-    ]);
-})->middleware(['auth']);
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('/dashboard', 'index')->name('dashboard')->middleware(['auth']);
+});
+
+Route::get('/send-mail', [MailController::class, 'index']);
+
 
 Route::resource('/dashboard/warehouse', WarehouseController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
 Route::resource('/dashboard/contract', ContractController::class)->middleware(['auth', 'admin'])->except(['show']);
