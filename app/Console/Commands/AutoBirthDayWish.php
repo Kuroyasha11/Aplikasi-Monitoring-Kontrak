@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BirthDayWish;
 use App\Models\Contract;
+use Illuminate\Support\Facades\Log;
 
 class AutoBirthDayWish extends Command
 {
@@ -34,6 +35,8 @@ class AutoBirthDayWish extends Command
             ->whereMonth('tglkonfirmasi', date('m'))
             ->whereYear('tglkonfirmasi', date('Y'))
             ->get();
+
+        Log::info($contracts);
 
         if ($contracts->count() > 0) {
             foreach ($contracts as $contract) {

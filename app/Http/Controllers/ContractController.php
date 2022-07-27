@@ -24,6 +24,8 @@ class ContractController extends Controller
             'judul' => 'Daftar Kontrak',
             'contract' => Contract::latest()->paginate(10)
         ]);
+
+        
     }
 
     /**

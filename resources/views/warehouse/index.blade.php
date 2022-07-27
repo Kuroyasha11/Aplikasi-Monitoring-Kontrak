@@ -43,7 +43,7 @@
                                 <td>
                                     <div class="d-flex  justify-content-center">
                                         <!-- Button trigger modal edit-->
-                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal"
                                             data-bs-target="#edit{{ $item->id }}">
                                             <i class="bi bi-pencil-square"></i> Edit
                                         </button>

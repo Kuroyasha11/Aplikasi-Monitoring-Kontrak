@@ -33,76 +33,6 @@
         </div>
     </div>
 
-    {{-- <div class="card card-danger">
-        <div class="card-header">
-            <h3 class="card-title">Data Makanan & Minuman</h3>
-
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        </div>
-        <div class="card-body">
-            <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-        </div>
-        <!-- /.card-body -->
-    </div> --}}
-
-
-    <script type="text/javascript">
-        $(function() {
-            var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-            var donutData = {
-                labels: [
-                    'Makanan',
-                    'Minuman',
-                ],
-                datasets: [{
-                    data: [90, 100],
-                    backgroundColor: ['#f56954', '#00a65a'],
-                }]
-            }
-            var donutOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-            new Chart(donutChartCanvas, {
-                type: 'doughnut',
-                data: donutData,
-                options: donutOptions
-            })
-        })
-    </script>
-
-    {{-- <script type="text/javascript">
-        $(function() {
-            var barChartCanvas = $('#barChart').get(0).getContext('2d')
-            var barChartData = $.extend(true, {}, areaChartData)
-            var temp0 = areaChartData.datasets[0]
-            var temp1 = areaChartData.datasets[1]
-            barChartData.datasets[0] = temp1
-            barChartData.datasets[1] = temp0
-
-            var barChartOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                datasetFill: false
-            }
-
-            new Chart(barChartCanvas, {
-                type: 'bar',
-                data: barChartData,
-                options: barChartOptions
-            })
-
-        })
-    </script> --}}
 
     <script>
         am4core.ready(function() {
@@ -115,38 +45,39 @@
             chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
             chart.data = [{
-                    country: "Gudang",
-                    visits: 23725
+                    name: "Gudang",
+                    datas: <?php echo json_encode($gudang); ?>
                 },
                 {
-                    country: "Layanan",
-                    visits: 1882
+                    name: "Layanan",
+                    datas: <?php echo json_encode($contract); ?>
                 },
                 {
-                    country: "Kontrak",
-                    visits: 1809
+                    name: "Kontrak",
+                    datas: <?php echo json_encode($user); ?>
                 },
                 {
-                    country: "Depo Container",
-                    visits: 1322
+                    name: "Depo Container",
+                    datas: <?php echo json_encode($service); ?>
                 },
                 {
-                    country: "Pelanggan",
-                    visits: 1322
+                    name: "Pelanggan",
+                    datas: <?php echo json_encode($gudang); ?>
                 },
             ];
 
             var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
             categoryAxis.renderer.grid.template.location = 0;
-            categoryAxis.dataFields.category = "country";
+            categoryAxis.dataFields.category = "name";
             categoryAxis.renderer.minGridDistance = 40;
             categoryAxis.fontSize = 11;
 
+            var count = JSON.parse("{{ json_encode($gudang) }}")
             var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
             valueAxis.min = 0;
-            valueAxis.max = 5000;
+            // valueAxis.max = 100;
             valueAxis.strictMinMax = true;
-            valueAxis.renderer.minGridDistance = 30;
+            valueAxis.renderer.minGridDistance = 50;
             // axis break
             // var axisBreak = valueAxis.axisBreaks.create();
             // axisBreak.startValue = 2100;
@@ -183,8 +114,8 @@
             });*/
 
             var series = chart.series.push(new am4charts.ColumnSeries());
-            series.dataFields.categoryX = "country";
-            series.dataFields.valueY = "visits";
+            series.dataFields.categoryX = "name";
+            series.dataFields.valueY = "datas";
             series.columns.template.tooltipText = "{valueY.value}";
             series.columns.template.tooltipY = 0;
             series.columns.template.strokeOpacity = 0;

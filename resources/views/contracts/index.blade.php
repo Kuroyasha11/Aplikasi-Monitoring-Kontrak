@@ -50,8 +50,34 @@
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($item->tglmulai)->isoFormat('DD MMMM Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->tglakhir)->isoFormat('DD MMMM Y') }}</td>
+
                                 <td>
-                                    {{ $item->keterangan }}
+                                    {{-- {{ $item->keterangan }} --}}
+                                    @php
+                                        $tanggal = $item->tglakhir;
+                                        $date = new DateTime($tanggal);
+                                        $date_minus = $date->modify('+13 days')->format('Y-m-d');
+                                        $tgldenda = \Carbon\Carbon::parse($item->tglakhir);
+                                        $tglhariini = \Carbon\Carbon::now();
+                                    @endphp
+
+                                    @if ($tglhariini >= $tgldenda->addDays(13))
+                                        @if ($tglhariini >= $tgldenda->addDays(30))
+                                            @if ($tglhariini >= $tgldenda->addDays(60))
+                                                @if ($tglhariini >= $tgldenda->addDays(90))
+                                                    <a href="#" class="btn btn-danger">Lewat 90</a>
+                                                @else
+                                                    <a href="#" class="btn btn-danger">Lewat 60</a>
+                                                @endif
+                                            @else
+                                                <a href="{{ url('/send-mail') }}" class="btn btn-danger">Lewat 30</a>
+                                            @endif
+                                        @else
+                                            <a href="#" class="btn btn-danger">Lewat 13</a>
+                                        @endif
+                                    @else
+                                        <a href="#" class="btn btn-primary">Belum</a>
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
