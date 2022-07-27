@@ -1,6 +1,16 @@
-<h2>Sisa Kontrak {{ $contract->author->name }}</h2>
-<br>
-<p>Kontrak tersisa 14 hari lagi, untuk perpanjangan kontrak silahkan hubungi admin. Lihat data kontrak melalui link
-    berikut <a href="">kontrakpelanggan</a></p>
+<!DOCTYPE html>
+<html>
 
-Terima Kasih
+<head>
+    <title>Email Notifikasi</title>
+</head>
+
+<body>
+    <h1>{{ $mailData['title'] }}</h1>
+    <h1>{{ $mailData['body'] }}</h1>
+
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero quos in, quisquam est ipsa reprehenderit debitis
+        sint animi provident sit laboriosam minima maiores eum illo magni asperiores libero optio sequi.</p>
+</body>
+
+</html>
