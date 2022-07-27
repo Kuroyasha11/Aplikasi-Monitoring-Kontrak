@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\CMSController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\DepoController;
+use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\MailController;
@@ -39,6 +42,9 @@ Route::controller(DashboardController::class)->group(function () {
 Route::get('/send-mail', [MailController::class, 'index']);
 
 
-Route::resource('/dashboard/warehouse', WarehouseController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
 Route::resource('/dashboard/contract', ContractController::class)->middleware(['auth', 'admin'])->except(['show']);
-Route::resource('/dashboard/service', ServiceController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
+// Route::resource('/dashboard/service', ServiceController::class)->middleware(['auth', 'admin'])->only(['index']);
+Route::resource('/dashboard/warehouse', WarehouseController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
+Route::resource('/dashboard/depo', DepoController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
+Route::resource('/dashboard/cms', CMSController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
+Route::resource('/dashboard/logistic', LogisticController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);

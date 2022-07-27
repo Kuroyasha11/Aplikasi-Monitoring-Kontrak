@@ -39,18 +39,18 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $kapital = ucfirst($request->nama);
+        // $kapital = ucfirst($request->nama);
 
-        $validated = $request->validate([
-            'nama' => 'required|unique:services,nama',
-            'keterangan' => 'nullable|max:100'
-        ]);
+        // $validated = $request->validate([
+        //     'nama' => 'required|unique:services,nama',
+        //     'keterangan' => 'nullable|max:100'
+        // ]);
 
-        $validated['nama'] = $kapital;
+        // $validated['nama'] = $kapital;
 
-        Service::create($validated);
+        // Service::create($validated);
 
-        return redirect('/dashboard/service')->with('berhasil', 'Berhasil menambahkan Service baru');
+        // return redirect('/dashboard/service')->with('berhasil', 'Berhasil menambahkan Service baru');
     }
 
     /**
@@ -84,14 +84,14 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        $validated = $request->validate([
-            'nama' => 'required',
-            'keterangan' => 'nullable|max:100'
-        ]);
+        // $validated = $request->validate([
+        //     'nama' => 'required',
+        //     'keterangan' => 'nullable|max:100'
+        // ]);
 
-        Service::where('id', $service->id)->update($validated);
+        // Service::where('id', $service->id)->update($validated);
 
-        return redirect('/dashboard/service')->with('berhasil', 'Berhasil mengubah data Service');
+        // return redirect('/dashboard/service')->with('berhasil', 'Berhasil mengubah data Service');
     }
 
     /**
@@ -102,8 +102,8 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        Service::destroy($service->id);
+        // Service::destroy($service->id);
 
-        return redirect('/dashboard/service')->with('berhasil', 'Berhasil menghapus data Service');
+        // return redirect('/dashboard/service')->with('berhasil', 'Berhasil menghapus data Service');
     }
 }
