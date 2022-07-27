@@ -52,6 +52,15 @@
                     @can('admin')
                         <hr>
                         <li class="nav-item">
+                            <a href="/dashboard/contract"
+                                class="nav-link {{ Request::is('dashboard/contract*') ? 'active' : '' }}">
+                                <i class="bi bi-person-rolodex"></i>
+                                <p>
+                                    Kontrak
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="/dashboard/service"
                                 class="nav-link {{ Request::is('dashboard/warehouse*') ? 'active' : '' }} {{ Request::is('dashboard/depo*') ? 'active' : '' }} {{ Request::is('dashboard/cms*') ? 'active' : '' }} {{ Request::is('dashboard/logistic*') ? 'active' : '' }}">
                                 <i class="bi bi-gear"></i>
@@ -90,15 +99,6 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/dashboard/contract"
-                                class="nav-link {{ Request::is('dashboard/contract*') ? 'active' : '' }}">
-                                <i class="bi bi-person-rolodex"></i>
-                                <p>
-                                    Kontrak
-                                </p>
-                            </a>
                         </li>
                     @endcan
                     <hr>

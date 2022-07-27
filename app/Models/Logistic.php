@@ -21,4 +21,9 @@ class Logistic extends Model
             });
         });
     }
+
+    public function contract()
+    {
+        return $this->hasMany(Contract::class);
+    }
 }
