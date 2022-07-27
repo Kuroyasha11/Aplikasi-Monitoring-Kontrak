@@ -52,22 +52,44 @@
                     @can('admin')
                         <hr>
                         <li class="nav-item">
-                            <a href="/dashboard/warehouse"
-                                class="nav-link {{ Request::is('dashboard/warehouse*') ? 'active' : '' }}">
-                                <i class="bi bi-building"></i>
-                                <p>
-                                    Gudang
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="/dashboard/service"
-                                class="nav-link {{ Request::is('dashboard/service*') ? 'active' : '' }}">
+                                class="nav-link {{ Request::is('dashboard/warehouse*') ? 'active' : '' }} {{ Request::is('dashboard/depo*') ? 'active' : '' }} {{ Request::is('dashboard/cms*') ? 'active' : '' }} {{ Request::is('dashboard/logistic*') ? 'active' : '' }}">
                                 <i class="bi bi-gear"></i>
                                 <p>
                                     Jenis Pelayanan
+                                    <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/dashboard/warehouse"
+                                        class="nav-link {{ Request::is('dashboard/warehouse*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Gudang</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/dashboard/depo"
+                                        class="nav-link {{ Request::is('dashboard/depo*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Depo Container</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/dashboard/cms"
+                                        class="nav-link {{ Request::is('dashboard/cms*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>CMS</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/dashboard/logistic"
+                                        class="nav-link {{ Request::is('dashboard/logistic*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Logistik</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="/dashboard/contract"
