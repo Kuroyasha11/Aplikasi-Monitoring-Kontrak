@@ -259,6 +259,8 @@ class ContractController extends Controller
     {
         Contract::destroy($contract->id);
 
+        User::destroy($contract->user_id);
+
         return redirect('/dashboard/contract')->with('berhasil', 'Berhasil menghapus data kontrak');
     }
 }
