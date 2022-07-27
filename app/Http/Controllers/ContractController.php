@@ -22,10 +22,21 @@ class ContractController extends Controller
      */
     public function index()
     {
+        // $caridata = Contract::all()->where('selesai', false);
+
+        // foreach ($caridata as $item) {
+        //     $tanggal = ($item->tglakhir);
+        //     $date = new DateTime($tanggal);
+        //     $date_minus = $date->modify("-30 days");
+        //     $caritglakhir = Contract::whereBetween('tglkonfirmasi', [$date_minus, $item['tglakhir']])->get();
+        // }
+        // dd($caritglakhir);
+
         return view('contracts.index', [
             'title' => 'Kontrak',
             'judul' => 'Daftar Kontrak',
-            'contract' => Contract::latest()->paginate(10)
+            'contract' => Contract::latest()->paginate(10),
+            'notif' => Contract::where('selesai', false)->get()
         ]);
     }
 
@@ -57,7 +68,7 @@ class ContractController extends Controller
     {
         $tanggal = ($request->tglakhir);
         $date = new DateTime($tanggal);
-        $date_minus = $date->modify("-13 days");
+        $date_minus = $date->modify("-30 days");
 
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
@@ -207,7 +218,7 @@ class ContractController extends Controller
         // Tanggal Notifikasi
         $tanggal = ($request->tglakhir);
         $date = new DateTime($tanggal);
-        $date_minus = $date->modify("-13 days");
+        $date_minus = $date->modify("-30 days");
 
         $rules1 = [
             'service_id' => 'required|min:1|numeric',

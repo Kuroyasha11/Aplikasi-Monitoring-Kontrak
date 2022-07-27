@@ -21,96 +21,210 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <table id="tabel-biasa" class="table table-bordered table-hover">
-                <thead>
-                    <tr align="CENTER">
-                        <th>No</th>
-                        <th>Layanan</th>
-                        <th>Nama Pelanggan</th>
-                        <th>Nama (Gudang, Kantor, dan lain-lain)</th>
-                        <th>Mulai Sewa</th>
-                        <th>Akhir Sewa</th>
-                        <th>Keterangan</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($contract->count())
-                        @foreach ($contract as $item)
-                            <tr>
-                                <td align="CENTER"><b>{{ $contract->firstItem() - 1 + $loop->iteration }}</b></th>
-                                <td>{{ $item->service->nama }}</td>
-                                <td>{{ $item->author->name }}</td>
-                                <td>
-                                    @if ($item->warehouse_id && !$item->depo_id && !$item->c_m_s_id && !$item->logistic_id)
-                                        {{ $item->warehouse->nama }}
-                                    @elseif(!$item->warehouse_id && $item->depo_id && !$item->c_m_s_id && !$item->logistic_id)
-                                        {{ $item->depo->nama }}
-                                    @elseif(!$item->warehouse_id && !$item->depo_id && $item->c_m_s_id && !$item->logistic_id)
-                                        {{ $item->CMS->nama }}
-                                    @elseif(!$item->warehouse_id && !$item->depo_id && !$item->c_m_s_id && $item->logistic_id)
-                                        {{ $item->logistic->nama }}
-                                    @endif
-                                </td>
-                                <td>{{ \Carbon\Carbon::parse($item->tglmulai)->isoFormat('DD MMMM Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->tglakhir)->isoFormat('DD MMMM Y') }}</td>
-
-                                <td>
-                                    {{-- {{ $item->keterangan }} --}}
-                                    @php
-                                        $tanggal = $item->tglakhir;
-                                        $date = new DateTime($tanggal);
-                                        $date_minus = $date->modify('+13 days')->format('Y-m-d');
-                                        $tgldenda = \Carbon\Carbon::parse($item->tglakhir);
-                                        $tglhariini = \Carbon\Carbon::now();
-                                    @endphp
-
-                                    @if ($tglhariini >= $tgldenda->addDays(13))
-                                        @if ($tglhariini >= $tgldenda->addDays(30))
-                                            @if ($tglhariini >= $tgldenda->addDays(60))
-                                                @if ($tglhariini >= $tgldenda->addDays(90))
-                                                    <a href="#" class="btn btn-danger">Lewat 90</a>
-                                                @else
-                                                    <a href="#" class="btn btn-danger">Lewat 60</a>
-                                                @endif
-                                            @else
-                                                <a href="{{ url('/send-mail') }}" class="btn btn-danger">Lewat 30</a>
-                                            @endif
-                                        @else
-                                            <a href="#" class="btn btn-danger">Lewat 13</a>
+            <div class="table-responsive">
+                <table id="tabel-biasa" class="table table-bordered table-hover">
+                    <thead>
+                        <tr align="CENTER">
+                            <th>No</th>
+                            <th>Layanan</th>
+                            <th>Nama Pelanggan</th>
+                            <th>Nama (Gudang, Kantor, dan lain-lain)</th>
+                            <th>Mulai Sewa</th>
+                            <th>Akhir Sewa</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($contract->count())
+                            @foreach ($contract as $item)
+                                <tr>
+                                    <td align="CENTER"><b>{{ $contract->firstItem() - 1 + $loop->iteration }}</b></th>
+                                    <td>{{ $item->service->nama }}</td>
+                                    <td>{{ $item->author->name }}</td>
+                                    <td>
+                                        @if ($item->warehouse_id && !$item->depo_id && !$item->c_m_s_id && !$item->logistic_id)
+                                            {{ $item->warehouse->nama }}
+                                        @elseif(!$item->warehouse_id && $item->depo_id && !$item->c_m_s_id && !$item->logistic_id)
+                                            {{ $item->depo->nama }}
+                                        @elseif(!$item->warehouse_id && !$item->depo_id && $item->c_m_s_id && !$item->logistic_id)
+                                            {{ $item->CMS->nama }}
+                                        @elseif(!$item->warehouse_id && !$item->depo_id && !$item->c_m_s_id && $item->logistic_id)
+                                            {{ $item->logistic->nama }}
                                         @endif
-                                    @else
-                                        <a href="#" class="btn btn-primary">Belum</a>
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center">
-                                        <a href="/dashboard/contract/{{ $item->id }}/edit"
-                                            class="btn btn-warning m-1"><i class="bi bi-pencil-square"></i> Edit</a>
-                                        <form action="/dashboard/contract/{{ $item->id }}" method="post">
-                                            @method('delete')
-                                            @csrf
-                                            <button class="btn btn-danger m-1" onclick="return confirm('Are you sure?')">
-                                                <i class="bi bi-x-circle"></i> Delete
-                                            </button>
-                                        </form>
-                                    </div>
+                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tglmulai)->isoFormat('DD MMMM Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tglakhir)->isoFormat('DD MMMM Y') }}</td>
+
+                                    <td>
+                                        {{-- {{ $item->keterangan }} --}}
+                                        @php
+                                            // $tanggal = $item->tglakhir;
+                                            // $date = new DateTime($tanggal);
+                                            // $date_minus = $date->modify('+13 days')->format('Y-m-d');
+                                            // $tgldenda = \Carbon\Carbon::parse($item->tglakhir);
+                                            // $tglhariini = \Carbon\Carbon::now();
+                                            $today = \Carbon\Carbon::now();
+                                            $tglstart = \Carbon\Carbon::parse($item->tglmulai);
+                                            $tglfrom = \Carbon\Carbon::parse($item->tglkonfirmasi);
+                                            $tglto = \Carbon\Carbon::parse($item->tglakhir);
+                                        @endphp
+
+                                        @if ($today >= $tglstart && $today <= $tglfrom)
+                                            <a href="#" class="btn btn-primary">Kontrak</a>
+                                        @elseif($today >= $tglfrom && $today <= $tglto)
+                                            <a href="#" class="btn btn-warning">Masa Tenggang</a>
+                                        @elseif ($today > $tglto && $today <= $tglto->addDays(30))
+                                            <div class="d-grid">
+                                                <a href="#" class="btn btn-danger">Denda 1 Bulan</a>
+                                                <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 2)</a>
+                                            </div>
+                                        @elseif ($today > $tglto->addDays(30) && $today <= $tglto->addDays(60))
+                                            <div class="d-grid">
+                                                <a href="#" class="btn btn-danger">Denda 2 Bulan</a>
+                                                <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 3)</a>
+                                            </div>
+                                        @elseif ($today > $tglto->addDays(60) && $today <= $tglto->addDays(90))
+                                            <div class="d-grid">
+                                                <a href="#" class="btn btn-danger">Denda 3 Bulan</a>
+                                                <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 4)</a>
+                                            </div>
+                                        @elseif ($item->selesai = true)
+                                            <a href="" class="btn btn-success">Selesai</a>
+                                        @endif
+                                        {{-- @if ($today >= $tglstart && $today < $tglfrom)
+                                            <a href="#" class="btn btn-primary">Kontrak</a>
+                                        @else
+                                            @if ($today > $tglfrom && $today <= $tglto)
+                                                @if ($today > $tglto && $today <= $tglto->addDays(30))
+                                                    @if ($today > $tglto->addDays(30) && $today <= $tglto->addDays(60))
+                                                        @if ($today > $tglto->addDays(60))
+                                                            <a href="#" class="btn btn-danger">Denda 3 Bulan</a>
+                                                            <a href="#" class="btn btn-danger">@IDR($item->harga * 4)</a>
+                                                        @else
+                                                            <a href="#" class="btn btn-danger">Denda 2 Bulan</a>
+                                                            <a href="#" class="btn btn-danger">@IDR($item->harga * 3)</a>
+                                                        @endif
+                                                    @else
+                                                        <a href="#" class="btn btn-danger">Denda 1 Bulan</a>
+                                                        <a href="#" class="btn btn-danger">@IDR($item->harga * 2)</a>
+                                                    @endif
+                                                @else
+                                                    <a href="#" class="btn btn-warning">Masa Tenggang</a>
+                                                @endif
+                                            @endif
+                                        @endif --}}
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <a href="/dashboard/contract/{{ $item->id }}/edit"
+                                                class="btn btn-warning m-1"><i class="bi bi-pencil-square"></i> Edit</a>
+                                            <form action="/dashboard/contract/{{ $item->id }}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-danger m-1"
+                                                    onclick="return confirm('Are you sure?')">
+                                                    <i class="bi bi-x-circle"></i> Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="8">
+                                    <p class="text-center fs-4">Tidak ada daftar kontrak</p>
                                 </td>
                             </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="8">
-                                <p class="text-center fs-4">Tidak ada daftar kontrak</p>
-                            </td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+
         </div>
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
 
+    <div class="toast-container position-static">
+        <div class="toast-container top-0 end-0 p-3">
+            @foreach ($notif as $item)
+                <input type="hidden" id="toastbtn{{ $item->id }}" value="{{ $item->id }}">
+                @php
+                    $today = \Carbon\Carbon::now();
+                    $tglfrom = \Carbon\Carbon::parse($item->tglkonfirmasi);
+                    $tglto = \Carbon\Carbon::parse($item->tglakhir);
+                @endphp
 
+                @if ($today >= $tglfrom && $today <= $tglto)
+                    <div id="toast{{ $item->id }}" class="toast text-bg-danger" role="alert" aria-live="assertive"
+                        aria-atomic="true">
+                        <div class="toast-header">
+                            <strong class="me-auto">Pemberitahuan Kontrak {{ $item->author->name }}</strong>
+                            <small class="text-muted"></small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            Kontrak akan habis dalam {{ \Carbon\Carbon::parse($item->tglakhir)->diffForHumans() }}
+                        </div>
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+
+                            const toastLiveExample = document.getElementById('toast{{ $item->id }}')
+
+
+                            let toastbtn{{ $item->id }} = $('#toastbtn{{ $item->id }}').val()
+
+                            if (toastbtn{{ $item->id }} == {{ $item->id }}) {
+                                const toast = new bootstrap.Toast(toastLiveExample)
+
+                                toast.show()
+                            }
+
+                        });
+                    </script>
+                @endif
+            @endforeach
+        </div>
+    </div>
+
+    {{-- <script>
+        $(document).ready(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            $('.toastsDefaultInfo').show(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-info',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+        });
+    </script> --}}
+
+    {{-- <script>
+        $(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            $('.toastsDefaultInfo').show(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-info',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+        });
+    </script> --}}
 @endsection
