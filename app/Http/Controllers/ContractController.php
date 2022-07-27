@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CMS;
 use App\Models\Contract;
+use App\Models\Depo;
+use App\Models\Logistic;
 use App\Models\Service;
 use App\Models\User;
 use App\Models\Warehouse;
@@ -19,13 +22,22 @@ class ContractController extends Controller
      */
     public function index()
     {
+        // $caridata = Contract::all()->where('selesai', false);
+
+        // foreach ($caridata as $item) {
+        //     $tanggal = ($item->tglakhir);
+        //     $date = new DateTime($tanggal);
+        //     $date_minus = $date->modify("-30 days");
+        //     $caritglakhir = Contract::whereBetween('tglkonfirmasi', [$date_minus, $item['tglakhir']])->get();
+        // }
+        // dd($caritglakhir);
+
         return view('contracts.index', [
             'title' => 'Kontrak',
             'judul' => 'Daftar Kontrak',
-            'contract' => Contract::latest()->paginate(10)
+            'contract' => Contract::latest()->paginate(10),
+            'notif' => Contract::where('selesai', false)->get()
         ]);
-
-        
     }
 
     /**
@@ -40,6 +52,9 @@ class ContractController extends Controller
             'judul' => 'Buat Daftar Kontrak Baru',
             'layanan' => Service::all(),
             'gudang' => Warehouse::latest()->get(),
+            'depo' => Depo::latest()->get(),
+            'cms' => CMS::latest()->get(),
+            'logistic' => Logistic::latest()->get(),
         ]);
     }
 
@@ -53,13 +68,13 @@ class ContractController extends Controller
     {
         $tanggal = ($request->tglakhir);
         $date = new DateTime($tanggal);
-        $date_minus = $date->modify("-13 days");
+        $date_minus = $date->modify("-30 days");
 
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
             'warehouse_id' => ['nullable'],
-            'namamitra' => ['nullable', 'min:3'],
+            'depo_id' => ['nullable'],
             'harga' => 'required|numeric',
             'luassewa' => ['required'],
             'peruntukan' => 'nullable',
@@ -90,29 +105,77 @@ class ContractController extends Controller
             $validatedData1['user_id'] = $cekuser['id'];
         }
 
-        // GUDANG
+        // Lainnya
         if ($request->nama) {
-            $kapital = ucfirst($request->nama);
-            $rules2 = [
-                'nama' => 'nullable|min:3|unique:warehouses,nama'
-            ];
+            if ($request->service_id == 1) {
+                $kapital = ucfirst($request->nama);
+                $rules2 = [
+                    'nama' => 'nullable|min:3|unique:warehouses,nama'
+                ];
 
-            // validasi gudang
-            $validatedData2 = $request->validate($rules2);
+                // validasi gudang
+                $validatedData2 = $request->validate($rules2);
 
-            $validatedData2['nama'] = $kapital;
+                $validatedData2['nama'] = $kapital;
 
-            Warehouse::create($validatedData2);
+                Warehouse::create($validatedData2);
 
-            $cekgudang = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
+                $cek = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
 
-            $validatedData1['warehouse_id'] = $cekgudang['id'];
+                $validatedData1['warehouse_id'] = $cek['id'];
+            } elseif ($request->service_id == 2) {
+                $kapital = ucfirst($request->nama);
+                $rules2 = [
+                    'nama' => 'nullable|min:3|unique:depos,nama'
+                ];
+
+                // validasi depo
+                $validatedData2 = $request->validate($rules2);
+
+                $validatedData2['nama'] = $kapital;
+
+                Depo::create($validatedData2);
+
+                $cek = Depo::all()->where('nama', $validatedData2['nama'])->first();
+
+                $validatedData1['depo_id'] = $cek['id'];
+            } elseif ($request->service_id == 3) {
+                $kapital = ucfirst($request->nama);
+                $rules2 = [
+                    'nama' => 'nullable|min:3|unique:c_m_s,nama'
+                ];
+
+                // validasi cms
+                $validatedData2 = $request->validate($rules2);
+
+                $validatedData2['nama'] = $kapital;
+
+                CMS::create($validatedData2);
+
+                $cek = CMS::all()->where('nama', $validatedData2['nama'])->first();
+
+                $validatedData1['c_m_s_id'] = $cek['id'];
+            } elseif ($request->service_id == 4) {
+                $kapital = ucfirst($request->nama);
+                $rules2 = [
+                    'nama' => 'nullable|min:3|unique:logistics,nama'
+                ];
+
+                // validasi logistic
+                $validatedData2 = $request->validate($rules2);
+
+                $validatedData2['nama'] = $kapital;
+
+                Logistic::create($validatedData2);
+
+                $cek = Logistic::all()->where('nama', $validatedData2['nama'])->first();
+
+                $validatedData1['logistic_id'] = $cek['id'];
+            }
         }
-
-
         Contract::create($validatedData1);
 
-        return redirect('/dashboard/contract')->with('Berhasil', 'Berhasil menambahkan kontrak baru');
+        return redirect('/dashboard/contract')->with('berhasil', 'Berhasil menambahkan kontrak baru');
     }
 
     /**
@@ -155,7 +218,7 @@ class ContractController extends Controller
         // Tanggal Notifikasi
         $tanggal = ($request->tglakhir);
         $date = new DateTime($tanggal);
-        $date_minus = $date->modify("-13 days");
+        $date_minus = $date->modify("-30 days");
 
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
@@ -248,6 +311,8 @@ class ContractController extends Controller
     public function destroy(Contract $contract)
     {
         Contract::destroy($contract->id);
+
+        User::destroy($contract->user_id);
 
         return redirect('/dashboard/contract')->with('berhasil', 'Berhasil menghapus data kontrak');
     }

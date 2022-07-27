@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -44,6 +45,22 @@ class DatabaseSeeder extends Seeder
             'username' => 'byy',
             'email' => 'byy@gmail.com',
             'password' => bcrypt('admin123')
+        ]);
+
+        Service::create([
+            'nama' => 'Gudang',
+        ]);
+
+        Service::create([
+            'nama' => 'Depo Container',
+        ]);
+
+        Service::create([
+            'nama' => 'Collateral Management Service (CMS)',
+        ]);
+
+        Service::create([
+            'nama' => 'Logistik',
         ]);
     }
 }

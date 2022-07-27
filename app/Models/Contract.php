@@ -27,4 +27,19 @@ class Contract extends Model
     {
         return $this->belongsTo(Warehouse::class);
     }
+
+    public function depo()
+    {
+        return $this->belongsTo(Depo::class);
+    }
+
+    public function CMS()
+    {
+        return $this->belongsTo(CMS::class);
+    }
+
+    public function logistic()
+    {
+        return $this->belongsTo(Logistic::class);
+    }
 }

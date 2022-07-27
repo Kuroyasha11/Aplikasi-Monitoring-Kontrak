@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\CMS;
+use App\Models\Depo;
+use App\Models\Logistic;
 use App\Models\Service;
 use App\Models\User;
 use App\Models\Warehouse;
@@ -20,8 +23,10 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Service::class);
             $table->foreignIdFor(Warehouse::class)->nullable();
+            $table->foreignIdFor(Depo::class)->nullable();
+            $table->foreignIdFor(CMS::class)->nullable();
+            $table->foreignIdFor(Logistic::class)->nullable();
             $table->foreignIdFor(User::class);
-            $table->string('namamitra')->nullable();
             $table->boolean('manajemen')->default(false);
             $table->integer('harga');
             $table->string('luassewa');
