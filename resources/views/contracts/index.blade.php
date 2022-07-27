@@ -42,10 +42,14 @@
                                 <td>{{ $item->service->nama }}</td>
                                 <td>{{ $item->author->name }}</td>
                                 <td>
-                                    @if ($item->warehouse_id && !$item->namamitra)
+                                    @if ($item->warehouse_id && !$item->depo_id && !$item->c_m_s_id && !$item->logistic_id)
                                         {{ $item->warehouse->nama }}
-                                    @elseif(!$item->warehouse_id && $item->namamitra)
-                                        {{ $item->namamitra }}
+                                    @elseif(!$item->warehouse_id && $item->depo_id && !$item->c_m_s_id && !$item->logistic_id)
+                                        {{ $item->depo->nama }}
+                                    @elseif(!$item->warehouse_id && !$item->depo_id && $item->c_m_s_id && !$item->logistic_id)
+                                        {{ $item->CMS->nama }}
+                                    @elseif(!$item->warehouse_id && !$item->depo_id && !$item->c_m_s_id && $item->logistic_id)
+                                        {{ $item->logistic->nama }}
                                     @endif
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($item->tglmulai)->isoFormat('DD MMMM Y') }}</td>
