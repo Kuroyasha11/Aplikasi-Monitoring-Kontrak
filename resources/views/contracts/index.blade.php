@@ -67,13 +67,14 @@
                                                 @if ($tglhariini >= $tgldenda->addDays(90))
                                                     <a href="#" class="btn btn-danger">Lewat 90</a>
                                                 @else
-                                                    <a href="#" class="btn btn-danger">Lewat 60</a>
+                                                    <a href="#" class="btn btn-danger" id="toast">Lewat 60</a>
                                                 @endif
                                             @else
                                                 <a href="{{ url('/send-mail') }}" class="btn btn-danger">Lewat 30</a>
                                             @endif
                                         @else
-                                            <a href="#" class="btn btn-danger">Lewat 13</a>
+                                            <a href="#" class="btn btn-danger" id="toast">Lewat
+                                                13</a>
                                         @endif
                                     @else
                                         <a href="#" class="btn btn-primary">Belum</a>
@@ -107,6 +108,99 @@
         <!-- /.card-body -->
     </div>
     <!-- /.card -->
+    <div class="toast-container position-static">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Bootstrap</strong>
+                <small class="text-muted">just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                See? Just like this.
+            </div>
+        </div>
+    </div>
+    {{-- <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast1" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
+    </div> --}}
+
+    <script>
+        $(document).ready(function() {
+
+            const toastLiveExample = document.getElementById('liveToast')
 
 
+            let toast = $('#toast').show()
+
+            if (toast) {
+                const toast = new bootstrap.Toast(toastLiveExample)
+
+                toast.show()
+            }
+
+        });
+    </script>
+
+    {{-- <script>
+        $(document).ready(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            $('.toastsDefaultInfo').show(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-info',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+        });
+    </script> --}}
+
+    {{-- <script>
+        $(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            $('.toastsDefaultInfo').show(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-info',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+        });
+    </script> --}}
 @endsection

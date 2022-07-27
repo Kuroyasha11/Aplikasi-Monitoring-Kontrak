@@ -164,6 +164,13 @@
 
     <script>
         $(document).ready(function() {
+
+            // $(document).Toasts('create', {
+            //     class: 'bg-success',
+            //     title: 'Toast Title',
+            //     subtitle: 'Subtitle',
+            //     body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+            // })
             let service_id = $('#service_id').find(':selected').text()
 
             if (service_id == 'Gudang') {
