@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }} | PT BGR LOGISTIK INDONESIA DIVRE PALEMBANG</title>
+    <link rel="icon" href="/assets/image/BGR.png">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -93,7 +94,7 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2021 Kuroyasha.</strong>
+            <strong>Copyright &copy; 2022 PT. BGR Palembang</strong>
             All rights reserved.
         </footer>
 

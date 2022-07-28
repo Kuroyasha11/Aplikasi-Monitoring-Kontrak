@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }} | PT BGR LOGISTIK INDONESIA DIVRE PALEMBANG (v2)</title>
+    <link rel="icon" href="/assets/image/BGR.png">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"

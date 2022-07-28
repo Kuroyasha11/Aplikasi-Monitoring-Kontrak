@@ -106,7 +106,7 @@ https://templatemo.com/tm-551-stand-blog
                                     </div>
                                     <div class="down-content">
                                         <span>Tentang Kami</span>
-                                        <a href="post-details.html">
+                                        <a href="#">
                                             <h4>PT. BGR Logistik</h4>
                                         </a>
                                         <p>PT BGR Logistik Indonesia merupakan perusahaan logistik yang memberikan
@@ -142,7 +142,7 @@ https://templatemo.com/tm-551-stand-blog
                                     </div>
                                     <div class="down-content">
                                         <span>Visi Misi</span>
-                                        <a href="post-details.html">
+                                        <a href="#">
                                             <h4>PT. BGR LOGISTIK</h4>
                                         </a>
                                         <b>VISI</b>
