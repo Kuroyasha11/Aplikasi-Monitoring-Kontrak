@@ -84,11 +84,27 @@ class WarehouseController extends Controller
      */
     public function update(Request $request, Warehouse $warehouse)
     {
-        $validated = $request->validate([
+        $rules = [
             'nama' => 'required',
             'keterangan' => 'nullable|max:100'
-        ]);
+        ];
 
+        if (isset($request->aktif)) {
+            if ($request->aktif != $warehouse->aktif) {
+                $rules['aktif'] = 'required';
+            }
+
+            $validated = $request->validate($rules);
+        } else {
+            $request->merge([
+                'aktif' => 0
+            ]);
+
+            if ($request->aktif != $warehouse->aktif) {
+                $rules['aktif'] = 'required';
+            }
+            $validated = $request->validate($rules);
+        }
         Warehouse::where('id', $warehouse->id)->update($validated);
 
         return redirect('/dashboard/warehouse')->with('berhasil', 'Berhasil mengubah data Warehouse');

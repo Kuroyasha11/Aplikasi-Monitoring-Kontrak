@@ -84,10 +84,27 @@ class LogisticController extends Controller
      */
     public function update(Request $request, Logistic $logistic)
     {
-        $validated = $request->validate([
+        $rules = [
             'nama' => 'required',
             'keterangan' => 'nullable|max:100'
-        ]);
+        ];
+
+        if (isset($request->aktif)) {
+            if ($request->aktif != $logistic->aktif) {
+                $rules['aktif'] = 'required';
+            }
+
+            $validated = $request->validate($rules);
+        } else {
+            $request->merge([
+                'aktif' => 0
+            ]);
+
+            if ($request->aktif != $logistic->aktif) {
+                $rules['aktif'] = 'required';
+            }
+            $validated = $request->validate($rules);
+        }
 
         Logistic::where('id', $logistic->id)->update($validated);
 
