@@ -51,10 +51,10 @@ class ContractController extends Controller
             'title' => 'Kontrak',
             'judul' => 'Buat Daftar Kontrak Baru',
             'layanan' => Service::all(),
-            'gudang' => Warehouse::latest()->get(),
-            'depo' => Depo::latest()->get(),
-            'cms' => CMS::latest()->get(),
-            'logistic' => Logistic::latest()->get(),
+            'gudang' => Warehouse::latest()->where('aktif', true)->get(),
+            'depo' => Depo::latest()->where('aktif', true)->get(),
+            'cms' => CMS::latest()->where('aktif', true)->get(),
+            'logistic' => Logistic::latest()->where('aktif', true)->get(),
         ]);
     }
 
@@ -75,6 +75,8 @@ class ContractController extends Controller
             'manajemen' => 'required',
             'warehouse_id' => ['nullable'],
             'depo_id' => ['nullable'],
+            'c_m_s_id' => ['nullable'],
+            'logistic_id' => ['nullable'],
             'harga' => 'required|numeric',
             'luassewa' => ['required'],
             'peruntukan' => 'nullable',
@@ -86,24 +88,6 @@ class ContractController extends Controller
         // validasi kontrak
         $validatedData1 = $request->validate($rules1);
         $validatedData1['tglkonfirmasi'] = $date_minus;
-
-        // USER
-        if ($request->name) {
-            $rules3 = [
-                'name' => 'required|min:3',
-                'email' => 'required|email:dns|unique:users',
-            ];
-
-            $validatedData3 = $request->validate($rules3);
-            $validatedData3['username'] = $request->email;
-            $validatedData3['password'] = bcrypt('12345678');
-
-            User::create($validatedData3);
-
-            $cekuser = User::all()->where('email', $validatedData3['email'])->first();
-
-            $validatedData1['user_id'] = $cekuser['id'];
-        }
 
         // Lainnya
         if ($request->nama) {
@@ -173,6 +157,25 @@ class ContractController extends Controller
                 $validatedData1['logistic_id'] = $cek['id'];
             }
         }
+
+        // USER
+        if ($request->name) {
+            $rules3 = [
+                'name' => 'required|min:3',
+                'email' => 'required|email:dns|unique:users',
+            ];
+
+            $validatedData3 = $request->validate($rules3);
+            $validatedData3['username'] = $request->email;
+            $validatedData3['password'] = bcrypt('12345678');
+
+            User::create($validatedData3);
+
+            $cekuser = User::all()->where('email', $validatedData3['email'])->first();
+
+            $validatedData1['user_id'] = $cekuser['id'];
+        }
+
         Contract::create($validatedData1);
 
         return redirect('/dashboard/contract')->with('berhasil', 'Berhasil menambahkan kontrak baru');
@@ -202,7 +205,10 @@ class ContractController extends Controller
             'judul' => 'Ubah Data Kontrak',
             'request' => $contract,
             'layanan' => Service::all(),
-            'gudang' => Warehouse::latest()->get(),
+            'gudang' => Warehouse::latest()->where('aktif', true)->get(),
+            'depo' => Depo::latest()->where('aktif', true)->get(),
+            'cms' => CMS::latest()->where('aktif', true)->get(),
+            'logistic' => Logistic::latest()->where('aktif', true)->get(),
         ]);
     }
 
@@ -223,9 +229,11 @@ class ContractController extends Controller
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
+            'warehouse_id' => ['nullable'],
+            'depo_id' => ['nullable'],
+            'c_m_s_id' => ['nullable'],
+            'logistic_id' => ['nullable'],
             'harga' => 'required|numeric',
-            'warehouse_id' => 'nullable',
-            'namamitra' => 'nullable|min:3',
             'luassewa' => ['required'],
             'peruntukan' => 'nullable',
             'tglmulai' => 'required',
@@ -233,21 +241,100 @@ class ContractController extends Controller
             'keterangan' => 'nullable'
         ];
 
-        // $cekdatagudangkontrak = Warehouse::all()->where('id', $contract->warehouse_id);
-        // if ($request->warehouse_id != $cekdatagudangkontrak->id) {
-        //     $rules1['warehouse_id'] = 'nullable';
-        // } elseif ($request->warehouse_id) {
-        //     $rules1['warehouse_id'] = 'nullable';
-        // }
-
-        // if ($request->namamitra != $contract->namamitra) {
-        //     $rules1['namamitra'] = 'nullable|min:3';
-        // } elseif ($request->namamitra) {
-        //     $rules1['namamitra'] = 'nullable|min:3';
-        // }
         // validasi kontrak
         $validatedData1 = $request->validate($rules1);
         $validatedData1['tglkonfirmasi'] = $date_minus;
+
+        $cekdatagudang  = Warehouse::all()->where('id', $contract->warehouse_id)->first();
+        $cekdatadepo  = Depo::all()->where('id', $contract->depo_id)->first();
+        $cekdatacms  = CMS::all()->where('id', $contract->c_m_s_id)->first();
+        $cekdatalogistik  = Logistic::all()->where('id', $contract->logistic_id)->first();
+        // Lainnya
+        if ($request->nama) {
+            if ($request->service_id == 1) {
+                if ($request->nama != $cekdatagudang->nama) {
+                    $kapital = ucfirst($request->nama);
+                    $rules2 = [
+                        'nama' => 'nullable|min:3|unique:warehouses,nama'
+                    ];
+
+                    // validasi gudang
+                    $validatedData2 = $request->validate($rules2);
+
+                    $validatedData2['nama'] = $kapital;
+
+                    Warehouse::create($validatedData2);
+
+                    $cek = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
+
+                    $validatedData1['warehouse_id'] = $cek['id'];
+                }
+            } elseif ($request->service_id == 2) {
+                if ($request->nama != $cekdatadepo->nama) {
+                    $kapital = ucfirst($request->nama);
+                    $rules2 = [
+                        'nama' => 'nullable|min:3|unique:depos,nama'
+                    ];
+
+                    // validasi depo
+                    $validatedData2 = $request->validate($rules2);
+
+                    $validatedData2['nama'] = $kapital;
+
+                    Depo::create($validatedData2);
+
+                    $cek = Depo::all()->where('nama', $validatedData2['nama'])->first();
+
+                    $validatedData1['depo_id'] = $cek['id'];
+                }
+            } elseif ($request->service_id == 3) {
+                if ($request->nama != $cekdatacms->nama) {
+                    $kapital = ucfirst($request->nama);
+                    $rules2 = [
+                        'nama' => 'nullable|min:3|unique:c_m_s,nama'
+                    ];
+
+                    // validasi cms
+                    $validatedData2 = $request->validate($rules2);
+
+                    $validatedData2['nama'] = $kapital;
+
+                    CMS::create($validatedData2);
+
+                    $cek = CMS::all()->where('nama', $validatedData2['nama'])->first();
+
+                    $validatedData1['c_m_s_id'] = $cek['id'];
+                }
+            } elseif ($request->service_id == 4) {
+                if ($request->nama != $cekdatalogistik->nama) {
+                    $kapital = ucfirst($request->nama);
+                    $rules2 = [
+                        'nama' => 'nullable|min:3|unique:logistics,nama'
+                    ];
+
+                    // validasi logistik
+                    $validatedData2 = $request->validate($rules2);
+
+                    $validatedData2['nama'] = $kapital;
+
+                    Logistic::create($validatedData2);
+
+                    $cek = Logistic::all()->where('nama', $validatedData2['nama'])->first();
+
+                    $validatedData1['logistic_id'] = $cek['id'];
+                }
+            }
+        }
+
+        if ($request->warehouse_id == null) {
+            Contract::where('id', $contract->id)->update(['warehouse_id' => null]);
+        } elseif ($request->depo_id == null) {
+            Contract::where('id', $contract->id)->update(['depo_id' => null]);
+        } elseif ($request->c_m_s_id == null) {
+            Contract::where('id', $contract->id)->update(['c_m_s_id' => null]);
+        } elseif ($request->logistic_id == null) {
+            Contract::where('id', $contract->id)->update(['logistic_id' => null]);
+        }
 
         $cekdatauser = User::all()->where('id', $contract->user_id)->first();
         // USER
@@ -268,35 +355,6 @@ class ContractController extends Controller
 
             User::where('id', $contract->user_id)->update($validatedData3);
         }
-
-        $cekdatagudang  = Warehouse::all()->where('id', $contract->warehouse_id)->first();
-        // GUDANG
-        if ($request->nama) {
-            if ($request->nama != $cekdatagudang->nama) {
-                $kapital = ucfirst($request->nama);
-                $rules2 = [
-                    'nama' => 'nullable|min:3|unique:warehouses,nama'
-                ];
-
-                // validasi gudang
-                $validatedData2 = $request->validate($rules2);
-
-                $validatedData2['nama'] = $kapital;
-
-                Warehouse::create($validatedData2);
-
-                $cekgudang = Warehouse::all()->where('nama', $validatedData2['nama'])->first();
-
-                $validatedData1['warehouse_id'] = $cekgudang['id'];
-            }
-        }
-
-        if ($request->warehouse_id == null) {
-            Contract::where('id', $contract->id)->update(['warehouse_id' => null]);
-        } elseif ($request->namamitra == null) {
-            Contract::where('id', $contract->id)->update(['namamitra' => null]);
-        }
-
         Contract::where('id', $contract->id)->update($validatedData1);
 
         return redirect('/dashboard/contract')->with('berhasil', 'Berhasil mengubah data kontrak');

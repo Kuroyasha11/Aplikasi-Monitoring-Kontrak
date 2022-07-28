@@ -66,8 +66,8 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="form-select">Nama (Gudang,Kantor, dan lain-lain)</label>
-                <select name="warehouse_id" id="pilihan" class="form-select">
+                <label for="form-select">Nama</label>
+                <select name="warehouse_id" id="warehouse_id" class="form-select">
                     @foreach ($gudang as $item)
                         @if (old('warehouse_id', $request->warehouse_id) == $item->id)
                             <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
@@ -77,19 +77,41 @@
                     @endforeach
                     <option>Lainnya</option>
                 </select>
-                <input type="text" name="namamitra" id="teks"
-                    class="form-control @error('namamitra') is-invalid @enderror" id="namamitra"
-                    placeholder="Nama (Gudang,Kantor, dan lain-lain)" value="{{ old('namamitra', $request->namamitra) }}">
-                @error('namamitra')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
+                <select name="depo_id" id="depo_id" class="form-select">
+                    @foreach ($depo as $item)
+                        @if (old('depo_id', $request->depo_id) == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endif
+                    @endforeach
+                    <option>Lainnya</option>
+                </select>
+                <select name="c_m_s_id" id="c_m_s_id" class="form-select">
+                    @foreach ($cms as $item)
+                        @if (old('c_m_s_id', $request->c_m_s_id) == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endif
+                    @endforeach
+                    <option>Lainnya</option>
+                </select>
+                <select name="logistic_id" id="logistic_id" class="form-select">
+                    @foreach ($logistic as $item)
+                        @if (old('logistic_id', $request->logistic_id) == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endif
+                    @endforeach
+                    <option>Lainnya</option>
+                </select>
                 <hr>
             </div>
             <div class="mb-3">
                 <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="lainnya"
-                    placeholder="Nama Gudang" value="{{ old('nama') }}">
+                    placeholder="Lainnya" value="{{ old('nama') }}">
                 @error('nama')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -166,7 +188,8 @@
         </form>
     </div>
 
-    <script>
+    {{-- <script src="/javascript/contract-edit.js"></script> --}}
+    {{-- <script>
         $(document).ready(function() {
             let service_id = $('#service_id').find(':selected').text()
 
@@ -211,6 +234,171 @@
             } else {
                 $('#lainnya').hide();
                 $('#lainnya').val('');
+            }
+        });
+    </script> --}}
+    <script>
+        $(document).ready(function() {
+            let service_id = $('#service_id').find(':selected').text()
+
+            if (service_id == 'Gudang') {
+                $('#warehouse_id').show();
+                $('#depo_id').hide();
+                $('#c_m_s_id').hide();
+                $('#logistic_id').hide();
+                $('#depo_id').text('');
+                $('#c_m_s_id').text('');
+                $('#logistic_id').text('');
+            } else if (service_id == 'Depo Container') {
+                $('#warehouse_id').hide();
+                $('#warehouse_id').text('');
+                $('#depo_id').show();
+                $('#c_m_s_id').hide();
+                $('#logistic_id').hide();
+                $('#c_m_s_id').text('');
+                $('#logistic_id').text('');
+            } else if (service_id == 'Collateral Management Service (CMS)') {
+                $('#warehouse_id').hide();
+                $('#depo_id').hide();
+                $('#warehouse_id').text('');
+                $('#depo_id').text('');
+                $('#c_m_s_id').show();
+                $('#logistic_id').hide();
+                $('#logistic_id').text('');
+            } else if (service_id == 'Logistik') {
+                $('#warehouse_id').hide();
+                $('#depo_id').hide();
+                $('#c_m_s_id').hide();
+                $('#warehouse_id').text('');
+                $('#depo_id').text('');
+                $('#c_m_s_id').text('');
+                $('#logistic_id').show();
+            }
+
+            if ($('#warehouse_id').show()) {
+                let warehouse_id = $('#warehouse_id').find(':selected').text()
+            } else if ($('#depo_id').show()) {
+                let depo_id = $('#depo_id').find(':selected').text()
+            } else if ($('#c_m_s_id').show()) {
+                let c_m_s_id = $('#c_m_s_id').find(':selected').text()
+            } else if ($('#logistic_id').show()) {
+                let logistic_id = $('#logistic_id').find(':selected').text()
+            }
+
+            if (warehouse_id == 'Lainnya') {
+                $('#lainnya').show();
+            } else {
+                $('#lainnya').hide();
+            }
+            if (depo_id == 'Lainnya') {
+                $('#lainnya').show();
+            } else {
+                $('#lainnya').hide();
+            }
+            if (c_m_s_id == 'Lainnya') {
+                $('#lainnya').show();
+            } else {
+                $('#lainnya').hide();
+            }
+            if (logistic_id == 'Lainnya') {
+                $('#lainnya').show();
+            } else {
+                $('#lainnya').hide();
+            }
+            // if (warehouse_id == 'Lainnya') {
+            //     $('#lainnya').show();
+            // } else if (depo_id == 'Lainnya') {
+            //     $('#lainnya').show();
+            // } else if (c_m_s_id == 'Lainnya') {
+            //     $('#lainnya').show();
+            // } else if (logistic_id == 'Lainnya') {
+            //     $('#lainnya').show();
+            // } else {
+            //     $('#lainnya').hide();
+            // }
+        });
+
+        $('#service_id').change(function(e) {
+            e.preventDefault();
+            let data = $('#service_id').find(':selected').text()
+
+            if (data == 'Gudang') {
+                $('#warehouse_id').show();
+                $('#depo_id').hide();
+                $('#depo_id').val(null);
+                $('#c_m_s_id').hide();
+                $('#c_m_s_id').val(null);
+                $('#logistic_id').hide();
+                $('#logistic_id').val(null);
+            } else if (data == 'Depo Container') {
+                $('#warehouse_id').hide();
+                $('#warehouse_id').val(null);
+                $('#depo_id').show();
+                $('#c_m_s_id').hide();
+                $('#c_m_s_id').val(null);
+                $('#logistic_id').hide();
+                $('#logistic_id').val(null);
+            } else if (data == 'Collateral Management Service (CMS)') {
+                $('#warehouse_id').hide();
+                $('#warehouse_id').val(null);
+                $('#depo_id').hide();
+                $('#depo_id').val(null);
+                $('#c_m_s_id').show();
+                $('#logistic_id').hide();
+                $('#logistic_id').val(null);
+            } else if (data == 'Logistik') {
+                $('#warehouse_id').hide();
+                $('#warehouse_id').val(null);
+                $('#depo_id').hide();
+                $('#depo_id').val(null);
+                $('#c_m_s_id').hide();
+                $('#c_m_s_id').val(null);
+                $('#logistic_id').show();
+            }
+        });
+
+        $('#warehouse_id').change(function(e) {
+            e.preventDefault();
+            let data = $('#warehouse_id').find(':selected').text()
+
+            if (data == 'Lainnya') {
+                $('#lainnya').show();
+            } else {
+                $('#lainnya').hide();
+                $('#lainnya').val(null);
+            }
+        });
+        $('#depo_id').change(function(e) {
+            e.preventDefault();
+            let data = $('#depo_id').find(':selected').text()
+
+            if (data == 'Lainnya') {
+                $('#lainnya').show();
+            } else {
+                $('#lainnya').hide();
+                $('#lainnya').val(null);
+            }
+        });
+        $('#c_m_s_id').change(function(e) {
+            e.preventDefault();
+            let data = $('#c_m_s_id').find(':selected').text()
+
+            if (data == 'Lainnya') {
+                $('#lainnya').show();
+            } else {
+                $('#lainnya').hide();
+                $('#lainnya').val(null);
+            }
+        });
+        $('#logistic_id').change(function(e) {
+            e.preventDefault();
+            let data = $('#logistic_id').find(':selected').text()
+
+            if (data == 'Lainnya') {
+                $('#lainnya').show();
+            } else {
+                $('#lainnya').hide();
+                $('#lainnya').val(null);
             }
         });
     </script>
