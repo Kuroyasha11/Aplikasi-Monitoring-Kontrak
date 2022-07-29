@@ -42,16 +42,16 @@
                                 <td>{{ $item->nama }}</td>
                                 <td align="CENTER">
                                     @if ($item->aktif == 1)
-                                        <span class="badge rounded-pill text-bg-success">Aktif</span>
+                                        <span class="badge rounded-pill text-bg-success">Tersedia</span>
                                     @elseif ($item->aktif == 0)
-                                        <span class="badge rounded-pill text-bg-danger">Tidak Aktif</span>
+                                        <span class="badge rounded-pill text-bg-primary">Disewakan</span>
                                     @endif
                                 </td>
                                 <td>{{ $item->Keterangan }}</td>
                                 <td>
                                     <div class="d-flex  justify-content-center">
                                         <!-- Button trigger modal edit-->
-                                        <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-warning mx-2" data-bs-toggle="modal"
                                             data-bs-target="#edit{{ $item->id }}">
                                             <i class="bi bi-pencil-square"></i> Edit
                                         </button>
@@ -81,7 +81,7 @@
                                             <form action="/dashboard/logistic/{{ $item->id }}" method="post">
                                                 @method('put')
                                                 @csrf
-                                                <div class="form-group">
+                                                {{-- <div class="form-group">
                                                     <label for="aktif">Status</label>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" value="1"
@@ -90,7 +90,7 @@
                                                             Aktif
                                                         </label>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <div class="form-group">
                                                     <label for="nama">Nama</label>
                                                     <input type="text" id="nama" name="nama"
