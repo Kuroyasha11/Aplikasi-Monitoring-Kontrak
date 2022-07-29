@@ -117,8 +117,13 @@
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-center">
-                                            <a href="/dashboard/contract/{{ $item->id }}/edit"
-                                                class="btn btn-warning m-1"><i class="bi bi-pencil-square"></i> Edit</a>
+                                            {{-- <a href="/dashboard/contract/{{ $item->id }}/edit"
+                                                class="btn btn-warning m-1"><i class="bi bi-pencil-square"></i> Edit</a> --}}
+                                            <!-- Button trigger modal edit-->
+                                            <button type="button" class="btn btn-warning mx-2" data-bs-toggle="modal"
+                                                data-bs-target="#edit{{ $item->id }}">
+                                                <i class="bi bi-pencil-square"></i> Perpanjang
+                                            </button>
                                             <form action="/dashboard/contract/{{ $item->id }}" method="post">
                                                 @method('delete')
                                                 @csrf
@@ -130,6 +135,55 @@
                                         </div>
                                     </td>
                                 </tr>
+
+                                <!-- Modal EDIT-->
+                                <div class="modal fade" id="edit{{ $item->id }}" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Ubah Kontrak
+                                                    {{ $item->namapelanggan }}
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/dashboard/contract/{{ $item->id }}" method="post">
+                                                    @method('put')
+                                                    @csrf
+                                                    <div class="mb-3 col-lg-5">
+                                                        <label for="tglakhir" class="form-label">Perpanjang Sewa</label>
+                                                        <input type="date" name="tglakhir"
+                                                            class="form-control @error('tglakhir') is-invalid @enderror"
+                                                            id="tglakhir" value="{{ old('tglakhir', $item->tglakhir) }}">
+                                                        @error('tglakhir')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="keterangan">Keterangan</label>
+                                                        <textarea class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" id="keterangan"
+                                                            cols="30" rows="10">{{ old('keterangan', $item->keterangan) }}</textarea>
+                                                        @error('keterangan')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary"><i
+                                                        class="bi bi-check-lg"></i>
+                                                    Ubah</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         @else
                             <tr>
@@ -163,7 +217,8 @@
                         <div class="toast-header">
                             <strong class="me-auto">Pemberitahuan Kontrak {{ $item->author->name }}</strong>
                             <small class="text-muted"></small>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
                         </div>
                         <div class="toast-body">
                             Kontrak akan habis dalam {{ \Carbon\Carbon::parse($item->tglakhir)->diffForHumans() }}

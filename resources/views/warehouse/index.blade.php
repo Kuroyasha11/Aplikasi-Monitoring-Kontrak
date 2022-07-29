@@ -29,6 +29,7 @@
                     <tr align="CENTER">
                         <th>No</th>
                         <th>NAMA</th>
+                        <th>STATUS</th>
                         <th>Keterangan</th>
                         <th>Aksi</th>
                     </tr>
@@ -39,6 +40,13 @@
                             <tr>
                                 <td align="CENTER"><b>{{ $request->firstItem() - 1 + $loop->iteration }}</b></th>
                                 <td>{{ $item->nama }}</td>
+                                <td align="CENTER">
+                                    @if ($item->aktif == 1)
+                                        <span class="badge rounded-pill text-bg-success">Tersedia</span>
+                                    @elseif ($item->aktif == 0)
+                                        <span class="badge rounded-pill text-bg-danger">Disewakan</span>
+                                    @endif
+                                </td>
                                 <td>{{ $item->Keterangan }}</td>
                                 <td>
                                     <div class="d-flex  justify-content-center">
@@ -74,6 +82,16 @@
                                                 @method('put')
                                                 @csrf
                                                 <div class="form-group">
+                                                    <label for="aktif">Status</label>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="1"
+                                                            id="aktif" name="aktif" @checked(old('aktif', $item->aktif) == 1)>
+                                                        <label class="form-check-label" for="aktif">
+                                                            Aktif
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
                                                     <label for="nama">Nama</label>
                                                     <input type="text" id="nama" name="nama"
                                                         class="form-control @error('nama') is-invalid @enderror"
@@ -106,7 +124,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="4">
+                            <td colspan="5">
                                 <p class="text-center fs-4">Tidak ada daftar {{ $title }}</p>
                             </td>
                         </tr>

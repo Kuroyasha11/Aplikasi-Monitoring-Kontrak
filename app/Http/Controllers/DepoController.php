@@ -84,11 +84,27 @@ class DepoController extends Controller
      */
     public function update(Request $request, Depo $depo)
     {
-        $validated = $request->validate([
+        $rules = [
             'nama' => 'required',
             'keterangan' => 'nullable|max:100'
-        ]);
+        ];
 
+        if (isset($request->aktif)) {
+            if ($request->aktif != $depo->aktif) {
+                $rules['aktif'] = 'required';
+            }
+
+            $validated = $request->validate($rules);
+        } else {
+            $request->merge([
+                'aktif' => 0
+            ]);
+
+            if ($request->aktif != $depo->aktif) {
+                $rules['aktif'] = 'required';
+            }
+            $validated = $request->validate($rules);
+        }
         Depo::where('id', $depo->id)->update($validated);
 
         return redirect('/dashboard/depo')->with('berhasil', 'Berhasil mengubah data Depo');

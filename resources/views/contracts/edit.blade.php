@@ -66,8 +66,8 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="form-select">Nama (Gudang,Kantor, dan lain-lain)</label>
-                <select name="warehouse_id" id="pilihan" class="form-select">
+                <label for="form-select">Nama</label>
+                <select name="warehouse_id" id="warehouse_id" class="form-select">
                     @foreach ($gudang as $item)
                         @if (old('warehouse_id', $request->warehouse_id) == $item->id)
                             <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
@@ -77,19 +77,41 @@
                     @endforeach
                     <option>Lainnya</option>
                 </select>
-                <input type="text" name="namamitra" id="teks"
-                    class="form-control @error('namamitra') is-invalid @enderror" id="namamitra"
-                    placeholder="Nama (Gudang,Kantor, dan lain-lain)" value="{{ old('namamitra', $request->namamitra) }}">
-                @error('namamitra')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
+                <select name="depo_id" id="depo_id" class="form-select">
+                    @foreach ($depo as $item)
+                        @if (old('depo_id', $request->depo_id) == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endif
+                    @endforeach
+                    <option>Lainnya</option>
+                </select>
+                <select name="c_m_s_id" id="c_m_s_id" class="form-select">
+                    @foreach ($cms as $item)
+                        @if (old('c_m_s_id', $request->c_m_s_id) == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endif
+                    @endforeach
+                    <option>Lainnya</option>
+                </select>
+                <select name="logistic_id" id="logistic_id" class="form-select">
+                    @foreach ($logistic as $item)
+                        @if (old('logistic_id', $request->logistic_id) == $item->id)
+                            <option value="{{ $item->id }}" selected>{{ $item->nama }}</option>
+                        @else
+                            <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @endif
+                    @endforeach
+                    <option>Lainnya</option>
+                </select>
                 <hr>
             </div>
             <div class="mb-3">
                 <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="lainnya"
-                    placeholder="Nama Gudang" value="{{ old('nama') }}">
+                    placeholder="Lainnya" value="{{ old('nama') }}">
                 @error('nama')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -166,52 +188,5 @@
         </form>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            let service_id = $('#service_id').find(':selected').text()
-
-            if (service_id == 'Gudang') {
-                $('#pilihan').show();
-                $('#teks').hide();
-            } else {
-                $('#pilihan').hide();
-                $('#teks').show();
-            }
-
-            let pilihan = $('#pilihan').find(':selected').text()
-
-            if (pilihan == 'Lainnya') {
-                $('#lainnya').show();
-            } else {
-                $('#lainnya').hide();
-            }
-        });
-
-        $('#service_id').change(function(e) {
-            e.preventDefault();
-            let data = $('#service_id').find(':selected').text()
-
-            if (data == 'Gudang') {
-                $('#pilihan').show();
-                $('#teks').hide();
-                $('#teks').val('');
-            } else {
-                $('#pilihan').hide();
-                $('#pilihan').val('0');
-                $('#teks').show();
-            }
-        });
-
-        $('#pilihan').change(function(e) {
-            e.preventDefault();
-            let data = $('#pilihan').find(':selected').text()
-
-            if (data == 'Lainnya') {
-                $('#lainnya').show();
-            } else {
-                $('#lainnya').hide();
-                $('#lainnya').val('');
-            }
-        });
-    </script>
+    <script src="/javascript/contract-edit.js"></script>
 @endsection

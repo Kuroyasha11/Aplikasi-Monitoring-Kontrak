@@ -178,7 +178,10 @@
             </div>
 
             <div class="d-flex">
-                <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg"></i> Buat</button>
+                <button type="submit" class="btn btn-primary"
+                    onclick="return confirm('Data tidak dapat diedit lagi. Apakah anda yakin?')"><i
+                        class="bi bi-check-lg"></i>
+                    Buat</button>
                 <a href="/dashboard/contract" class="btn btn-warning"><i class="bi bi-arrow-left"></i> Kembali</a>
             </div>
         </form>

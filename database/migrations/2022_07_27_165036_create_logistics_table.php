@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('logistics', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->boolean('aktif')->default(true);
             $table->string('keterangan')->nullable();
             $table->timestamps();
         });

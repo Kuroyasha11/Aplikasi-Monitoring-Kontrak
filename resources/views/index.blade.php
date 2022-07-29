@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col">
                     <div class="card">
-                        <div class="card-header">Grafik</div>
+                        <div class="card-header">Monitoring</div>
                         <div class="card-body">
                             <div id="barchart"></div>
                         </div>
@@ -54,7 +54,7 @@
                         datas: <?php echo json_encode($depo); ?>
                     },
                     {
-                        name: "Collateral Management Service",
+                        name: "Collateral Management Service (CMS)",
                         datas: <?php echo json_encode($cms); ?>
                     },
                     {
