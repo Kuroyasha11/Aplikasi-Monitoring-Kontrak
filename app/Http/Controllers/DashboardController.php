@@ -15,17 +15,17 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $gudang = Warehouse::all()->count();
-        $contract = Contract::all()->count();
-        $cms = CMS::all()->count();
-        $depo = Depo::all()->count();
-        $logistic = Logistic::all()->count();
+        $gudang = Warehouse::where('aktif', '0')->count();
+        $contract = Contract::where('selesai', false)->count();
+        $cms = CMS::where('aktif', '0')->count();
+        $depo = Depo::where('aktif', '0')->count();
+        $logistic = Logistic::where('aktif', '0')->count();
         $user = User::where('is_admin', '0')->count();
         $datacontract = Contract::where('user_id', '=', Auth::user()->id)->first();
         $title = 'Home';
         $judul = 'Dashboard';
         return view('index', compact([
-            'gudang', 'contract', 'cms', 'depo', 'logistic', 'user','datacontract',
+            'gudang', 'contract', 'cms', 'depo', 'logistic', 'user', 'datacontract',
             'title',
             'judul'
         ]));

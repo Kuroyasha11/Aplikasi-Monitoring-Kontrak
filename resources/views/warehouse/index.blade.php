@@ -42,9 +42,9 @@
                                 <td>{{ $item->nama }}</td>
                                 <td align="CENTER">
                                     @if ($item->aktif == 1)
-                                        <span class="badge rounded-pill text-bg-success">Aktif</span>
+                                        <span class="badge rounded-pill text-bg-success">Tersedia</span>
                                     @elseif ($item->aktif == 0)
-                                        <span class="badge rounded-pill text-bg-danger">Tidak Aktif</span>
+                                        <span class="badge rounded-pill text-bg-danger">Disewakan</span>
                                     @endif
                                 </td>
                                 <td>{{ $item->Keterangan }}</td>

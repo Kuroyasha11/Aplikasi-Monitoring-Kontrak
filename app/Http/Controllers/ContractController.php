@@ -12,6 +12,7 @@ use App\Models\Warehouse;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Nette\Schema\Context;
 
 class ContractController extends Controller
 {
@@ -66,9 +67,15 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
+        // Tanggal
         $tanggal = ($request->tglakhir);
         $date = new DateTime($tanggal);
         $date_minus = $date->modify("-30 days");
+
+        // Mengubah Status
+        // $getwarehouse = Contract::where('warehouse_id', $request->warehouse_id)->first();
+        // $ubahstatus = $getwarehouse->warehouse->aktif;
+        // $tidakaktif = '0';
 
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
@@ -85,22 +92,31 @@ class ContractController extends Controller
             'keterangan' => 'nullable'
         ];
 
+        // $warehouse = [
+        //     'aktif' => [$ubahstatus],
+        // ];
+
         // validasi kontrak
         $validatedData1 = $request->validate($rules1);
+        // $validatedData1 = $request->validate($warehouse);
         $validatedData1['tglkonfirmasi'] = $date_minus;
+        // $validatedData1['aktif'] = $tidakaktif;
 
         // Lainnya
         if ($request->nama) {
             if ($request->service_id == 1) {
                 $kapital = ucfirst($request->nama);
+                $tidaktersedia = isset($request->aktif);
                 $rules2 = [
-                    'nama' => 'nullable|min:3|unique:warehouses,nama'
+                    'nama' => 'nullable|min:3|unique:warehouses,nama',
+                    'aktif' => '0'
                 ];
 
                 // validasi gudang
                 $validatedData2 = $request->validate($rules2);
 
                 $validatedData2['nama'] = $kapital;
+                $validatedData2['aktif'] = $tidaktersedia;
 
                 Warehouse::create($validatedData2);
 
@@ -109,14 +125,17 @@ class ContractController extends Controller
                 $validatedData1['warehouse_id'] = $cek['id'];
             } elseif ($request->service_id == 2) {
                 $kapital = ucfirst($request->nama);
+                $tidaktersedia = isset($request->aktif);
                 $rules2 = [
-                    'nama' => 'nullable|min:3|unique:depos,nama'
+                    'nama' => 'nullable|min:3|unique:depos,nama',
+                    'aktif' => '0'
                 ];
 
                 // validasi depo
                 $validatedData2 = $request->validate($rules2);
 
                 $validatedData2['nama'] = $kapital;
+                $validatedData2['aktif'] = $tidaktersedia;
 
                 Depo::create($validatedData2);
 
@@ -125,14 +144,17 @@ class ContractController extends Controller
                 $validatedData1['depo_id'] = $cek['id'];
             } elseif ($request->service_id == 3) {
                 $kapital = ucfirst($request->nama);
+                $tidaktersedia = isset($request->aktif);
                 $rules2 = [
-                    'nama' => 'nullable|min:3|unique:c_m_s,nama'
+                    'nama' => 'nullable|min:3|unique:c_m_s,nama',
+                    'aktif' => '0'
                 ];
 
                 // validasi cms
                 $validatedData2 = $request->validate($rules2);
 
                 $validatedData2['nama'] = $kapital;
+                $validatedData2['aktif'] = $tidaktersedia;
 
                 CMS::create($validatedData2);
 
@@ -141,14 +163,17 @@ class ContractController extends Controller
                 $validatedData1['c_m_s_id'] = $cek['id'];
             } elseif ($request->service_id == 4) {
                 $kapital = ucfirst($request->nama);
+                $tidaktersedia = isset($request->aktif);
                 $rules2 = [
-                    'nama' => 'nullable|min:3|unique:logistics,nama'
+                    'nama' => 'nullable|min:3|unique:logistics,nama',
+                    'aktif' => '0'
                 ];
 
                 // validasi logistic
                 $validatedData2 = $request->validate($rules2);
 
                 $validatedData2['nama'] = $kapital;
+                $validatedData2['aktif'] = $tidaktersedia;
 
                 Logistic::create($validatedData2);
 
