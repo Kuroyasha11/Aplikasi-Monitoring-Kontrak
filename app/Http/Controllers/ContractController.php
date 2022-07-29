@@ -106,17 +106,16 @@ class ContractController extends Controller
         if ($request->nama) {
             if ($request->service_id == 1) {
                 $kapital = ucfirst($request->nama);
-                $tidaktersedia = isset($request->aktif);
+
                 $rules2 = [
                     'nama' => 'nullable|min:3|unique:warehouses,nama',
-                    'aktif' => '0'
                 ];
 
                 // validasi gudang
                 $validatedData2 = $request->validate($rules2);
 
                 $validatedData2['nama'] = $kapital;
-                $validatedData2['aktif'] = $tidaktersedia;
+                $validatedData2['aktif'] = 0;
 
                 Warehouse::create($validatedData2);
 
@@ -125,17 +124,16 @@ class ContractController extends Controller
                 $validatedData1['warehouse_id'] = $cek['id'];
             } elseif ($request->service_id == 2) {
                 $kapital = ucfirst($request->nama);
-                $tidaktersedia = isset($request->aktif);
+
                 $rules2 = [
                     'nama' => 'nullable|min:3|unique:depos,nama',
-                    'aktif' => '0'
                 ];
 
                 // validasi depo
                 $validatedData2 = $request->validate($rules2);
 
                 $validatedData2['nama'] = $kapital;
-                $validatedData2['aktif'] = $tidaktersedia;
+                $validatedData2['aktif'] = 0;
 
                 Depo::create($validatedData2);
 
@@ -144,17 +142,16 @@ class ContractController extends Controller
                 $validatedData1['depo_id'] = $cek['id'];
             } elseif ($request->service_id == 3) {
                 $kapital = ucfirst($request->nama);
-                $tidaktersedia = isset($request->aktif);
+
                 $rules2 = [
                     'nama' => 'nullable|min:3|unique:c_m_s,nama',
-                    'aktif' => '0'
                 ];
 
                 // validasi cms
                 $validatedData2 = $request->validate($rules2);
 
                 $validatedData2['nama'] = $kapital;
-                $validatedData2['aktif'] = $tidaktersedia;
+                $validatedData2['aktif'] = 0;
 
                 CMS::create($validatedData2);
 
@@ -163,17 +160,16 @@ class ContractController extends Controller
                 $validatedData1['c_m_s_id'] = $cek['id'];
             } elseif ($request->service_id == 4) {
                 $kapital = ucfirst($request->nama);
-                $tidaktersedia = isset($request->aktif);
+
                 $rules2 = [
                     'nama' => 'nullable|min:3|unique:logistics,nama',
-                    'aktif' => '0'
                 ];
 
                 // validasi logistic
                 $validatedData2 = $request->validate($rules2);
 
                 $validatedData2['nama'] = $kapital;
-                $validatedData2['aktif'] = $tidaktersedia;
+                $validatedData2['aktif'] = 0;
 
                 Logistic::create($validatedData2);
 

@@ -89,22 +89,23 @@ class CMSController extends Controller
             'keterangan' => 'nullable|max:100'
         ];
 
-        if (isset($request->aktif)) {
-            if ($request->aktif != $cm->aktif) {
-                $rules['aktif'] = 'required';
-            }
+        // if (isset($request->aktif)) {
+        //     if ($request->aktif != $cm->aktif) {
+        //         $rules['aktif'] = 'required';
+        //     }
 
-            $validated = $request->validate($rules);
-        } else {
-            $request->merge([
-                'aktif' => 0
-            ]);
+        //     $validated = $request->validate($rules);
+        // } else {
+        //     $request->merge([
+        //         'aktif' => 0
+        //     ]);
 
-            if ($request->aktif != $cm->aktif) {
-                $rules['aktif'] = 'required';
-            }
-            $validated = $request->validate($rules);
-        }
+        //     if ($request->aktif != $cm->aktif) {
+        //         $rules['aktif'] = 'required';
+        //     }
+        //     $validated = $request->validate($rules);
+        // }
+        $validated = $request->validate($rules);
         CMS::where('id', $cm->id)->update($validated);
 
         return redirect('/dashboard/cms')->with('berhasil', 'Berhasil mengubah data CMS');
