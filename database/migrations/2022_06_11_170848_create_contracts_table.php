@@ -34,8 +34,10 @@ return new class extends Migration
             $table->date('tglmulai');
             $table->date('tglkonfirmasi');
             $table->date('tglakhir');
+            $table->date('tglselesai')->nullable();
             $table->string('keterangan')->nullable();
             $table->boolean('selesai')->default(false);
+            $table->string('totalharga')->nullable();
             $table->timestamps();
         });
     }
