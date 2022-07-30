@@ -55,13 +55,15 @@
                                             data-bs-target="#edit{{ $item->id }}">
                                             <i class="bi bi-pencil-square"></i> Edit
                                         </button>
-                                        <form action="/dashboard/logistic/{{ $item->id }}" method="post">
-                                            @method('delete')
-                                            @csrf
-                                            <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
-                                                <i class="bi bi-x-circle"></i> Delete
-                                            </button>
-                                        </form>
+                                        @if ($item->aktif == 1)
+                                            <form action="/dashboard/logistic/{{ $item->id }}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                                    <i class="bi bi-x-circle"></i> Delete
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
