@@ -41,8 +41,8 @@ Route::controller(DashboardController::class)->group(function () {
 
 Route::get('/send-mail', [MailController::class, 'index']);
 
-
 Route::resource('/dashboard/contract', ContractController::class)->middleware(['auth', 'admin'])->except(['show', 'edit']);
+Route::get('/dashboard/contract/print', [ContractController::class, 'print'])->middleware(['auth', 'admin']);
 // Route::resource('/dashboard/service', ServiceController::class)->middleware(['auth', 'admin'])->only(['index']);
 Route::resource('/dashboard/warehouse', WarehouseController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
 Route::resource('/dashboard/depo', DepoController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);

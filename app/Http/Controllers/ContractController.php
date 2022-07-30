@@ -23,21 +23,10 @@ class ContractController extends Controller
      */
     public function index()
     {
-        // $caridata = Contract::all()->where('selesai', false);
-
-        // foreach ($caridata as $item) {
-        //     $tanggal = ($item->tglakhir);
-        //     $date = new DateTime($tanggal);
-        //     $date_minus = $date->modify("-30 days");
-        //     $caritglakhir = Contract::whereBetween('tglkonfirmasi', [$date_minus, $item['tglakhir']])->get();
-        // }
-        // dd($caritglakhir);
-
         return view('contracts.index', [
             'title' => 'Kontrak',
             'judul' => 'Daftar Kontrak',
-            'contract' => Contract::latest()->paginate(10),
-            'notif' => Contract::where('selesai', false)->get()
+            'contract' => Contract::latest()->paginate(10)
         ]);
     }
 
@@ -290,5 +279,14 @@ class ContractController extends Controller
         User::destroy($contract->user_id);
 
         return redirect('/dashboard/contract')->with('berhasil', 'Berhasil menghapus data kontrak');
+    }
+
+    public function print()
+    {
+        return view('contracts.index', [
+            'title' => 'Kontrak',
+            'judul' => 'Daftar Kontrak',
+            'contract' => Contract::latest()->paginate(10)
+        ]);
     }
 }
