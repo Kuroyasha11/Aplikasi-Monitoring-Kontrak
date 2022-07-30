@@ -199,6 +199,17 @@ class ContractController extends Controller
 
         Contract::create($validatedData1);
 
+        // Mengubah Status pelayanan menjadi disewakan
+        if ($request->warehouse_id) {
+            Warehouse::where('id', $validatedData1['warehouse_id'])->update(['aktif' => 0]);
+        } elseif ($request->depo_id) {
+            Depo::where('id', $validatedData1['depo_id'])->update(['aktif' => 0]);
+        } elseif ($request->c_m_s_id) {
+            CMS::where('id', $validatedData1['c_m_s_id'])->update(['aktif' => 0]);
+        } elseif ($request->logistic_id) {
+            Logistic::where('id', $validatedData1['logistic_id'])->update(['aktif' => 0]);
+        }
+
         return redirect('/dashboard/contract')->with('berhasil', 'Berhasil menambahkan kontrak baru');
     }
 
@@ -270,6 +281,11 @@ class ContractController extends Controller
     public function destroy(Contract $contract)
     {
         Contract::destroy($contract->id);
+
+        Warehouse::where('id', $contract->warehouse_id)->update(['aktif' => 1]);
+        Depo::where('id', $contract->depo_id)->update(['aktif' => 1]);
+        CMS::where('id', $contract->c_m_s_id)->update(['aktif' => 1]);
+        Logistic::where('id', $contract->logistic_id)->update(['aktif' => 1]);
 
         User::destroy($contract->user_id);
 
