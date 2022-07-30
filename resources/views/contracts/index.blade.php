@@ -26,9 +26,9 @@
                     <thead>
                         <tr align="CENTER">
                             <th>No</th>
+                            <th>Pelanggan</th>
                             <th>Layanan</th>
-                            <th>Nama Pelanggan</th>
-                            <th>Nama (Gudang, Kantor, dan lain-lain)</th>
+                            <th>Nama</th>
                             <th>Mulai Sewa</th>
                             <th>Akhir Sewa</th>
                             <th>Status</th>
@@ -40,8 +40,8 @@
                             @foreach ($contract as $item)
                                 <tr>
                                     <td align="CENTER"><b>{{ $contract->firstItem() - 1 + $loop->iteration }}</b></th>
-                                    <td>{{ $item->service->nama }}</td>
                                     <td>{{ $item->author->name }}</td>
+                                    <td>{{ $item->service->nama }}</td>
                                     <td>
                                         @if ($item->warehouse_id && !$item->depo_id && !$item->c_m_s_id && !$item->logistic_id)
                                             {{ $item->warehouse->nama }}
@@ -56,69 +56,60 @@
                                     <td>{{ \Carbon\Carbon::parse($item->tglmulai)->isoFormat('DD MMMM Y') }}</td>
                                     <td>{{ \Carbon\Carbon::parse($item->tglakhir)->isoFormat('DD MMMM Y') }}</td>
 
-                                    <td>
-                                        {{-- {{ $item->keterangan }} --}}
+                                    <td align="CENTER">
                                         @php
-                                            // $tanggal = $item->tglakhir;
-                                            // $date = new DateTime($tanggal);
-                                            // $date_minus = $date->modify('+13 days')->format('Y-m-d');
-                                            // $tgldenda = \Carbon\Carbon::parse($item->tglakhir);
-                                            // $tglhariini = \Carbon\Carbon::now();
                                             $today = \Carbon\Carbon::now();
                                             $tglstart = \Carbon\Carbon::parse($item->tglmulai);
                                             $tglfrom = \Carbon\Carbon::parse($item->tglkonfirmasi);
                                             $tglto = \Carbon\Carbon::parse($item->tglakhir);
+                                            $sebulan = \Carbon\Carbon::parse($item->tglakhir)->addDays(30);
+                                            $duobulan = \Carbon\Carbon::parse($item->tglakhir)->addDays(60);
+                                            $tigobulan = \Carbon\Carbon::parse($item->tglakhir)->addDays(90);
                                         @endphp
 
-                                        @if ($today >= $tglstart && $today <= $tglfrom)
-                                            @if ($item->selesai == 1)
-                                                <a href="#" class="btn btn-success">Selesai</a>
-                                            @else
-                                                <a href="#" class="btn btn-primary">Kontrak</a>
-                                            @endif
-                                        @elseif($today >= $tglfrom && $today <= $tglto)
-                                            @if ($item->selesai == 1)
-                                                <a href="#" class="btn btn-success">Selesai</a>
-                                            @else
-                                                <a href="#" class="btn btn-warning">Masa Tenggang</a>
-                                            @endif
-                                        @elseif ($today > $tglto && $today <= $tglto->addDays(30))
-                                            @if ($item->selesai == 1)
-                                                <a href="#" class="btn btn-success">Selesai</a>
-                                            @else
-                                                <div class="d-grid">
+                                        <div class="d-grid">
+                                            @if ($today >= $tglstart && $today <= $tglfrom)
+                                                @if ($item->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
+                                                    <a href="#" class="btn btn-primary">Kontrak</a>
+                                                @endif
+                                            @elseif($today >= $tglfrom && $today <= $tglto)
+                                                @if ($item->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
+                                                    <a href="#" class="btn btn-warning">Masa Tenggang</a>
+                                                @endif
+                                            @elseif ($today > $tglto && $today <= $sebulan)
+                                                @if ($item->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
                                                     <a href="#" class="btn btn-danger">Denda 1 Bulan</a>
                                                     <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 2)</a>
-                                                </div>
-                                            @endif
-                                        @elseif ($today > $tglto->addDays(30) && $today <= $tglto->addDays(60))
-                                            @if ($item->selesai == 1)
-                                                <a href="#" class="btn btn-success">Selesai</a>
-                                            @else
-                                                <div class="d-grid">
+                                                @endif
+                                            @elseif ($today > $sebulan && $today <= $duobulan)
+                                                @if ($item->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
                                                     <a href="#" class="btn btn-danger">Denda 2 Bulan</a>
                                                     <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 3)</a>
-                                                </div>
-                                            @endif
-                                        @elseif ($today > $tglto->addDays(60) && $today <= $tglto->addDays(90))
-                                            @if ($item->selesai == 1)
-                                                <a href="#" class="btn btn-success">Selesai</a>
-                                            @else
-                                                <div class="d-grid">
+                                                @endif
+                                            @elseif ($today > $duobulan && $today <= $tigobulan)
+                                                @if ($item->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
                                                     <a href="#" class="btn btn-danger">Denda 3 Bulan</a>
                                                     <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 4)</a>
-                                                </div>
-                                            @endif
-                                        @elseif ($today > $tglto->addDays(90))
-                                            @if ($item->selesai == 1)
-                                                <a href="#" class="btn btn-success">Selesai</a>
-                                            @else
-                                                <div class="d-grid">
+                                                @endif
+                                            @elseif ($today > $tigobulan)
+                                                @if ($item->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
                                                     <a href="#" class="btn btn-danger">Denda Maksimal 3 Bulan</a>
                                                     <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 4)</a>
-                                                </div>
+                                                @endif
                                             @endif
-                                        @endif
+                                        </div>
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-center">
@@ -135,7 +126,7 @@
                                                         <i class="bi bi-pencil-square"></i> Perpanjang
                                                     </button>
                                                 @endif
-                                            @elseif ($today > $tglto && $today <= $tglto->addDays(30))
+                                            @elseif ($today > $tglto && $today <= $sebulan)
                                                 @if ($item->selesai == 1)
                                                 @else
                                                     <!-- Button trigger modal edit-->
@@ -144,7 +135,7 @@
                                                         <i class="bi bi-pencil-square"></i> Perpanjang
                                                     </button>
                                                 @endif
-                                            @elseif ($today > $tglto->addDays(30) && $today <= $tglto->addDays(60))
+                                            @elseif ($today > $sebulan && $today <= $duobulan)
                                                 @if ($item->selesai == 1)
                                                 @else
                                                     <!-- Button trigger modal edit-->
@@ -153,7 +144,7 @@
                                                         <i class="bi bi-pencil-square"></i> Perpanjang
                                                     </button>
                                                 @endif
-                                            @elseif ($today > $tglto->addDays(60) && $today <= $tglto->addDays(90))
+                                            @elseif ($today > $duobulan && $today <= $tigobulan)
                                                 @if ($item->selesai == 1)
                                                 @else
                                                     <!-- Button trigger modal edit-->
@@ -162,7 +153,7 @@
                                                         <i class="bi bi-pencil-square"></i> Perpanjang
                                                     </button>
                                                 @endif
-                                            @elseif ($today > $tglto->addDays(90))
+                                            @elseif ($today > $tigobulan)
                                                 @if ($item->selesai == 1)
                                                 @else
                                                     <!-- Button trigger modal edit-->
@@ -233,6 +224,52 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- NOTIF --}}
+                                <div class="toast-container position-static">
+                                    <div class="toast-container top-0 end-0 p-3">
+
+                                        <input type="hidden" id="toastbtn{{ $item->id }}"
+                                            value="{{ $item->id }}">
+
+                                        @if ($today >= $tglfrom && $today <= $tglto)
+                                            @if ($item->selesai == 1)
+                                            @else
+                                                <div id="toast{{ $item->id }}" class="toast text-bg-danger"
+                                                    role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="toast-header">
+                                                        <strong class="me-auto">Pemberitahuan Kontrak
+                                                            {{ $item->author->name }}</strong>
+                                                        <small class="text-muted"></small>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="toast-body">
+                                                        Kontrak akan habis dalam
+                                                        {{ \Carbon\Carbon::parse($item->tglakhir)->diffForHumans() }}
+                                                    </div>
+                                                </div>
+                                                <script>
+                                                    $(document).ready(function() {
+
+                                                        const toastLiveExample = document.getElementById('toast{{ $item->id }}')
+
+
+                                                        let toastbtn{{ $item->id }} = $('#toastbtn{{ $item->id }}').val()
+
+                                                        if (toastbtn{{ $item->id }} == {{ $item->id }}) {
+                                                            const toast = new bootstrap.Toast(toastLiveExample)
+
+                                                            toast.show()
+                                                        }
+
+                                                    });
+                                                </script>
+                                            @endif
+                                        @endif
+
+                                    </div>
+                                </div>
                             @endforeach
                         @else
                             <tr>
@@ -250,85 +287,4 @@
     </div>
     <!-- /.card -->
 
-    <div class="toast-container position-static">
-        <div class="toast-container top-0 end-0 p-3">
-            @foreach ($notif as $item)
-                <input type="hidden" id="toastbtn{{ $item->id }}" value="{{ $item->id }}">
-                @php
-                    $today = \Carbon\Carbon::now();
-                    $tglfrom = \Carbon\Carbon::parse($item->tglkonfirmasi);
-                    $tglto = \Carbon\Carbon::parse($item->tglakhir);
-                @endphp
-
-                @if ($today >= $tglfrom && $today <= $tglto)
-                    <div id="toast{{ $item->id }}" class="toast text-bg-danger" role="alert"
-                        aria-live="assertive" aria-atomic="true">
-                        <div class="toast-header">
-                            <strong class="me-auto">Pemberitahuan Kontrak {{ $item->author->name }}</strong>
-                            <small class="text-muted"></small>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="toast-body">
-                            Kontrak akan habis dalam {{ \Carbon\Carbon::parse($item->tglakhir)->diffForHumans() }}
-                        </div>
-                    </div>
-                    <script>
-                        $(document).ready(function() {
-
-                            const toastLiveExample = document.getElementById('toast{{ $item->id }}')
-
-
-                            let toastbtn{{ $item->id }} = $('#toastbtn{{ $item->id }}').val()
-
-                            if (toastbtn{{ $item->id }} == {{ $item->id }}) {
-                                const toast = new bootstrap.Toast(toastLiveExample)
-
-                                toast.show()
-                            }
-
-                        });
-                    </script>
-                @endif
-            @endforeach
-        </div>
-    </div>
-
-    {{-- <script>
-        $(document).ready(function() {
-            var Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            $('.toastsDefaultInfo').show(function() {
-                $(document).Toasts('create', {
-                    class: 'bg-info',
-                    title: 'Toast Title',
-                    subtitle: 'Subtitle',
-                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-                })
-            });
-        });
-    </script> --}}
-
-    {{-- <script>
-        $(function() {
-            var Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            $('.toastsDefaultInfo').show(function() {
-                $(document).Toasts('create', {
-                    class: 'bg-info',
-                    title: 'Toast Title',
-                    subtitle: 'Subtitle',
-                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-                })
-            });
-        });
-    </script> --}}
 @endsection
