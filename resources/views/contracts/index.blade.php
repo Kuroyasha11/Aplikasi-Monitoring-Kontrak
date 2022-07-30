@@ -71,59 +71,107 @@
                                         @endphp
 
                                         @if ($today >= $tglstart && $today <= $tglfrom)
-                                            <a href="#" class="btn btn-primary">Kontrak</a>
-                                        @elseif($today >= $tglfrom && $today <= $tglto)
-                                            <a href="#" class="btn btn-warning">Masa Tenggang</a>
-                                        @elseif ($today > $tglto && $today <= $tglto->addDays(30))
-                                            <div class="d-grid">
-                                                <a href="#" class="btn btn-danger">Denda 1 Bulan</a>
-                                                <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 2)</a>
-                                            </div>
-                                        @elseif ($today > $tglto->addDays(30) && $today <= $tglto->addDays(60))
-                                            <div class="d-grid">
-                                                <a href="#" class="btn btn-danger">Denda 2 Bulan</a>
-                                                <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 3)</a>
-                                            </div>
-                                        @elseif ($today > $tglto->addDays(60) && $today <= $tglto->addDays(90))
-                                            <div class="d-grid">
-                                                <a href="#" class="btn btn-danger">Denda 3 Bulan</a>
-                                                <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 4)</a>
-                                            </div>
-                                        @elseif ($item->selesai = true)
-                                            <a href="" class="btn btn-success">Selesai</a>
-                                        @endif
-                                        {{-- @if ($today >= $tglstart && $today < $tglfrom)
-                                            <a href="#" class="btn btn-primary">Kontrak</a>
-                                        @else
-                                            @if ($today > $tglfrom && $today <= $tglto)
-                                                @if ($today > $tglto && $today <= $tglto->addDays(30))
-                                                    @if ($today > $tglto->addDays(30) && $today <= $tglto->addDays(60))
-                                                        @if ($today > $tglto->addDays(60))
-                                                            <a href="#" class="btn btn-danger">Denda 3 Bulan</a>
-                                                            <a href="#" class="btn btn-danger">@IDR($item->harga * 4)</a>
-                                                        @else
-                                                            <a href="#" class="btn btn-danger">Denda 2 Bulan</a>
-                                                            <a href="#" class="btn btn-danger">@IDR($item->harga * 3)</a>
-                                                        @endif
-                                                    @else
-                                                        <a href="#" class="btn btn-danger">Denda 1 Bulan</a>
-                                                        <a href="#" class="btn btn-danger">@IDR($item->harga * 2)</a>
-                                                    @endif
-                                                @else
-                                                    <a href="#" class="btn btn-warning">Masa Tenggang</a>
-                                                @endif
+                                            @if ($item->selesai == 1)
+                                                <a href="#" class="btn btn-success">Selesai</a>
+                                            @else
+                                                <a href="#" class="btn btn-primary">Kontrak</a>
                                             @endif
-                                        @endif --}}
+                                        @elseif($today >= $tglfrom && $today <= $tglto)
+                                            @if ($item->selesai == 1)
+                                                <a href="#" class="btn btn-success">Selesai</a>
+                                            @else
+                                                <a href="#" class="btn btn-warning">Masa Tenggang</a>
+                                            @endif
+                                        @elseif ($today > $tglto && $today <= $tglto->addDays(30))
+                                            @if ($item->selesai == 1)
+                                                <a href="#" class="btn btn-success">Selesai</a>
+                                            @else
+                                                <div class="d-grid">
+                                                    <a href="#" class="btn btn-danger">Denda 1 Bulan</a>
+                                                    <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 2)</a>
+                                                </div>
+                                            @endif
+                                        @elseif ($today > $tglto->addDays(30) && $today <= $tglto->addDays(60))
+                                            @if ($item->selesai == 1)
+                                                <a href="#" class="btn btn-success">Selesai</a>
+                                            @else
+                                                <div class="d-grid">
+                                                    <a href="#" class="btn btn-danger">Denda 2 Bulan</a>
+                                                    <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 3)</a>
+                                                </div>
+                                            @endif
+                                        @elseif ($today > $tglto->addDays(60) && $today <= $tglto->addDays(90))
+                                            @if ($item->selesai == 1)
+                                                <a href="#" class="btn btn-success">Selesai</a>
+                                            @else
+                                                <div class="d-grid">
+                                                    <a href="#" class="btn btn-danger">Denda 3 Bulan</a>
+                                                    <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 4)</a>
+                                                </div>
+                                            @endif
+                                        @elseif ($today > $tglto->addDays(90))
+                                            @if ($item->selesai == 1)
+                                                <a href="#" class="btn btn-success">Selesai</a>
+                                            @else
+                                                <div class="d-grid">
+                                                    <a href="#" class="btn btn-danger">Denda Maksimal 3 Bulan</a>
+                                                    <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 4)</a>
+                                                </div>
+                                            @endif
+                                        @endif
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-center">
-                                            {{-- <a href="/dashboard/contract/{{ $item->id }}/edit"
-                                                class="btn btn-warning m-1"><i class="bi bi-pencil-square"></i> Edit</a> --}}
-                                            <!-- Button trigger modal edit-->
-                                            <button type="button" class="btn btn-warning mx-2" data-bs-toggle="modal"
-                                                data-bs-target="#edit{{ $item->id }}">
-                                                <i class="bi bi-pencil-square"></i> Perpanjang
-                                            </button>
+                                            @if ($today >= $tglstart && $today <= $tglfrom)
+                                                @if ($item->selesai == 1)
+                                                @else
+                                                @endif
+                                            @elseif($today >= $tglfrom && $today <= $tglto)
+                                                @if ($item->selesai == 1)
+                                                @else
+                                                    <!-- Button trigger modal edit-->
+                                                    <button type="button" class="btn btn-warning mx-2"
+                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}">
+                                                        <i class="bi bi-pencil-square"></i> Perpanjang
+                                                    </button>
+                                                @endif
+                                            @elseif ($today > $tglto && $today <= $tglto->addDays(30))
+                                                @if ($item->selesai == 1)
+                                                @else
+                                                    <!-- Button trigger modal edit-->
+                                                    <button type="button" class="btn btn-warning mx-2"
+                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}">
+                                                        <i class="bi bi-pencil-square"></i> Perpanjang
+                                                    </button>
+                                                @endif
+                                            @elseif ($today > $tglto->addDays(30) && $today <= $tglto->addDays(60))
+                                                @if ($item->selesai == 1)
+                                                @else
+                                                    <!-- Button trigger modal edit-->
+                                                    <button type="button" class="btn btn-warning mx-2"
+                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}">
+                                                        <i class="bi bi-pencil-square"></i> Perpanjang
+                                                    </button>
+                                                @endif
+                                            @elseif ($today > $tglto->addDays(60) && $today <= $tglto->addDays(90))
+                                                @if ($item->selesai == 1)
+                                                @else
+                                                    <!-- Button trigger modal edit-->
+                                                    <button type="button" class="btn btn-warning mx-2"
+                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}">
+                                                        <i class="bi bi-pencil-square"></i> Perpanjang
+                                                    </button>
+                                                @endif
+                                            @elseif ($today > $tglto->addDays(90))
+                                                @if ($item->selesai == 1)
+                                                @else
+                                                    <!-- Button trigger modal edit-->
+                                                    <button type="button" class="btn btn-warning mx-2"
+                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}">
+                                                        <i class="bi bi-pencil-square"></i> Perpanjang
+                                                    </button>
+                                                @endif
+                                            @endif
                                             <form action="/dashboard/contract/{{ $item->id }}" method="post">
                                                 @method('delete')
                                                 @csrf
@@ -157,7 +205,8 @@
                                                         <label for="tglakhir" class="form-label">Perpanjang Sewa</label>
                                                         <input type="date" name="tglakhir"
                                                             class="form-control @error('tglakhir') is-invalid @enderror"
-                                                            id="tglakhir" value="{{ old('tglakhir', $item->tglakhir) }}">
+                                                            id="tglakhir"
+                                                            value="{{ old('tglakhir', $item->tglakhir) }}">
                                                         @error('tglakhir')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -212,8 +261,8 @@
                 @endphp
 
                 @if ($today >= $tglfrom && $today <= $tglto)
-                    <div id="toast{{ $item->id }}" class="toast text-bg-danger" role="alert" aria-live="assertive"
-                        aria-atomic="true">
+                    <div id="toast{{ $item->id }}" class="toast text-bg-danger" role="alert"
+                        aria-live="assertive" aria-atomic="true">
                         <div class="toast-header">
                             <strong class="me-auto">Pemberitahuan Kontrak {{ $item->author->name }}</strong>
                             <small class="text-muted"></small>
