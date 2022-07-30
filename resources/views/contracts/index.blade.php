@@ -14,15 +14,25 @@
         @endif
 
         <div class="card-header">
-            <div class="d-flex justify-content-between">
-                <a href="/dashboard/contract/create" class="btn btn-success"><i class="bi bi-plus-square"></i> Tambah</a>
-                {{-- {{ $storage->onEachSide(5)->links() }} --}}
-            </div>
+            @if (Request::is('dashboard/contract'))
+                <div class="d-flex justify-content-start">
+                    <a href="/dashboard/contract/create" class="btn btn-success"><i class="bi bi-plus-square"></i> Tambah</a>
+                    {{-- {{ $storage->onEachSide(5)->links() }} --}}
+                    <a href="/dashboard/contract/print" class="btn btn-danger mx-2"><i class="bi bi-printer-fill"></i>
+                        Print</a>
+                </div>
+            @else
+                <div class="d-flex justify-content-end">
+                    <a href="/dashboard/contract" class="btn btn-success my-3"><i class="bi bi-arrow-90deg-left"></i>
+                        Kembali</a>
+                </div>
+            @endif
         </div>
         <!-- /.card-header -->
         <div class="card-body">
             <div class="table-responsive">
-                <table id="tabel-biasa" class="table table-bordered table-hover">
+                <table id="{{ Request::is('dashboard/contract') ? 'tabel-biasa' : 'tabel-print' }}"
+                    class="table table-bordered table-hover">
                     <thead>
                         <tr align="CENTER">
                             <th>No</th>
@@ -32,7 +42,9 @@
                             <th>Mulai Sewa</th>
                             <th>Akhir Sewa</th>
                             <th>Status</th>
-                            <th>Aksi</th>
+                            @if (Request::is('dashboard/contract'))
+                                <th>Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -84,95 +96,102 @@
                                                 @if ($item->selesai == 1)
                                                     <a href="#" class="btn btn-success">Selesai</a>
                                                 @else
-                                                    <a href="#" class="btn btn-danger">Denda 1 Bulan</a>
+                                                    <a href="#" class="btn btn-danger">| Denda 1 Bulan |</a>
                                                     <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 2)</a>
                                                 @endif
                                             @elseif ($today > $sebulan && $today <= $duobulan)
                                                 @if ($item->selesai == 1)
                                                     <a href="#" class="btn btn-success">Selesai</a>
                                                 @else
-                                                    <a href="#" class="btn btn-danger">Denda 2 Bulan</a>
+                                                    <a href="#" class="btn btn-danger">| Denda 2 Bulan |</a>
                                                     <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 3)</a>
                                                 @endif
                                             @elseif ($today > $duobulan && $today <= $tigobulan)
                                                 @if ($item->selesai == 1)
                                                     <a href="#" class="btn btn-success">Selesai</a>
                                                 @else
-                                                    <a href="#" class="btn btn-danger">Denda 3 Bulan</a>
+                                                    <a href="#" class="btn btn-danger">| Denda 3 Bulan |</a>
                                                     <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 4)</a>
                                                 @endif
                                             @elseif ($today > $tigobulan)
                                                 @if ($item->selesai == 1)
                                                     <a href="#" class="btn btn-success">Selesai</a>
                                                 @else
-                                                    <a href="#" class="btn btn-danger">Denda Maksimal 3 Bulan</a>
+                                                    <a href="#" class="btn btn-danger">| Denda Maksimal 3 Bulan |</a>
                                                     <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 4)</a>
                                                 @endif
                                             @endif
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="d-flex justify-content-center">
-                                            @if ($today >= $tglstart && $today <= $tglfrom)
-                                                @if ($item->selesai == 1)
-                                                @else
+                                    @if (Request::is('dashboard/contract'))
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                @if ($today >= $tglstart && $today <= $tglfrom)
+                                                    @if ($item->selesai == 1)
+                                                    @else
+                                                    @endif
+                                                @elseif($today >= $tglfrom && $today <= $tglto)
+                                                    @if ($item->selesai == 1)
+                                                    @else
+                                                        <!-- Button trigger modal edit-->
+                                                        <button type="button" class="btn btn-warning mx-2"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#edit{{ $item->id }}">
+                                                            <i class="bi bi-pencil-square"></i> Perpanjang
+                                                        </button>
+                                                    @endif
+                                                @elseif ($today > $tglto && $today <= $sebulan)
+                                                    @if ($item->selesai == 1)
+                                                    @else
+                                                        <!-- Button trigger modal edit-->
+                                                        <button type="button" class="btn btn-warning mx-2"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#edit{{ $item->id }}">
+                                                            <i class="bi bi-pencil-square"></i> Perpanjang
+                                                        </button>
+                                                    @endif
+                                                @elseif ($today > $sebulan && $today <= $duobulan)
+                                                    @if ($item->selesai == 1)
+                                                    @else
+                                                        <!-- Button trigger modal edit-->
+                                                        <button type="button" class="btn btn-warning mx-2"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#edit{{ $item->id }}">
+                                                            <i class="bi bi-pencil-square"></i> Perpanjang
+                                                        </button>
+                                                    @endif
+                                                @elseif ($today > $duobulan && $today <= $tigobulan)
+                                                    @if ($item->selesai == 1)
+                                                    @else
+                                                        <!-- Button trigger modal edit-->
+                                                        <button type="button" class="btn btn-warning mx-2"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#edit{{ $item->id }}">
+                                                            <i class="bi bi-pencil-square"></i> Perpanjang
+                                                        </button>
+                                                    @endif
+                                                @elseif ($today > $tigobulan)
+                                                    @if ($item->selesai == 1)
+                                                    @else
+                                                        <!-- Button trigger modal edit-->
+                                                        <button type="button" class="btn btn-warning mx-2"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#edit{{ $item->id }}">
+                                                            <i class="bi bi-pencil-square"></i> Perpanjang
+                                                        </button>
+                                                    @endif
                                                 @endif
-                                            @elseif($today >= $tglfrom && $today <= $tglto)
-                                                @if ($item->selesai == 1)
-                                                @else
-                                                    <!-- Button trigger modal edit-->
-                                                    <button type="button" class="btn btn-warning mx-2"
-                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}">
-                                                        <i class="bi bi-pencil-square"></i> Perpanjang
+                                                <form action="/dashboard/contract/{{ $item->id }}" method="post">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="btn btn-danger m-1"
+                                                        onclick="return confirm('Are you sure?')">
+                                                        <i class="bi bi-x-circle"></i> Delete
                                                     </button>
-                                                @endif
-                                            @elseif ($today > $tglto && $today <= $sebulan)
-                                                @if ($item->selesai == 1)
-                                                @else
-                                                    <!-- Button trigger modal edit-->
-                                                    <button type="button" class="btn btn-warning mx-2"
-                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}">
-                                                        <i class="bi bi-pencil-square"></i> Perpanjang
-                                                    </button>
-                                                @endif
-                                            @elseif ($today > $sebulan && $today <= $duobulan)
-                                                @if ($item->selesai == 1)
-                                                @else
-                                                    <!-- Button trigger modal edit-->
-                                                    <button type="button" class="btn btn-warning mx-2"
-                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}">
-                                                        <i class="bi bi-pencil-square"></i> Perpanjang
-                                                    </button>
-                                                @endif
-                                            @elseif ($today > $duobulan && $today <= $tigobulan)
-                                                @if ($item->selesai == 1)
-                                                @else
-                                                    <!-- Button trigger modal edit-->
-                                                    <button type="button" class="btn btn-warning mx-2"
-                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}">
-                                                        <i class="bi bi-pencil-square"></i> Perpanjang
-                                                    </button>
-                                                @endif
-                                            @elseif ($today > $tigobulan)
-                                                @if ($item->selesai == 1)
-                                                @else
-                                                    <!-- Button trigger modal edit-->
-                                                    <button type="button" class="btn btn-warning mx-2"
-                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $item->id }}">
-                                                        <i class="bi bi-pencil-square"></i> Perpanjang
-                                                    </button>
-                                                @endif
-                                            @endif
-                                            <form action="/dashboard/contract/{{ $item->id }}" method="post">
-                                                @method('delete')
-                                                @csrf
-                                                <button class="btn btn-danger m-1"
-                                                    onclick="return confirm('Are you sure?')">
-                                                    <i class="bi bi-x-circle"></i> Delete
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr>
 
                                 <!-- Modal EDIT-->

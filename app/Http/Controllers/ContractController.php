@@ -280,4 +280,13 @@ class ContractController extends Controller
 
         return redirect('/dashboard/contract')->with('berhasil', 'Berhasil menghapus data kontrak');
     }
+
+    public function print()
+    {
+        return view('contracts.index', [
+            'title' => 'Kontrak',
+            'judul' => 'Daftar Kontrak',
+            'contract' => Contract::latest()->paginate(10)
+        ]);
+    }
 }
