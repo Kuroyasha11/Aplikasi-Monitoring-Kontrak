@@ -52,7 +52,12 @@
                             @foreach ($contract as $item)
                                 <tr>
                                     <td align="CENTER"><b>{{ $contract->firstItem() - 1 + $loop->iteration }}</b></th>
-                                    <td>{{ $item->author->name }}</td>
+                                    <td>
+                                        <a href="/dashboard/contract/{{ $item->id }}"
+                                            class="text-decoration-none text-black">
+                                            {{ $item->author->name }} <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                    </td>
                                     <td>{{ $item->service->nama }}</td>
                                     <td>
                                         @if ($item->warehouse_id && !$item->depo_id && !$item->c_m_s_id && !$item->logistic_id)
@@ -117,7 +122,8 @@
                                                 @if ($item->selesai == 1)
                                                     <a href="#" class="btn btn-success">Selesai</a>
                                                 @else
-                                                    <a href="#" class="btn btn-danger">| Denda Maksimal 3 Bulan |</a>
+                                                    <a href="#" class="btn btn-danger">| Denda Maksimal 3 Bulan
+                                                        |</a>
                                                     <a href="#" class="btn btn-success mt-2">@IDR($item->harga * 4)</a>
                                                 @endif
                                             @endif
@@ -192,6 +198,7 @@
                                             </div>
                                         </td>
                                     @endif
+
                                 </tr>
 
                                 <!-- Modal EDIT-->
