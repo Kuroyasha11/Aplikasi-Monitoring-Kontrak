@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Warehouse;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Nette\Schema\Context;
 
@@ -169,11 +170,12 @@ class ContractController extends Controller
         }
 
         // USER
+        $rules3 = [
+            'name' => 'required|min:3',
+            'email' => 'required|email:dns|unique:users',
+        ];
         if ($request->name) {
-            $rules3 = [
-                'name' => 'required|min:3',
-                'email' => 'required|email:dns|unique:users',
-            ];
+
 
             $validatedData3 = $request->validate($rules3);
             $validatedData3['username'] = $request->email;
@@ -210,7 +212,12 @@ class ContractController extends Controller
      */
     public function show(Contract $contract)
     {
-        //
+        $cekuser = User::where('id', $contract->user_id)->first();
+        return view('contracts.show', [
+            'title' => $cekuser->name,
+            'judul' => 'Keterangan Kontrak ' . $cekuser->name,
+            'contract' => $contract,
+        ]);
     }
 
     /**
@@ -288,5 +295,35 @@ class ContractController extends Controller
             'judul' => 'Daftar Kontrak',
             'contract' => Contract::latest()->paginate(10)
         ]);
+    }
+
+    public function selesai(Request $request, Contract $selesai)
+    {
+        $rules1 = [
+            'selesai' => 'required',
+            'tglselesai' => 'required',
+        ];
+
+        $validatedData =  $request->validate($rules1);
+
+        if (!$request->totalharga == 0) {
+            $validatedData['totalharga'] = $request->totalharga;
+        } else {
+            $validatedData['totalharga'] = $selesai->harga;
+        }
+
+        Contract::where('id', $selesai->id)->update($validatedData);
+
+        if ($selesai->warehouse_id) {
+            Warehouse::where('id', $selesai->warehouse_id)->update(['aktif' => 1]);
+        } elseif ($selesai->depo_id) {
+            Depo::where('id', $selesai->depo_id)->update(['aktif' => 1]);
+        } elseif ($selesai->c_m_s_id) {
+            CMS::where('id', $selesai->c_m_s_id)->update(['aktif' => 1]);
+        } elseif ($selesai->logistic_id) {
+            Logistic::where('id', $selesai->logistic_id)->update(['aktif' => 1]);
+        }
+
+        return redirect('/dashboard/contract')->with('berhasil', 'Kontrak telah selesai');
     }
 }
