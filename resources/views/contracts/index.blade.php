@@ -43,7 +43,7 @@
                             <th>Akhir Sewa</th>
                             <th>Status</th>
                             @if (Request::is('dashboard/contract'))
-                                <th>Aksi</th>
+                                <th>Lihat</th>
                             @endif
                         </tr>
                     </thead>
@@ -53,10 +53,7 @@
                                 <tr>
                                     <td align="CENTER"><b>{{ $contract->firstItem() - 1 + $loop->iteration }}</b></th>
                                     <td>
-                                        <a href="/dashboard/contract/{{ $item->id }}"
-                                            class="text-decoration-none text-black">
-                                            {{ $item->author->name }} <i class="bi bi-eye-fill"></i>
-                                        </a>
+                                        {{ $item->author->name }}
                                     </td>
                                     <td>{{ $item->service->nama }}</td>
                                     <td>
@@ -131,7 +128,11 @@
                                     </td>
                                     @if (Request::is('dashboard/contract'))
                                         <td>
-                                            <div class="d-flex justify-content-center">
+                                            <a <abbr title="Lihat Kontrak" href="/dashboard/contract/{{ $item->id }}"
+                                                class="btn btn-info">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                            {{-- <div class="d-flex justify-content-center">
                                                 @if ($today >= $tglstart && $today <= $tglfrom)
                                                     @if ($item->selesai == 1)
                                                     @else
@@ -195,14 +196,14 @@
                                                         <i class="bi bi-x-circle"></i> Delete
                                                     </button>
                                                 </form>
-                                            </div>
+                                            </div> --}}
                                         </td>
                                     @endif
 
                                 </tr>
 
                                 <!-- Modal EDIT-->
-                                <div class="modal fade" id="edit{{ $item->id }}" data-bs-backdrop="static"
+                                {{-- <div class="modal fade" id="edit{{ $item->id }}" data-bs-backdrop="static"
                                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                     aria-hidden="true">
                                     <div class="modal-dialog">
@@ -249,7 +250,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 {{-- NOTIF --}}
                                 <div class="toast-container position-static">

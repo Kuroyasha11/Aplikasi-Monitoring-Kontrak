@@ -133,6 +133,16 @@
             }); // end am4core.ready()
         </script>
     @else
+        {{-- Kondisi Tanggal --}}
+        @php
+        $today = \Carbon\Carbon::now();
+        $tglstart = \Carbon\Carbon::parse($datacontract->tglmulai);
+        $tglfrom = \Carbon\Carbon::parse($datacontract->tglkonfirmasi);
+        $tglto = \Carbon\Carbon::parse($datacontract->tglakhir);
+        $sebulan = \Carbon\Carbon::parse($datacontract->tglakhir)->addDays(30);
+        $duobulan = \Carbon\Carbon::parse($datacontract->tglakhir)->addDays(60);
+        $tigobulan = \Carbon\Carbon::parse($datacontract->tglakhir)->addDays(90);
+        @endphp
         <div class="row">
             <div class="col-md-3">
 
@@ -220,50 +230,88 @@
                                     <h6>Tanggal Mulai Sewa :
                                         {{ \Carbon\Carbon::parse($datacontract->tglmulai)->isoFormat('DD MMMM Y') }}</h6>
 
-                                    <!-- Tanggal Selesai Sewa -->
-                                    <h6>Tanggal Selesai Sewa :
+                                    <!-- Tanggal Akhir Sewa -->
+                                    <h6>Tanggal Akhir Sewa :
                                         {{ \Carbon\Carbon::parse($datacontract->tglakhir)->isoFormat('DD MMMM Y') }}</h6>
 
-                                    <!-- Status Kontrak -->
-                                    @php
-                                        $today = \Carbon\Carbon::now();
-                                        $tglstart = \Carbon\Carbon::parse($datacontract->tglmulai);
-                                        $tglfrom = \Carbon\Carbon::parse($datacontract->tglkonfirmasi);
-                                        $tglto = \Carbon\Carbon::parse($datacontract->tglakhir);
-                                    @endphp
-
-                                    @if ($today >= $tglstart && $today <= $tglfrom)
-                                        <h6>Status Kontrak : <a href="#" class="btn btn-primary">Kontrak</a> </h6>
-                                    @elseif($today >= $tglfrom && $today <= $tglto)
-                                        <h6>Status Kontrak : <a href="#" class="btn btn-warning">Masa Tenggang</a></h6>
-                                    @elseif ($today > $tglto && $today <= $tglto->addDays(30))
-                                        <div class="d-grid">
-                                            <h6>Status Kontrak : <a href="#" class="btn btn-danger">Denda 1 Bulan</a>
-                                            </h6>
-                                            <h6>Denda : <a href="#" class="btn btn-success mt-2">@IDR($datacontract->harga * 2)</a>
-                                            </h6>
-                                        </div>
-                                    @elseif ($today > $tglto->addDays(30) && $today <= $tglto->addDays(60))
-                                        <div class="d-grid">
-                                            <h6>Status Kontrak : <a href="#" class="btn btn-danger">Denda 2 Bulan</a>
-                                            </h6>
-                                            <h6>Denda : <a href="#" class="btn btn-success mt-2">@IDR($datacontract->harga * 3)</a>
-                                            </h6>
-                                        </div>
-                                    @elseif ($today > $tglto->addDays(60) && $today <= $tglto->addDays(90))
-                                        <div class="d-grid">
-                                            <h6>Status Kontrak : <a href="#" class="btn btn-danger">Denda 3 Bulan</a>
-                                            </h6>
-                                            <h6>Denda : <a href="#" class="btn btn-success mt-2">@IDR($datacontract->harga * 4)</a>
-                                            </h6>
-                                        </div>
-                                    @elseif ($datacontract->selesai = true)
-                                        <h6>Status Kontrak : <a href="" class="btn btn-success">Selesai</a></h6>
+                                    {{-- Tanggal Kontrak Diselesaikan --}}
+                                    @if ($datacontract->tglselesai)
+                                        <h6>Tanggal Kontrak Diselesaikan :
+                                            {{ \Carbon\Carbon::parse($datacontract->tglselesai)->isoFormat('DD MMMM Y') }}
+                                        </h6>
                                     @endif
-                                    <hr>
-                                    <p>
-                                        *Untuk perpanjangan atau perubahan kontrak silahkan hubungi admin.
-                                    </p>
+
+                                    <!-- Status Kontrak -->
+                                    <div class="d-flex">
+                                        <h6>
+                                            Status Kontrak :
+                                            @if ($today >= $tglstart && $today <= $tglfrom)
+                                                @if ($datacontract->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
+                                                    <a href="#" class="btn btn-primary">Kontrak</a>
+                                                    @php
+                                                        $totalharga = 0;
+                                                    @endphp
+                                                @endif
+                                            @elseif($today >= $tglfrom && $today <= $tglto)
+                                                @if ($datacontract->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
+                                                    <a href="#" class="btn btn-warning">Masa Tenggang</a>
+                                                    @php
+                                                        $totalharga = 0;
+                                                    @endphp
+                                                @endif
+                                            @elseif ($today > $tglto && $today <= $sebulan)
+                                                @if ($datacontract->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
+                                                    <a href="#" class="btn btn-danger">| Denda 1 Bulan |</a>
+                                                    <a href="#" class="btn btn-success mt-2">@IDR($datacontract->harga * 2)</a>
+                                                    @php
+                                                        $totalharga = $datacontract->harga * 2;
+                                                    @endphp
+                                                @endif
+                                            @elseif ($today > $sebulan && $today <= $duobulan)
+                                                @if ($datacontract->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
+                                                    <a href="#" class="btn btn-danger">| Denda 2 Bulan |</a>
+                                                    <a href="#" class="btn btn-success mt-2">@IDR($datacontract->harga * 3)</a>
+                                                    @php
+                                                        $totalharga = $datacontract->harga * 3;
+                                                    @endphp
+                                                @endif
+                                            @elseif ($today > $duobulan && $today <= $tigobulan)
+                                                @if ($datacontract->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
+                                                    <a href="#" class="btn btn-danger">| Denda 3 Bulan |</a>
+                                                    <a href="#" class="btn btn-success mt-2">@IDR($datacontract->harga * 4)</a>
+                                                    @php
+                                                        $totalharga = $datacontract->harga * 4;
+                                                    @endphp
+                                                @endif
+                                            @elseif ($today > $tigobulan)
+                                                @if ($datacontract->selesai == 1)
+                                                    <a href="#" class="btn btn-success">Selesai</a>
+                                                @else
+                                                    <a href="#" class="btn btn-danger">| Denda Maksimal 3 Bulan
+                                                        |</a>
+                                                    <a href="#" class="btn btn-success mt-2">@IDR($datacontract->harga * 4)</a>
+                                                    @php
+                                                        $totalharga = $datacontract->harga * 4;
+                                                    @endphp
+                                                @endif
+                                            @endif
+                                        </h6>
+                                    </div>
+
+                                    {{-- Total Harga --}}
+                                    @if ($datacontract->totalharga)
+                                        <h6>Total Harga : <strong>@IDR($datacontract->totalharga)</strong></h6>
+                                    @endif
                                 </div>
                                 <!-- /.post -->
                             </div>
@@ -275,5 +323,6 @@
                 </div>
                 <!-- /.col -->
             </div>
-        @endcan
-    @endsection
+        </div>
+    @endcan
+@endsection

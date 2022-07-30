@@ -37,6 +37,9 @@
                 <tbody>
                     @if ($request->count())
                         @foreach ($request as $item)
+                            @php
+                                $cekkontrak = App\Models\Contract::where('warehouse_id', $item->id)->first();
+                            @endphp
                             <tr>
                                 <td align="CENTER"><b>{{ $request->firstItem() - 1 + $loop->iteration }}</b></th>
                                 <td>{{ $item->nama }}</td>
@@ -55,7 +58,15 @@
                                             data-bs-target="#edit{{ $item->id }}">
                                             <i class="bi bi-pencil-square"></i> Edit
                                         </button>
-                                        @if ($item->aktif == 1)
+                                        @if (!$cekkontrak)
+                                            <form action="/dashboard/warehouse/{{ $item->id }}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                                    <i class="bi bi-x-circle"></i> Delete
+                                                </button>
+                                            </form>
+                                        @elseif ($item->aktif == 1)
                                             <form action="/dashboard/warehouse/{{ $item->id }}" method="post">
                                                 @method('delete')
                                                 @csrf
@@ -64,6 +75,7 @@
                                                 </button>
                                             </form>
                                         @endif
+
                                     </div>
                                 </td>
                             </tr>
