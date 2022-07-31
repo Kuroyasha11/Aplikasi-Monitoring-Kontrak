@@ -62,11 +62,7 @@ class ContractController extends Controller
         $date = new DateTime($tanggal);
         $date_minus = $date->modify("-30 days");
 
-        // Mengubah Status
-        // $getwarehouse = Contract::where('warehouse_id', $request->warehouse_id)->first();
-        // $ubahstatus = $getwarehouse->warehouse->aktif;
-        // $tidakaktif = '0';
-
+        // Validasi Kontrak
         $rules1 = [
             'service_id' => 'required|min:1|numeric',
             'manajemen' => 'required',
@@ -81,16 +77,15 @@ class ContractController extends Controller
             'tglakhir' => 'required',
             'keterangan' => 'nullable'
         ];
-
-        // $warehouse = [
-        //     'aktif' => [$ubahstatus],
-        // ];
-
-        // validasi kontrak
         $validatedData1 = $request->validate($rules1);
-        // $validatedData1 = $request->validate($warehouse);
         $validatedData1['tglkonfirmasi'] = $date_minus;
-        // $validatedData1['aktif'] = $tidakaktif;
+
+        // Validasi User
+        $rules3 = [
+            'name' => 'required|min:3',
+            'email' => 'required|email:dns|unique:users',
+        ];
+        $validatedData3 = $request->validate($rules3);
 
         // Lainnya
         if ($request->nama) {
@@ -170,23 +165,14 @@ class ContractController extends Controller
         }
 
         // USER
-        $rules3 = [
-            'name' => 'required|min:3',
-            'email' => 'required|email:dns|unique:users',
-        ];
-        if ($request->name) {
+        $validatedData3['username'] = $request->email;
+        $validatedData3['password'] = bcrypt('12345678');
 
+        User::create($validatedData3);
 
-            $validatedData3 = $request->validate($rules3);
-            $validatedData3['username'] = $request->email;
-            $validatedData3['password'] = bcrypt('12345678');
+        $cekuser = User::all()->where('email', $validatedData3['email'])->first();
 
-            User::create($validatedData3);
-
-            $cekuser = User::all()->where('email', $validatedData3['email'])->first();
-
-            $validatedData1['user_id'] = $cekuser['id'];
-        }
+        $validatedData1['user_id'] = $cekuser['id'];
 
         Contract::create($validatedData1);
 
