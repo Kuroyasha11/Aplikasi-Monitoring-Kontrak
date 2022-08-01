@@ -37,13 +37,15 @@ Route::controller(LoginController::class)->group(function () {
 
 Route::controller(DashboardController::class)->group(function () {
     Route::get('/dashboard', 'index')->name('dashboard')->middleware(['auth']);
+    Route::get('/dashboard/contract/print', 'print')->middleware(['auth', 'admin']);
 });
 
 Route::get('/send-mail', [MailController::class, 'index']);
 
 Route::resource('/dashboard/contract', ContractController::class)->middleware(['auth', 'admin'])->except(['edit']);
-Route::get('/dashboard/contract/print', [ContractController::class, 'print'])->middleware(['auth', 'admin']);
-Route::put('/dashboard/contract/selesai/{selesai}', [ContractController::class, 'selesai'])->middleware(['auth', 'admin']);
+Route::controller(ContractController::class)->group(function () {
+    Route::put('/dashboard/contract/selesai/{selesai}', 'selesai')->middleware(['auth', 'admin']);
+});
 // Route::resource('/dashboard/service', ServiceController::class)->middleware(['auth', 'admin'])->only(['index']);
 Route::resource('/dashboard/warehouse', WarehouseController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
 Route::resource('/dashboard/depo', DepoController::class)->middleware(['auth', 'admin'])->except(['show', 'create', 'edit']);
