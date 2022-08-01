@@ -30,4 +30,13 @@ class DashboardController extends Controller
             'judul'
         ]));
     }
+
+    public function print()
+    {
+        return view('contracts.index', [
+            'title' => 'Kontrak',
+            'judul' => 'Daftar Kontrak',
+            'contract' => Contract::latest()->paginate(10)
+        ]);
+    }
 }
